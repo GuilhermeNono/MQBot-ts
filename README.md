@@ -15,4 +15,5 @@ O bot está sendo desenvolvido por uma pessoa, por isso, o desenvolvimento do bo
 Será utilizado na criação do bot:
 - [Node.js](https://nodejs.org/en/)
 - [Typescript](https://www.typescriptlang.org/)
+- [MongoDB](https://www.mongodb.com/)
 
