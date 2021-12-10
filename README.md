@@ -1,7 +1,12 @@
 # MQBot-ts
-## MQBot é uma segunda versão do "LKBot" feito inicialmente a muito tempo atrás, o bot será focado em comandos de funcionalidades para administração de um servidor. O mesmo ainda está em desenvolvimento e sendo usado como objeto de estudo em Typescript.
+## 📖 Descrição 
+<p>MQBot é um bot que está sendo desenvolvido tirando proveito da api discord.js, e usando a linguagem Typescript em seu desenvolvimento. O bot é uma re-adaptação do antigo LKBot, feito inicialmente em JavaScript. O objetivo do bot é auxiliar os usuarios a gerenciarem seus servidores no Discord de maneira facil e rapida.</p>
 
-O bot está sendo desenvolvido por uma pessoa, por isso, o desenvolvimento do bot tem de a ser demorado. Atualizarei o bot sempre que possivel, e estarei disponivel para consertar possiveis bugs.
+##
+
+<h4 align="center"><em>O bot está sendo desenvolvido por uma pessoa, por isso, o desenvolvimento do bot tem de a ser demorado. Atualizarei o bot sempre que possivel, e estarei disponivel para consertar possiveis bugs.</em></h4>
+
+##
 
 ### ✪ Objetivos primarios
 
