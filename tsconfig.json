@@ -14,7 +14,30 @@
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
     "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "baseUrl": ".",
+    "paths": {
+      "@CMDAdmin/*" : [
+        "src/Commands/Admin/*",
+      ],
+      "@CMDFun/*": [
+        "src/Commands/Fun/*",
+      ],
+      "@Interfaces/*":[
+        "src/interfaces/*"
+      ],
+      "@Interfaces":[
+        "src/interfaces/index.ts"
+      ],
+      // "@Modules/*":[
+      //   "modules/*",
+      // ],
+      "@Client":[
+        "src/Client/index.ts"
+      ],
+      "@Client/*":[
+        "src/Client/*"
+      ]
+    }
   },
-  "include": ["src"],
   "exclude": ["node_modules"]
 }

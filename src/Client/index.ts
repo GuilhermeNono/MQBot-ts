@@ -2,7 +2,7 @@ import { Client, Collection } from "discord.js";
 import mongoose from "mongoose";
 import path from "path";
 import { readdirSync } from "fs";
-import { Command, Event } from "../interfaces";
+import { Command, Event } from "@Interfaces";
 import dotenv from "dotenv";
 import { green, red, yellow } from 'colors';
 

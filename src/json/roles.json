@@ -1,0 +1,205 @@
+{
+  "Administracao": [
+    {
+      "name": "Ze",
+      "id": "735147189432483920"
+    },
+    {
+      "name": "MACACOS",
+      "id": "716006513818468404"
+    },
+    {
+      "name": "FUNAI",
+      "id": "716008029396533349"
+    }
+  ],
+  "Moderacao": [
+    {
+      "name": "Mod",
+      "id": "731199687981400097"
+    }
+  ],
+  "Supervisao": [
+    {
+      "name": "Supervisor(a) de eventos📑",
+      "id": "822482433059979266"
+    }
+  ],
+  "SemiModeracao": [
+    {
+      "name": "Fó Prey",
+      "id": "751898327842422925"
+    }
+  ],
+  "Especiais": [
+    {
+      "name": "Buffador",
+      "id": "724436250060128256"
+    },
+    {
+      "name": "Server Booster",
+      "id": "751149098517659729"
+    }
+    
+  ],
+  "Conquista": [
+    {
+      "name": "PROTEGIDO DO KOJJ",
+      "id": "721195112306180106"
+    },
+    {
+      "name": "Tchola (lvl5)",
+      "id": "716278562864496651"
+    },
+    {
+      "name": "Primata (lvl10)",
+      "id": "716278897716494346"
+    },
+    {
+      "name": "Pega no breu (lvl20)",
+      "id": "716279289917734953"
+    },
+    {
+      "name": "Milf hunter  (lvl30)",
+      "id": "716279647884673094"
+    },
+    {
+      "name": "TRAVADOR DE ZAP (lvl100)",
+      "id": "716279926483058721"
+    }
+  ],
+  "Default": [
+    {
+      "name": "Ratos de laboratorio",
+      "id":"775674480285581322"
+    },
+    {
+      "name": "Muted",
+      "id": "739498045955244032"
+    },
+    {
+      "name": "Kojjmunistas",
+      "id": "727958492631007252"
+    },
+    {
+      "name": "Caiólicos",
+      "id": "727958989614350400"
+    },
+    {
+      "name": "Freystation",
+      "id": "727958688228179968"
+    },
+    {
+      "name": "Consumidor de Urânio",
+      "id": "716007663304966144"
+    }
+  ],
+  "Fun": [
+    {
+      "name": "Vencendores do 5v5",
+      "id": "754435211152064534"
+    },
+    {
+      "name": "VENCEDOR DO EVENTO DE X1",
+      "id": "736698396278128720"
+    },
+    {
+      "name": "EVENTO",
+      "id": "743865256203517963"
+    },
+    {
+      "name": "◇__BOTS__◇",
+      "id": "727964329474785300"
+    },
+    {
+      "name": "GarticMOD",
+      "id": "727815875201073152"
+    },
+    {
+      "name": "ESQUIZITA",
+      "id": "781731080247181373"
+    },
+    {
+      "name": "ESQUIZITO",
+      "id": "753006709152284753"
+    },
+    {
+      "name": "MACACO REI",
+      "id": "782745596225388585"
+    },
+    {
+      "name": "◇__GHOSTS__◇",
+      "id": "727991890875514891"
+    },
+    {
+      "name": "Macaquinho",
+      "id": "727864097739243581"
+    },
+    {
+      "name": "CHATÃO",
+      "id": "727268411062878268"
+    },
+    {
+      "name": "◇__TAGS POR LEVEL__◇",
+      "id": "727963948166676521"
+    },
+    {
+      "name": "◇__TAGS POR REAÇÃO__◇",
+      "id": "727964141939195914"
+    }
+  ],
+  "Invisiveis": [
+    {
+      "name": "ANALISE",
+      "id": "783446911502778368"
+    }
+  ],
+  "RoleBot": [
+    {
+      "name": "Larissa Kfinel",
+      "id": "742076408108679189"
+    },
+    {
+      "name": "BOTE",
+      "id": "716010256567762974"
+    },
+    {
+      "name": "Zapier",
+      "id": "716028904447410228"
+    },
+    {
+      "name": "Zira",
+      "id": "727963639176495205"
+    },
+    {
+      "name": "AstolfoBot",
+      "id": "734782689978089522"
+    },
+    {
+      "name": "ZeroTwo",
+      "id": "716010168294441071"
+    },
+    {
+      "name": "Pro Bot",
+      "id": "731961957745426512"
+    },
+    {
+      "name": "GarticBOT",
+      "id": "727815453191307295"
+    },
+    {
+      "name": "Mudae",
+      "id": "762726385990500395"
+    },
+    {
+      "name": "Hydra",
+      "id": "839599339873108033"
+    }
+  ],
+  "RoleEveryone": [
+    {
+      "name": "@everyone",
+      "id": "715957077939454079"
+    }
+  ]
+}
