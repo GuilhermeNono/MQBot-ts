@@ -3,21 +3,24 @@
     // Focalizar para exibir as descrições dos atributos existentes.
     // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "ts-node",
-            "type": "node",
-            "request": "launch",
-            "args": [
-                "${relativeFile}"
-            ],
-            "runtimeArgs": [
-                "-r",
-                "ts-node/register"
-            ],
-            "cwd": "${workspaceRoot}",
-            "protocol": "inspector",
-            "internalConsoleOptions": "openOnSessionStart"
-        }
-    ]
+    "configurations": [{
+        "name": "ts-node",
+        "type": "node",
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
+        "request": "launch",
+        "runtimeArgs": [
+            "-r",
+            "${workspaceFolder}/node_modules/ts-node/register",
+            "-r",
+            "${workspaceFolder}/node_modules/tsconfig-paths/register"
+          ],
+          "args": ["${workspaceFolder}/src/index.ts"],
+        "cwd": "${workspaceRoot}",
+        "protocol": "inspector",
+        "sourceMaps": true,
+        "smartStep": true,
+        "internalConsoleOptions": "openOnSessionStart"
+    }]
 }

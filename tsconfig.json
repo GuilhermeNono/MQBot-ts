@@ -28,9 +28,9 @@
       "@Interfaces":[
         "src/interfaces/index.ts"
       ],
-      // "@Modules/*":[
-      //   "modules/*",
-      // ],
+      "@Modules/*":[
+        "lib/modules/*",
+      ],
       "@Client":[
         "src/Client/index.ts"
       ],

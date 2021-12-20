@@ -1,6 +1,6 @@
 import { Command } from "@Interfaces";
-import { CheckRole } from "../../../modules/CheckRoles";
-import { GuildBan, GuildMember, MessageEmbed, Snowflake , Collection} from "discord.js";
+import { CheckRole } from "@Modules/CheckRoles";
+import { Collection, GuildBan, GuildMember, MessageEmbed, User} from "discord.js";
 
 export const command: Command = {
   name: "ban",
@@ -92,48 +92,56 @@ export const command: Command = {
       if (/^[a-zA-Z]+$/.test(args[0])) {
         return message.channel.send({ embeds: [errorCode] });
       }
-      var person: GuildMember = personCheck
+
+      var person: GuildMember | User;
+
+      if(!isNaN(parseInt(args[0]))){
+        person = await client.users.fetch(args[0]);
+      } else {
+        person = personCheck
         ? message.guild.members.cache.get(args[0])
         : message.guild.members.cache.get(message.mentions.users.first().id);
+      }
 
       if (!person) return message.channel.send("Usuario inexistente");
 
       //*3 - Impedindo com que o usuario tente banir a si mesmo
-      if (person.user.id === message.author.id)
+      if ((person.id) === message.author.id)
         return message.channel.send({ embeds: [autoBan] });
 
-      //*4 - Impedindo com que o usuario tente banir alguem com cargo superior ou equivalente ao seu
-      const newCheckPerson: CheckRole = new CheckRole(
-        message,
-        listOfAllowedRoles,
-        person
-      );
+      // //*4 - Impedindo com que o usuario tente banir alguem com cargo superior ou equivalente ao seu
 
-      if (newCheckPerson.CheckReturnBoolean())
-        return message.channel.send({ embeds: [userCannotBeBan] });
+      if(!(person instanceof User)){
+        const newCheckPerson: CheckRole = new CheckRole(
+          message,
+          listOfAllowedRoles,
+          person
+        );
+  
+        if (newCheckPerson.CheckReturnBoolean())
+          return message.channel.send({ embeds: [userCannotBeBan] });
+      }
 
-      //*5 - Armazenando o "motivo" da punição
+      // //*5 - Armazenando o "motivo" da punição
 
       let reason: string = message.content.split(" ").splice(2).join(" ");
       if (reason === "") reason = "Indefinido";
 
-      //*6 -
-      let guildBans = message.guild.bans.cache.map((bans) => bans.user.id);
+      // //*6 - Checando se o usuario já foi banido
+      let guildBans:Collection<string, GuildBan>  = await message.guild.bans.fetch();
 
       //TODO: Descobrir Por que não está retornando o valor real de banidos.
-      if (guildBans.length === 0) {
+      if (guildBans.size === 0) {
         // await message.guild.members.ban(person);
         message.channel.send("Ninguem banido");
       } else {
-        if (guildBans.includes(`${person.id}`)) {
+        if (guildBans.findKey((userBan) => userBan.user.id === person.id)) {
           return message.react("❌");
         } else {
           // await message.guild.members.ban(person);
           message.channel.send("banido");
         }
       }
-
-      console.log("Catch!");
     } catch (error) {
       throw error;
     }
