@@ -1,4 +1,4 @@
-import { Event } from "../../interfaces";
+import { Event } from "@Interfaces";
 import { cyan } from 'colors'
 export const event:Event = {
     name: 'ready',

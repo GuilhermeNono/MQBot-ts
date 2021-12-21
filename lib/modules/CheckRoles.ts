@@ -41,4 +41,4 @@ class CheckRole {
   }
 }
 
-export {CheckRole};
+export default CheckRole;

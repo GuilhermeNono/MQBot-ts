@@ -28,8 +28,8 @@
       "@Interfaces":[
         "src/interfaces/index.ts"
       ],
-      "@Modules/*":[
-        "lib/modules/*",
+      "@Modules":[
+        "lib/modules/index.ts",
       ],
       "@Client":[
         "src/Client/index.ts"

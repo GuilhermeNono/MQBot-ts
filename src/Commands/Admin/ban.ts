@@ -1,5 +1,5 @@
 import { Command } from "@Interfaces";
-import { CheckRole } from "@Modules/CheckRoles";
+import { CheckRole } from "@Modules";
 import { Collection, GuildBan, GuildMember, MessageEmbed, User} from "discord.js";
 
 export const command: Command = {

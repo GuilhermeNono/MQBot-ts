@@ -1,4 +1,4 @@
-import { Event, Command } from "../../interfaces";
+import { Event, Command } from "@Interfaces";
 import { Message } from "discord.js";
 
 export const event:Event = {
