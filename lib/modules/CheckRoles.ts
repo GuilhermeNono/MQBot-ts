@@ -5,39 +5,51 @@ class CheckRole {
   guildMemberUser: GuildMember;
   message: Message;
 
-  constructor(message: Message, idRolesWithPermission:string[], guildMemberUser:GuildMember) {
-    this.message = message
-    this.idRolesWithPermission = idRolesWithPermission
-    this.guildMemberUser = guildMemberUser
+  constructor(
+    message: Message,
+    idRolesWithPermission: string[],
+    guildMemberUser: GuildMember
+  ) {
+    this.message = message;
+    this.idRolesWithPermission = idRolesWithPermission;
+    this.guildMemberUser = guildMemberUser;
   }
 
-
+  /**
+   * 🔰 - Verifica se o usuario tem, pelo menos uma, das roles informadas.
+   * @returns Verdadeiro quando encontra e, caso contrario, falso.
+   */
   CheckReturnBoolean(): boolean {
-    const userRolesMap = this.guildMemberUser.roles.cache.map((roles) => roles.id);    
+    const userRolesMap = this.guildMemberUser.roles.cache.map(
+      (roles) => roles.id
+    );
     for (const keyPerm in this.idRolesWithPermission) {
-       for(const keyPermUser in userRolesMap) {
-           if(this.idRolesWithPermission[keyPerm] === userRolesMap[keyPermUser]){
-            return true
-           }
-       } 
+      for (const keyPermUser in userRolesMap) {
+        if (this.idRolesWithPermission[keyPerm] === userRolesMap[keyPermUser]) {
+          return true;
+        }
+      }
     }
-    //Roles passadas para a verificação > this.rolesWithPermission[0] = '123'
-    //Roles pertencentes ao usuario > userRolesMap[0] = '231'
     return false;
   }
-
+  /**
+   * 🔰 - Verifica se o usuario tem, pelo menos uma, das roles informadas.
+   * @returns Os IDs das roles que o usuario possui.
+   */
   CheckReturnId(): string[] {
-    const userRolesMap = this.guildMemberUser.roles.cache.map((roles) => roles.id);
-    const newArrayList: string[] = []
+    const userRolesMap = this.guildMemberUser.roles.cache.map(
+      (roles) => roles.id
+    );
+    const newArrayList: string[] = [];
 
     for (const keyPerm in this.idRolesWithPermission) {
-       for(const keyPermUser in userRolesMap) {
-           if(this.idRolesWithPermission[keyPerm] === userRolesMap[keyPermUser]){
-            newArrayList.push(userRolesMap[keyPermUser])
-           }
-       } 
+      for (const keyPermUser in userRolesMap) {
+        if (this.idRolesWithPermission[keyPerm] === userRolesMap[keyPermUser]) {
+          newArrayList.push(userRolesMap[keyPermUser]);
+        }
+      }
     }
-    return newArrayList
+    return newArrayList;
   }
 }
 

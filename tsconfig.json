@@ -25,7 +25,7 @@
       "@Interfaces/*":[
         "src/interfaces/*"
       ],
-      "@Interfaces":[
+      "@Interface":[
         "src/interfaces/index.ts"
       ],
       "@Modules":[
