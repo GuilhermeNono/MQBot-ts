@@ -7,13 +7,16 @@ import {
   MessageEmbed,
   User,
 } from "discord.js";
+import ms from "ms";
 
 export const command: Command = {
-  name: "ban",
-  aliases: ["bn", "banir"],
-  description: "Comando para banir usuarios por tempo indeterminado.",
+  name: "tempban",
+  aliases: ["tb", "banirtemporario"],
+  description: "Comando para banir usuarios por tempo determinado.",
   run: async (client, message, args) => {
     try {
+
+        //TODO: Checar se o usuario está no servidor, banir independente das condições e desbanir quando a punição acabar.
       //PS: Inicializando os Embeds Templates.
       const Embeds: EmbedTemplates = new EmbedTemplates();
 
@@ -120,6 +123,13 @@ export const command: Command = {
       let reason: string = message.content.split(" ").splice(2).join(" ");
       if (reason === "") reason = "Indefinido";
 
+      //*5.5 - Armazenando o tempo da punição
+
+      //Definindo que o index 1 do array como o tempo.
+      let time: number = ms(args[1]);
+
+      if(!time) return message.channel.send("Tempo invalido.");
+
       // *6 - Checando se o usuario já foi banido
       let guildBans: Collection<string, GuildBan> =
         await message.guild.bans.fetch();
@@ -135,7 +145,7 @@ export const command: Command = {
         }
       }
     } catch (error) {
-      throw error;
+      console.log(`${error}`);
     }
   },
 };

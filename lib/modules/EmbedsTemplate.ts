@@ -59,6 +59,17 @@ class EmbedTemplates {
         "https://media.discordapp.net/attachments/776094611470942208/846246640867737610/peach_san.png?width=701&height=701"
       );
   }
+  
+  /**
+   * ❌ - Erro na hora de definir o tempo.
+   * @returns MessageEmbed()
+   */
+  errorTime(time:string | number): MessageEmbed {
+    return new MessageEmbed()
+      .setTitle("**:warning: Erro de Sintaxe :warning:**")
+      .setColor("#c5f542")
+      .addField("Tempo Não definido.", `"${time}" não é um tempo valido.`);
+  }
 }
 
 export default EmbedTemplates;
