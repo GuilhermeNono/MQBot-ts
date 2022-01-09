@@ -24,7 +24,7 @@ export const command: Command = {
         listOfAllowedRoles,
         memberAuthor
       );
-      const Embeds:EmbedTemplates = new EmbedTemplates();
+      const Embeds:EmbedTemplates = new EmbedTemplates(client);
       const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
       if (!checkReturn)
         return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });

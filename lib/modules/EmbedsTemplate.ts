@@ -1,5 +1,12 @@
-import { MessageEmbed, EmbedFieldData } from "discord.js";
+import ExtendedClient from "@Client";
+import { MessageEmbed, EmbedFieldData} from "discord.js";
 class EmbedTemplates {
+
+  client:ExtendedClient
+
+  constructor(client:ExtendedClient){    
+    this.client = client;
+  }
   /**
    * ❌ - Tentativa de banir alguem com cargo superior.
    * @returns MessageEmbed()
@@ -56,7 +63,7 @@ class EmbedTemplates {
       )
       .setAuthor(
         "Pessego 🡻 ",
-        "https://media.discordapp.net/attachments/776094611470942208/846246640867737610/peach_san.png?width=701&height=701"
+        `${this.client.user.displayAvatarURL()}`
       );
   }
   

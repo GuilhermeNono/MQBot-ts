@@ -32,7 +32,7 @@ export const command: Command = {
         listOfAllowedRoles,
         memberAuthor
       );
-      const Embeds: EmbedTemplates = new EmbedTemplates();
+      const Embeds: EmbedTemplates = new EmbedTemplates(client);
       const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
       if (!checkReturn)
         return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
@@ -48,16 +48,16 @@ export const command: Command = {
           embeds: [
             Embeds.errorCode(
               "Usuario Invalido.",
-              "Foi encontrado, no comando de banir usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
-              "ban",
+              "Foi encontrado, no comando de mutar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
+              "tempmute",
               [
                 {
-                  name: ":purple_square:  Banir por Menção | ",
-                  value: "`.ban @Discord 1h Regra[1]`",
+                  name: ":purple_square:  Mutar temporariamente por Menção | ",
+                  value: "`.tempmute @Discord 1h Regra[1]`",
                 },
                 {
-                  name: ":purple_square:  Banir por ID | ",
-                  value: "`.ban 261945904829956097 1h Regra[1]`",
+                  name: ":purple_square:  Mutar temporariamente por ID | ",
+                  value: "`.tempmute 261945904829956097 1h Regra[1]`",
                 },
               ]
             ),
@@ -70,16 +70,16 @@ export const command: Command = {
           embeds: [
             Embeds.errorCode(
               "Usuario Invalido.",
-              "Foi encontrado, no comando de banir usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
-              "ban",
+              "Foi encontrado, no comando de mutar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
+              "tempmute",
               [
                 {
-                  name: ":purple_square:  Banir por Menção | ",
-                  value: "`.ban @Discord 1h Regra[1]`",
+                  name: ":purple_square:  Mutar temporariamente por Menção | ",
+                  value: "`.tempmute @Discord 1h Regra[1]`",
                 },
                 {
-                  name: ":purple_square:  Banir por ID | ",
-                  value: "`.ban 261945904829956097 1h Regra[1]`",
+                  name: ":purple_square:  Mutar temporariamente por ID | ",
+                  value: "`.tempmute 261945904829956097 1h Regra[1]`",
                 },
               ]
             ),
@@ -99,16 +99,16 @@ export const command: Command = {
             embeds: [
               Embeds.errorCode(
                 "Usuario Invalido.",
-                "Foi encontrado, no comando de banir usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
-                "ban",
+                "Foi encontrado, no comando de mutar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
+                "tempmute",
                 [
                   {
-                    name: ":purple_square:  Banir por Menção | ",
-                    value: "`.ban @Discord 1h Regra[1]`",
+                    name: ":purple_square:  Mutar temporariamente por Menção | ",
+                    value: "`.tempmute @Discord 1h Regra[1]`",
                   },
                   {
-                    name: ":purple_square:  Banir por ID | ",
-                    value: "`.ban 261945904829956097 1h Regra[1]`",
+                    name: ":purple_square:  Mutar temporariamente por ID | ",
+                    value: "`.tempmute 261945904829956097 1h Regra[1]`",
                   },
                 ]
               ),

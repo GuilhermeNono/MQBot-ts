@@ -19,6 +19,9 @@
       "@CMDAdmin/*" : [
         "src/Commands/Admin/*",
       ],
+      "@Cycle":[
+        "src/Events/Cycle/index.ts",
+      ],
       "@CMDFun/*": [
         "src/Commands/Fun/*",
       ],

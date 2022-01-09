@@ -15,7 +15,7 @@ export const command: Command = {
   run: async (client, message, args) => {
     try {
       //PS: Inicializando os Embeds Templates.
-      const Embeds: EmbedTemplates = new EmbedTemplates();
+      const Embeds: EmbedTemplates = new EmbedTemplates(client);
 
       //*1 - Verificando se o usuario tem o cargo necessario para usar esse comando
 
@@ -52,11 +52,11 @@ export const command: Command = {
               [
                 {
                   name: ":purple_square:  Banir por Menção | ",
-                  value: "`.ban @Discord 1h Regra[1]`",
+                  value: "`.ban @Discord Regra[1]`",
                 },
                 {
                   name: ":purple_square:  Banir por ID | ",
-                  value: "`.ban 261945904829956097 1h Regra[1]`",
+                  value: "`.ban 261945904829956097 Regra[1]`",
                 },
               ]
             ),
@@ -73,11 +73,11 @@ export const command: Command = {
               [
                 {
                   name: ":purple_square:  Banir por Menção | ",
-                  value: "`.ban @Discord 1h Regra[1]`",
+                  value: "`.ban @Discord Regra[1]`",
                 },
                 {
                   name: ":purple_square:  Banir por ID | ",
-                  value: "`.ban 261945904829956097 1h Regra[1]`",
+                  value: "`.ban 261945904829956097 Regra[1]`",
                 },
               ]
             ),

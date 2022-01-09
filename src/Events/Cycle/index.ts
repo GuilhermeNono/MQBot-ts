@@ -1,0 +1,1 @@
+export { default as Contador } from "./countMembers";
