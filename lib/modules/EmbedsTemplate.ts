@@ -1,10 +1,9 @@
 import ExtendedClient from "@Client";
-import { MessageEmbed, EmbedFieldData} from "discord.js";
+import { MessageEmbed, EmbedFieldData } from "discord.js";
 class EmbedTemplates {
+  client: ExtendedClient;
 
-  client:ExtendedClient
-
-  constructor(client:ExtendedClient){    
+  constructor(client: ExtendedClient) {
     this.client = client;
   }
   /**
@@ -39,7 +38,7 @@ class EmbedTemplates {
     return new MessageEmbed()
       .setColor("#fc3d03")
       .setTitle("**Você não tem permissão para usar esse comando.**")
-      .setFooter("Permissão nivel administrador.");
+      .setFooter({ text: "Permissão nivel administrador." });
   }
   /**
    * ❌ - Erro de digitação
@@ -57,21 +56,22 @@ class EmbedTemplates {
       .setDescription(`${description}`)
       .addField(`**:books: Comando de ${commandName} |** `, "\u200b")
       .addFields(fields)
-      .setFooter(
-        `${errorType}`,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Eo_circle_purple_letter-x.svg/1200px-Eo_circle_purple_letter-x.svg.png"
-      )
-      .setAuthor(
-        "Pessego 🡻 ",
-        `${this.client.user.displayAvatarURL()}`
-      );
+      .setFooter({
+        text: `${errorType}`,
+        iconURL:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Eo_circle_purple_letter-x.svg/1200px-Eo_circle_purple_letter-x.svg.png",
+      })
+      .setAuthor({
+        name: "Pessego 🡻 ",
+        iconURL: `${this.client.user.displayAvatarURL()}`,
+      });
   }
-  
+
   /**
    * ❌ - Erro na hora de definir o tempo.
    * @returns MessageEmbed()
    */
-  errorTime(time:string | number): MessageEmbed {
+  errorTime(time: string | number): MessageEmbed {
     return new MessageEmbed()
       .setTitle("**:warning: Erro de Sintaxe :warning:**")
       .setColor("#c5f542")

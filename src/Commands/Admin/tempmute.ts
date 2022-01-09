@@ -2,11 +2,12 @@ import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates, Timer, mTimer } from "@Modules";
 import {
   Collection,
-  GuildChannel,
   GuildMember,
   Role,
   User,
   MessageEmbed,
+  GuildBasedChannel,
+  TextChannel,
 } from "discord.js";
 import ms from "ms";
 
@@ -150,89 +151,45 @@ export const command: Command = {
 
       //*3.5 Criando variavel que armezene o tempo da punição.
 
+      //Checando o parametro de tempo foi informado.
+      if (!args[1])
+        return message.channel.send({
+          embeds: [
+            Embeds.errorCode(
+              "Usuario Invalido.",
+              "Foi encontrado, no comando de mutar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
+              "tempmute",
+              [
+                {
+                  name: ":purple_square:  Mutar temporariamente por Menção | ",
+                  value: "`.tempmute @Discord 1h Regra[1]`",
+                },
+                {
+                  name: ":purple_square:  Mutar temporariamente por ID | ",
+                  value: "`.tempmute 261945904829956097 1h Regra[1]`",
+                },
+              ]
+            ),
+          ],
+        });
+        
       //Definindo que o index 1 do array como o tempo.
       let time: number = ms(args[1]);
 
-      if(!time) return message.channel.send("Tempo invalido.");
+      if (!time) return message.channel.send("Tempo invalido.");
 
-      //*4 Criando, definindo a posição do cargo na hierarquia e setando para cada canal do servidor a devida permissão do cargo.
+      //*4 Adicionando o timeout ao usuario.
 
-      //Procurando o cargo no servidor.
-      let muteRole: Role = message.guild.roles.cache.find(
-        (role: Role) => role.name === "Muted"
-      );
+      // Checando se o usuario já está mutado.
+      const personAlreadyMuted: boolean = person.isCommunicationDisabled();
 
-      //Procurando a quantidade de cargos no servidor.
-      let cargos: number = await message.guild.roles
-        .fetch()
-        .then((roles: Collection<string, Role>) => {
-          return roles.size;
-        });
-
-      //Subtraindo 2 posições na hierarquia de cargos.
-      cargos -= 4;
-
-      //Criando/setando o cargo "Muted" nos canais do servidor.
-      if (!muteRole) {
-        await message.guild.roles
-          .create({
-            name: "Muted",
-            reason:
-              "Cargo para os mutados, quem tiver esse cargo não consegue enviar mensagens.",
-            permissions: ["VIEW_CHANNEL"],
-            position: cargos,
-            mentionable: false,
-          })
-          .then((newRole: Role) => {
-            message.guild.channels.cache.each((channels: GuildChannel) => {
-              channels.permissionOverwrites.edit(newRole.id, {
-                SEND_MESSAGES: false,
-                ADD_REACTIONS: false,
-              });
-            });
-            muteRole = newRole;
-          });
-      } else {
-        message.guild.channels.cache.each((channels: GuildChannel) => {
-          channels.permissionOverwrites.edit(muteRole.id, {
-            SEND_MESSAGES: false,
-            ADD_REACTIONS: false,
-          });
-        });
-      }
-
-      //*5 Adicionando o cargo de "Muted" no usuario mutado e criando os templates para as punições
-
-      //Checando se o usuario já está mutado.
-      const personAlreadyMuted: CheckRole = new CheckRole(
-        message,
-        [muteRole.id],
-        person
-      );
-
-      if (personAlreadyMuted.CheckReturnBoolean())
+      if (personAlreadyMuted)
         return message.channel.send("Esse usuario já está mutado.");
 
-      //Adicionando o cargo "Muted" no usuario.
-      await person.roles.add(muteRole);
+      //Mutando o usuario.
+      await person.timeout(time, reason);
 
-      //*6 Setando os canais publicos e privados, e por ultimo, adicionando um teporizador para retirar o cargo de "Muted" depois de um certo tempo.
-
-      //Setando o timer e armazenando na memoria temporaria do sistema a classe do timer com o id do usuario.
-      let userTimer:Timer= new Timer(() => {
-
-        //Esse escopo será executado quando o tempo do timer se esgotar.
-        try {
-          //@ts-expect-error
-          person.roles.remove(muteRole);
-          mTimer.delete(person.id);
-        } catch (e) {
-          console.log(`${e}`);
-        }
-        
-      }, time);
-      userTimer.start();
-      mTimer.set(person.id, userTimer);
+      //*5 Setando os canais publicos e privados.
 
       let embedPub: MessageEmbed = new MessageEmbed()
         .setTitle("titulo")
@@ -242,8 +199,7 @@ export const command: Command = {
         .setDescription(
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit, lorem ut commodo suscipit, massa augue finibus mi, vel viverra ex ex a justo. Sed id nunc non neque fermentum viverra."
         )
-        .setFooter("Discord.", message.author.avatarURL());
-
+        .setFooter({ text: "Discord.", iconURL: message.author.avatarURL() });
 
       //929426733516615781 idPunições > Canal Privado(Apenas moderação terá acesso)
       //929441854469070949 Punições > Canal Publico(Todos terão acesso)
@@ -251,7 +207,6 @@ export const command: Command = {
       //TODO: PEDIR PRA ALGUEM FAZER OS EMBEDS.
 
       message.channel.send({ embeds: [embedPub] });
-
     } catch (error) {
       console.log(error);
     }

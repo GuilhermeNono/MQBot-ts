@@ -1,6 +1,6 @@
 import { Command } from "@Interface";
-import { CheckRole, EmbedTemplates, Timer} from "@Modules";
-import { Collection, GuildChannel, GuildMember, Role, User, MessageEmbed} from "discord.js";
+import { CheckRole, EmbedTemplates} from "@Modules";
+import { Collection, GuildMember, Role, User, MessageEmbed, TextChannel} from "discord.js";
 
 export const command: Command = {
   name: "mute",
@@ -168,16 +168,17 @@ export const command: Command = {
             mentionable: false,
           }
         ).then((newRole:Role) => {
-          message.guild.channels.cache.each((channels:GuildChannel) => {
+          message.guild.channels.cache.each((channels:TextChannel) => {
             channels.permissionOverwrites.edit(newRole.id, {
               SEND_MESSAGES: false,
               ADD_REACTIONS: false,
             })
-          })
+          }) 
+          
           muteRole = newRole;
         })
       } else {
-        message.guild.channels.cache.each((channels:GuildChannel) => {
+        message.guild.channels.cache.each((channels:TextChannel) => {
           channels.permissionOverwrites.edit(muteRole.id, {
             SEND_MESSAGES: false,
             ADD_REACTIONS: false,
@@ -193,7 +194,7 @@ export const command: Command = {
       if(personAlreadyMuted.CheckReturnBoolean()) return message.channel.send("Esse usuario já está mutado.")
 
       //Adicionando o cargo "Muted" no usuario.
-      // person.roles.add(muteRole);
+      person.roles.add(muteRole);
 
       //TODO: 6 Setando os canais publicos e privados, e por ultimo, adicionando um teporizador para retirar o cargo de "Muted" depois de um certo tempo.
 
@@ -201,7 +202,7 @@ export const command: Command = {
       .setTitle("titulo")
       .setThumbnail('https://cdn1.iconfinder.com/data/icons/social-messaging-ui-color/254000/46-512.png')
       .setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit, lorem ut commodo suscipit, massa augue finibus mi, vel viverra ex ex a justo. Sed id nunc non neque fermentum viverra.")
-      .setFooter("Discord.", message.author.avatarURL())
+      .setFooter({text:"Discord.", iconURL:message.author.avatarURL()})
 
 
       //929426733516615781 idPunições > Priv
