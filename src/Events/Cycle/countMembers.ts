@@ -14,7 +14,6 @@ async function Contador(client:ExtendedClient): Promise<void> {
     /*Setando o canal que será editado com o numero de pessoas presentes no servidor*/
     const channel:GuildChannel | ThreadChannel = guild.channels.cache.get("929442677701869588");
     /*Editando o nome do canal*/
-    memberCount = 2570;
     if(memberCount >= 1000) {
     let newCount:string = memberCount.toString() 
     let arrayStringCount:string[]= newCount.split("")
