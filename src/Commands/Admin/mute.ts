@@ -10,22 +10,13 @@ export const command: Command = {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const memberAuthor: GuildMember = message.member;
-      const listOfAllowedRoles: string[] = [
-        "929426173673500673", //Role "Fei" > brioco
-        "929418031795408916", //Role "Adm" > brioco
-        "929435905926791168", //Role "Mod" > brioco
-        "735147189432483920", //Role "Zé" > Peach Server
-        "716006513818468404", //Role "MACACOS" > Muquifo
-        "716008029396533349", //Role "FUNAI" > Muquifo
-        "731199687981400097", //Role "MOD" > Muquifo
-      ];
+      
       const newCheckAuthor: CheckRole = new CheckRole(
         message,
-        listOfAllowedRoles,
-        memberAuthor
+        memberAuthor,
       );
       const Embeds:EmbedTemplates = new EmbedTemplates(client);
-      const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
+      const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
       if (!checkReturn)
         return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
 
@@ -127,15 +118,17 @@ export const command: Command = {
       if (!(person instanceof User)) {
         const newCheckPerson: CheckRole = new CheckRole(
           message,
-          listOfAllowedRoles,
-          person
+          person,
         );
 
-        if (newCheckPerson.CheckReturnBoolean())
+        if (newCheckPerson.CheckHighRoleBool())
           return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
       } else {
         return console.log("Esse usuario não está no servidor.")
       }
+
+      //Impedindo com que o author da mensagem se auto-mute.
+      if(person.id === message.author.id) return message.channel.send("Está tentando se auto mutar.")
 
       //*3 Criando uma variavel que armazene o motivo.
 
@@ -189,7 +182,7 @@ export const command: Command = {
       //*5 Adicionando o cargo de "Muted" no usuario mutado e criando os templates para as punições
 
       //Checando se o usuario já está mutado.
-      const personAlreadyMuted:CheckRole = new CheckRole(message, [muteRole.id], person);
+      const personAlreadyMuted:CheckRole = new CheckRole(message, person, [muteRole.id]);
 
       if(personAlreadyMuted.CheckReturnBoolean()) return message.channel.send("Esse usuario já está mutado.")
 

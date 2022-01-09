@@ -22,21 +22,12 @@ export const command: Command = {
       //*1 - Verificando se o usuario tem o cargo necessario para usar esse comando
 
       const memberAuthor: GuildMember = message.member;
-      const listOfAllowedRoles: string[] = [
-        "929426173673500673", //Role "Fei" > brioco
-        "929418031795408916", //Role "Adm" > brioco
-        "929435905926791168", //Role "Mod" > brioco
-        "735147189432483920", //Role "Zé" > Peach Server
-        "716006513818468404", //Role "MACACOS" > Muquifo
-        "716008029396533349", //Role "FUNAI" > Muquifo
-        "731199687981400097", //Role "MOD" > Muquifo
-      ];
+      
       const newCheckAuthor: CheckRole = new CheckRole(
         message,
-        listOfAllowedRoles,
-        memberAuthor
+        memberAuthor,
       );
-      const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
+      const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
 
       if (!checkReturn)
         return message.channel.send({ embeds: [Embeds.missingPermission()] });
@@ -144,11 +135,10 @@ export const command: Command = {
       if (!(person instanceof User)) {
         const newCheckPerson: CheckRole = new CheckRole(
           message,
-          listOfAllowedRoles,
-          person
+          person,
         );
 
-        if (newCheckPerson.CheckReturnBoolean())
+        if (newCheckPerson.CheckHighRoleBool())
           return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
       }
 

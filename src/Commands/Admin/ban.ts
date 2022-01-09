@@ -4,6 +4,7 @@ import {
   Collection,
   GuildBan,
   GuildMember,
+  Message,
   MessageEmbed,
   User,
 } from "discord.js";
@@ -20,21 +21,11 @@ export const command: Command = {
       //*1 - Verificando se o usuario tem o cargo necessario para usar esse comando
 
       const memberAuthor: GuildMember = message.member;
-      const listOfAllowedRoles: string[] = [
-        "929426173673500673", //Role "Fei" > brioco
-        "929418031795408916", //Role "Adm" > brioco
-        "929435905926791168", //Role "Mod" > brioco
-        "735147189432483920", //Role "Zé" > Peach Server
-        "716006513818468404", //Role "MACACOS" > Muquifo
-        "716008029396533349", //Role "FUNAI" > Muquifo
-        "731199687981400097", //Role "MOD" > Muquifo
-      ];
       const newCheckAuthor: CheckRole = new CheckRole(
         message,
-        listOfAllowedRoles,
-        memberAuthor
+        memberAuthor,
       );
-      const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
+      const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
 
       if (!checkReturn)
         return message.channel.send({ embeds: [Embeds.missingPermission()] });
@@ -107,13 +98,15 @@ export const command: Command = {
       if (!(person instanceof User)) {
         const newCheckPerson: CheckRole = new CheckRole(
           message,
-          listOfAllowedRoles,
-          person
+          person,
         );
 
-        if (newCheckPerson.CheckReturnBoolean())
+        if (newCheckPerson.CheckHighRoleBool())
           return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
       }
+
+      //Impedindo com que o author da mensagem se auto-mute.
+      if(person.id === message.author.id) return message.channel.send("Está tentando se auto mutar.")
 
       // *5 - Armazenando o "motivo" da punição
 
@@ -125,13 +118,12 @@ export const command: Command = {
         await message.guild.bans.fetch();
 
       if (guildBans.size === 0) {
-        message.channel.send("Ninguem banido");
+        await BanPerson(message, person, reason);
       } else {
         if (guildBans.findKey((userBan) => userBan.user.id === person.id)) {
           return message.react("❌");
         } else {
-          // await message.guild.members.ban(person);
-          message.channel.send("banido");
+          await BanPerson(message, person, reason);
         }
       }
     } catch (error) {
@@ -139,3 +131,22 @@ export const command: Command = {
     }
   },
 };
+
+async function BanPerson(
+  message: Message,
+  person: GuildMember | User,
+  reason: string,
+  days: number = 0
+) {
+  try {
+    //Banindo o usuario.
+    await message.guild.members.ban(person, {
+      reason: `${reason}`,
+      days: days,
+    });
+
+    await message.react("☑️");
+  } catch (error) {
+    console.log(`${error}`);
+  }
+}
