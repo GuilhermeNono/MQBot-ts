@@ -70,7 +70,9 @@ export const command: Command = {
       if (!isNaN(parseInt(args[0]))) {
         //Checando se contem alguma letra em meio aos numeros.
         try {
-          person = message.guild.members.cache.find((memberID) => memberID.id === args[0]);
+          person = message.guild.members.cache.find(
+            (memberID) => memberID.id === args[0]
+          );
         } catch {
           return message.channel.send({
             embeds: [
@@ -110,20 +112,26 @@ export const command: Command = {
       if (person.id === message.author.id)
         return message.channel.send({ embeds: [Embeds.autoBan()] });
 
-        let muteRole:Role = message.guild.roles.cache.find(
-            (role:Role) => role.name === "Muted"
-          );
+      //*5 Checando se o usuario foi mutado temporariamente pelo "timeout()" ou sem tempo definido pelo "cargo muted".
 
-        const checkMuteRole = new CheckRole(message, person, [muteRole.id])
+      let muteRole: Role = message.guild.roles.cache.find(
+        (role: Role) => role.name === "Muted"
+      );
 
-        if(checkMuteRole.CheckReturnBoolean()){
-            await person.roles.remove(muteRole)
-            await message.react("✅");
-        } else {
-            await person.timeout(null);
-            await message.react("✅");
-        }
+      //Checando se o usuario tem o cargo muted em seu usuario
+      const checkMuteRole: CheckRole = new CheckRole(message, person, [
+        muteRole.id,
+      ]);
 
+      //Caso tenha, quer dizer que ele foi mutado pelo .mute
+      if (checkMuteRole.CheckReturnBoolean()) {
+        await person.roles.remove(muteRole);
+        await message.react("✅");
+      } else {
+        //Caso contrario, quer dizer que ele foi mutado pelo .tempmute
+        await person.timeout(null);
+        await message.react("✅");
+      }
     } catch (error) {
       console.log(`${error}`);
     }
