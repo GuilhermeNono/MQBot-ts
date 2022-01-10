@@ -79,8 +79,30 @@ export const command: Command = {
       var person: GuildMember | User;
 
       if (!isNaN(parseInt(args[0]))) {
-        //.ban 123545678
-        person = await client.users.fetch(args[0]);
+        //Checando se contem alguma letra em meio aos numeros.
+        try {
+          person = await client.users.fetch(args[0]);
+        } catch {
+          return message.channel.send({
+            embeds: [
+              Embeds.errorCode(
+                "Usuario Invalido.",
+                "Foi encontrado, no comando de banir usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
+                "tempban",
+                [
+                  {
+                    name: ":purple_square:  Banir temporariamente por Menção | ",
+                    value: "`.tempban @Discord 1h Regra[1]`",
+                  },
+                  {
+                    name: ":purple_square:  Banir temporariamente por ID | ",
+                    value: "`.tempban 261945904829956097 1h Regra[1]`",
+                  },
+                ]
+              ),
+            ],
+          });
+        }
       } else {
         person = personCheck
           ? message.guild.members.cache.get(args[0])
