@@ -144,7 +144,7 @@ export const command: Command = {
 
       // *5 - Armazenando o "motivo" da punição
 
-      let reason: string = message.content.split(" ").splice(2).join(" ");
+      let reason: string = message.content.split(" ").splice(3).join(" ");
       if (reason === "") reason = "Indefinido";
 
       //*5.5 - Armazenando o tempo da punição

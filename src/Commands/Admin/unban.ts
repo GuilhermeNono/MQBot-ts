@@ -14,16 +14,20 @@ export const command: Command = {
   description: "Comando para desbanir usuarios.",
   run: async (client, message, args) => {
     try {
+
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const Embeds = new EmbedTemplates(client);
       const authorRoleCheck: CheckRole = new CheckRole(message, message.member);
 
-      if (!authorRoleCheck)
+      if (!authorRoleCheck.CheckHighRoleBool())
         return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
+
       //*2 Criando uma variavel com as informações do membro, e logo abaixo, verificando se o usuario não digitou o membro errado e se o membro pode ser punido.
       var person: User;
 
+      //Checando se o argumento informado é igual a um numero.
       if (!isNaN(parseInt(args[0]))) {
+        //Checando se contem alguma letra em meio aos numeros.
         try {
           person = await client.users.fetch(args[0]);
         } catch {
@@ -66,6 +70,7 @@ export const command: Command = {
       if (reason === "") reason = "Indefinido";
 
       //*4 Procurando pelo usuario banido, e se o usuario realmente estiver banido, o mesmo será desbanido logo em seguida.
+      //Procurando todos os bans presentes no servidor e armazenando eles numa vairavel.
       const banList: Collection<string, GuildBan> =
         await message.guild.bans.fetch();
       const bannedUser: GuildBan = banList.get(person.id);
