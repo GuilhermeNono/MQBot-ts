@@ -11,7 +11,7 @@ import {
 
 export const command: Command = {
   name: "ban",
-  aliases: ["bn", "banir"],
+  aliases: ["b", "banir"],
   description: "Comando para banir usuarios por tempo indeterminado.",
   run: async (client, message, args) => {
     try {
@@ -124,7 +124,7 @@ export const command: Command = {
         );
 
         if (newCheckPerson.CheckHighRoleBool())
-          return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
+          return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
       }
 
       //Impedindo com que o author da mensagem se auto-mute.
@@ -169,6 +169,7 @@ async function BanPerson(
 
     await message.react("☑️");
   } catch (error) {
+    await message.react("❌")
     console.log(`${error}`);
   }
 }

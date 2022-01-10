@@ -77,6 +77,7 @@ export const command: Command = {
         }
       }
     } catch (error) {
+      await message.react("❌")
       console.log(`${error}`);
     }
   },

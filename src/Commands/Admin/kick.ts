@@ -1,21 +1,29 @@
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
-import { GuildMember, Role, User } from "discord.js";
+import {
+  Collection,
+  GuildMember,
+  Message,
+  Role,
+  TextChannel,
+  User,
+} from "discord.js";
 
 export const command: Command = {
-  name: "unmute",
-  aliases: ["um", "desmutar"],
-  description: "Comando para retirar o Mute de um usuario.",
+  name: "kick",
+  aliases: ["k", "kickar"],
+  description: "Comando para limpar o chat.",
   run: async (client, message, args) => {
     try {
-      //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
-      const Embeds = new EmbedTemplates(client);
-      const authorRoleCheck: CheckRole = new CheckRole(message, message.member);
+      //* 1 Verificando se o usuario tem o cargo necessario para usar esse comando
+      const authorHighRole: CheckRole = new CheckRole(message, message.member);
+      const Embeds: EmbedTemplates = new EmbedTemplates(client);
 
-      if (!authorRoleCheck.CheckHighRoleBool())
-        return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+      if (!authorHighRole.CheckHighRoleBool())
+        return message.channel.send({ embeds: [Embeds.missingPermission()] });
 
-      //*2 Pegando as informações do usuario.
+      //* 2 Pegando as informações do usuario
+
       //Checando se o argumento foi uma marcação.
       let personCheck: Boolean = message.mentions.users.first() === undefined;
 
@@ -102,38 +110,23 @@ export const command: Command = {
 
       if (!person) return message.channel.send("Usuario inexistente");
 
-      //*3 Armazenando o motivo em uma variavel caso tenha.
+      //* 3 Armazenando o motivo em uma variavel caso tenha.
 
       let reason: string = message.content.split(" ").splice(2).join(" ");
       if (reason === "") reason = "Indefinido";
 
-      //*4 Impedindo com que o author da mensagem se desmute.
+      //* 4 Checando se o usuario pode ser kickado.
 
-      if (person.id === message.author.id)
-        return message.channel.send({ embeds: [Embeds.autoBan()] });
+      const userKickable:CheckRole = new CheckRole(message, person)
+      if(userKickable.CheckHighRoleBool()) return message.channel.send({embeds: [Embeds.userCannotBePunished()]}) 
 
-      //*5 Checando se o usuario foi mutado temporariamente pelo "timeout()" ou sem tempo definido pelo "cargo muted".
+      //todo 5 Kickando o usuario.
 
-      let muteRole: Role = message.guild.roles.cache.find(
-        (role: Role) => role.name === "Muted"
-      );
+      await person.kick(reason);
+      await message.react("✅")
 
-      //Checando se o usuario tem o cargo muted em seu usuario
-      const checkMuteRole: CheckRole = new CheckRole(message, person, [
-        muteRole.id,
-      ]);
-
-      //Caso tenha, quer dizer que ele foi mutado pelo .mute
-      if (checkMuteRole.CheckReturnBoolean()) {
-        await person.roles.remove(muteRole);
-        await message.react("✅");
-      } else {
-        //Caso contrario, quer dizer que ele foi mutado pelo .tempmute
-        await person.timeout(null);
-        await message.react("✅");
-      }
     } catch (error) {
-      await message.react("❌")
+        await message.react("❌")
       console.log(`${error}`);
     }
   },

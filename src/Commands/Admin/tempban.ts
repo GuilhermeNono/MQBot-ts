@@ -139,7 +139,7 @@ export const command: Command = {
         );
 
         if (newCheckPerson.CheckHighRoleBool())
-          return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
+          return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
       }
 
       // *5 - Armazenando o "motivo" da punição
@@ -172,6 +172,7 @@ export const command: Command = {
         }
       }
     } catch (error) {
+      await message.react("❌")
       console.log(`${error}`);
     }
   },

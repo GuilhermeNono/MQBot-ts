@@ -4,7 +4,7 @@ import { Collection, GuildMember, Role, User, MessageEmbed, TextChannel} from "d
 
 export const command: Command = {
   name: "mute",
-  aliases: ["mt"],
+  aliases: ["m", "mutar"],
   description: "Comando para deixar o usuario mutado por tempo ilimitado.",
   run: async (client, message, args) => {
     try {
@@ -18,7 +18,7 @@ export const command: Command = {
       const Embeds:EmbedTemplates = new EmbedTemplates(client);
       const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
       if (!checkReturn)
-        return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
+        return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
 
       //*2 Puxando as informações do membro, verificando se o usuario não digitou errado e se o usuario pode ser punido.
 
@@ -122,7 +122,7 @@ export const command: Command = {
         );
 
         if (newCheckPerson.CheckHighRoleBool())
-          return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
+          return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
       } else {
         return console.log("Esse usuario não está no servidor.")
       }
@@ -207,6 +207,7 @@ export const command: Command = {
 
       
     } catch (error) {
+      await message.react("❌")
       console.log(error)
     }
   },

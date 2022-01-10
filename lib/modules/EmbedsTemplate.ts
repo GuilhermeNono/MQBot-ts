@@ -1,16 +1,14 @@
 import ExtendedClient from "@Client";
 import { MessageEmbed, EmbedFieldData } from "discord.js";
 class EmbedTemplates {
-  client: ExtendedClient;
-
-  constructor(client: ExtendedClient) {
+  constructor(private client: ExtendedClient) {
     this.client = client;
   }
   /**
    * ❌ - Tentativa de banir alguem com cargo superior.
    * @returns MessageEmbed()
    */
-  userCannotBeBan(): MessageEmbed {
+  userCannotBePunished(): MessageEmbed {
     return new MessageEmbed()
       .setColor("#fa4848")
       .setDescription(

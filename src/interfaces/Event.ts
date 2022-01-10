@@ -2,7 +2,7 @@ import Client from "@Client";
 import { ClientEvents } from "discord.js";
 
 interface Run {
-  (client: Client, ...args: string[]): Promise<unknown>;
+  (client: Client, ...args: any[]): Promise<unknown>;
 }
 
 export interface Event {

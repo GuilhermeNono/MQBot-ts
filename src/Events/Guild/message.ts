@@ -3,7 +3,6 @@ import { Message } from "discord.js";
 
 export const event:Event = {
     name: 'messageCreate',
-    //@ts-ignore
     run: async (client, message:Message) => {
         try {
             if(

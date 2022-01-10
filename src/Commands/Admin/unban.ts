@@ -20,7 +20,7 @@ export const command: Command = {
       const authorRoleCheck: CheckRole = new CheckRole(message, message.member);
 
       if (!authorRoleCheck.CheckHighRoleBool())
-        return message.channel.send({ embeds: [Embeds.userCannotBeBan()] });
+        return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
 
       //*2 Criando uma variavel com as informações do membro, e logo abaixo, verificando se o usuario não digitou o membro errado e se o membro pode ser punido.
       var person: User;
@@ -83,6 +83,7 @@ export const command: Command = {
       await message.guild.members.unban(person, reason);
       message.react("✅").then(() => setTimeout(() => message.delete(), 5000));
     } catch (error) {
+      await message.react("❌")
         console.log(`${error}`)
     }
   },
