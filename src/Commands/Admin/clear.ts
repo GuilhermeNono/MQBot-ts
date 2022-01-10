@@ -22,7 +22,7 @@ export const command: Command = {
       ];
 
       const authorHighRole: CheckRole = new CheckRole(
-        message,
+        client,
         message.member,
         rolesAgree
       );

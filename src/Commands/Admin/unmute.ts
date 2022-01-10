@@ -10,7 +10,7 @@ export const command: Command = {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const Embeds = new EmbedTemplates(client);
-      const authorRoleCheck: CheckRole = new CheckRole(message, message.member);
+      const authorRoleCheck: CheckRole = new CheckRole(client, message.member);
 
       if (!authorRoleCheck.CheckHighRoleBool())
         return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
@@ -119,7 +119,7 @@ export const command: Command = {
       );
 
       //Checando se o usuario tem o cargo muted em seu usuario
-      const checkMuteRole: CheckRole = new CheckRole(message, person, [
+      const checkMuteRole: CheckRole = new CheckRole(client, person, [
         muteRole.id,
       ]);
 

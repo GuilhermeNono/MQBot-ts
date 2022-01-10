@@ -12,7 +12,7 @@ export const command: Command = {
       const memberAuthor: GuildMember = message.member;
       
       const newCheckAuthor: CheckRole = new CheckRole(
-        message,
+        client,
         memberAuthor,
       );
       const Embeds:EmbedTemplates = new EmbedTemplates(client);
@@ -117,7 +117,7 @@ export const command: Command = {
        */
       if (!(person instanceof User)) {
         const newCheckPerson: CheckRole = new CheckRole(
-          message,
+          client,
           person,
         );
 
@@ -182,7 +182,7 @@ export const command: Command = {
       //*5 Adicionando o cargo de "Muted" no usuario mutado e criando os templates para as punições
 
       //Checando se o usuario já está mutado.
-      const personAlreadyMuted:CheckRole = new CheckRole(message, person, [muteRole.id]);
+      const personAlreadyMuted:CheckRole = new CheckRole(client, person, [muteRole.id]);
 
       if(personAlreadyMuted.CheckReturnBoolean()) return message.channel.send("Esse usuario já está mutado.")
 

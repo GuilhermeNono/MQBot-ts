@@ -17,7 +17,7 @@ export const command: Command = {
 
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const Embeds = new EmbedTemplates(client);
-      const authorRoleCheck: CheckRole = new CheckRole(message, message.member);
+      const authorRoleCheck: CheckRole = new CheckRole(client, message.member);
 
       if (!authorRoleCheck.CheckHighRoleBool())
         return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });

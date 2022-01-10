@@ -16,7 +16,7 @@ export const command: Command = {
   run: async (client, message, args) => {
     try {
       //* 1 Verificando se o usuario tem o cargo necessario para usar esse comando
-      const authorHighRole: CheckRole = new CheckRole(message, message.member);
+      const authorHighRole: CheckRole = new CheckRole(client, message.member);
       const Embeds: EmbedTemplates = new EmbedTemplates(client);
 
       if (!authorHighRole.CheckHighRoleBool())
@@ -117,7 +117,7 @@ export const command: Command = {
 
       //* 4 Checando se o usuario pode ser kickado.
 
-      const userKickable:CheckRole = new CheckRole(message, person)
+      const userKickable:CheckRole = new CheckRole(client, person)
       if(userKickable.CheckHighRoleBool()) return message.channel.send({embeds: [Embeds.userCannotBePunished()]}) 
 
       //todo 5 Kickando o usuario.

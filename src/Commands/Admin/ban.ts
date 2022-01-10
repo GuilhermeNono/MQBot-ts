@@ -22,7 +22,7 @@ export const command: Command = {
 
       const memberAuthor: GuildMember = message.member;
       const newCheckAuthor: CheckRole = new CheckRole(
-        message,
+        client,
         memberAuthor,
       );
       const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
@@ -119,7 +119,7 @@ export const command: Command = {
 
       if (!(person instanceof User)) {
         const newCheckPerson: CheckRole = new CheckRole(
-          message,
+          client,
           person,
         );
 

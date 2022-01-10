@@ -1,16 +1,15 @@
+import ExtendedClient from "@Client";
 import { GuildMember, Message } from "discord.js";
 
 class CheckRole {
   idRolesWithPermission: string[];
   guildMemberUser: GuildMember;
-  message: Message;
 
   constructor(
-    message: Message,
+    private client: ExtendedClient,
     guildMemberUser: GuildMember,
     idRolesWithPermission?: string[]
   ) {
-    this.message = message;
     this.idRolesWithPermission = idRolesWithPermission;
     this.guildMemberUser = guildMemberUser;
   }

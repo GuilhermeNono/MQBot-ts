@@ -16,6 +16,9 @@
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "baseUrl": ".",
     "paths": {
+      "@Models": [
+        "models/index.ts"
+      ],
       "@CMDAdmin/*" : [
         "src/Commands/Admin/*",
       ],

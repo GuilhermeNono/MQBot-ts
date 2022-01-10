@@ -1,5 +1,5 @@
 import { Client, Collection } from "discord.js";
-import mongoose from "mongoose";
+import {connect} from "mongoose";
 import path from "path";
 import { readdirSync } from "fs";
 import { Command, Event } from "@Interface";
@@ -15,7 +15,9 @@ class ExtendedClient extends Client {
 
   public async init() {
     this.login(process.env["DISCORD_TOKEN"]);
-    await mongoose.connect(process.env["MONGODB_LOGIN"]);
+    await connect(process.env["MONGODB_LOGIN"], {
+      
+    });
 
     //*Commands
 
