@@ -1,3 +1,4 @@
+import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
 import {
@@ -13,7 +14,7 @@ export const command: Command = {
   name: "kick",
   aliases: ["k", "kickar"],
   description: "Comando para limpar o chat.",
-  run: async (client, message, args) => {
+  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
     try {
       //* 1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const authorHighRole: CheckRole = new CheckRole(client, message.member);

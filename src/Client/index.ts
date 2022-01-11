@@ -23,10 +23,10 @@ class ExtendedClient extends Client {
 
     console.log(yellow("⌛ Initializing Commands...⌛"));
 
-    const commandPath = path.join(__dirname, "..", "Commands");
+    const commandPath:string = path.join(__dirname, "..", "Commands");
     readdirSync(commandPath).forEach((dir) => {
       try {
-        const commands = readdirSync(`${commandPath}/${dir}`).filter((file) =>
+        const commands:string[] = readdirSync(`${commandPath}/${dir}`).filter((file) =>
           file.endsWith(".ts")
         );
         for (const file of commands) {
@@ -58,7 +58,7 @@ class ExtendedClient extends Client {
 
     console.log(yellow("⌛ Initializing Events...⌛"));
 
-    const load_dir = async (dir: string) => {
+    const load_dir:(dir:string) => Promise<void> = async (dir: string) => {
       try {
         const eventPath = path.join(__dirname, "..", "Events", `${dir}`);
         const event_files = readdirSync(eventPath).filter(async (file) =>

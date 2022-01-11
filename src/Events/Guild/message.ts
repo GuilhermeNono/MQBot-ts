@@ -1,10 +1,11 @@
 import { Event, Command } from "@Interface";
 import { Report } from "@Cycle";
 import { Message, MessageEmbed } from "discord.js";
+import ExtendedClient from "@Client";
 
 export const event: Event = {
   name: "messageCreate",
-  run: async (client, message: Message) => {
+  run: async (client:ExtendedClient, message: Message<boolean>) => {
     try {
       if (message.author.bot) return;
 

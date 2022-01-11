@@ -1,9 +1,11 @@
+import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
 import {
   Collection,
   GuildBan,
   GuildMember,
+  Message,
   MessageEmbed,
   User,
 } from "discord.js";
@@ -12,7 +14,7 @@ export const command: Command = {
   name: "unban",
   aliases: ["ub", "desbanir"],
   description: "Comando para desbanir usuarios.",
-  run: async (client, message, args) => {
+  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
     try {
 
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando

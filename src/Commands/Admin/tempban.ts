@@ -1,3 +1,4 @@
+import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates, mTimer, Timer } from "@Modules";
 import {
@@ -14,7 +15,7 @@ export const command: Command = {
   name: "tempban",
   aliases: ["tb", "banirtemporario"],
   description: "Comando para banir usuarios por tempo determinado.",
-  run: async (client, message, args) => {
+  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
     try {
       //PS: Inicializando os Embeds Templates.
       const Embeds: EmbedTemplates = new EmbedTemplates(client);

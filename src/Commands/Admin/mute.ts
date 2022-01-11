@@ -1,12 +1,13 @@
+import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates} from "@Modules";
-import { Collection, GuildMember, Role, User, MessageEmbed, TextChannel} from "discord.js";
+import { Collection, GuildMember, Role, User, MessageEmbed, TextChannel, Message} from "discord.js";
 
 export const command: Command = {
   name: "mute",
   aliases: ["m", "mutar"],
   description: "Comando para deixar o usuario mutado por tempo ilimitado.",
-  run: async (client, message, args) => {
+  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const memberAuthor: GuildMember = message.member;

@@ -1,7 +1,6 @@
-import { UserDataModel } from "@Models";
+import { UserDataModel, UserBoostModel } from "@Models";
 
 class Databases {
-
   /**
    * 💠 - Cria um banco de dados para o usuario.
    * @returns Verdadeiro significará que a operação foi um sucesso.
@@ -31,6 +30,30 @@ class Databases {
         primaryInsignia: primaryInsignia,
         secondaryInsignia: secondaryInsignia,
         insigniaID: insigniaID,
+      });
+
+      await doc.save();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * 💠 - Cria um banco de dados para os bufadores.
+   * @returns Verdadeiro significará que a operação foi um sucesso.
+   */
+
+  async UserBoost(
+    userId: string,
+    numberChannel: number = 0,
+    idChannel: string = "000"
+  ): Promise<boolean> {
+    try {
+      const doc = new UserBoostModel({
+        userId: userId,
+        numberChannel: numberChannel,
+        idChannel: idChannel,
       });
 
       await doc.save();

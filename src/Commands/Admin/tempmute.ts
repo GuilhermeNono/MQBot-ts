@@ -1,3 +1,4 @@
+import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates, Timer, mTimer } from "@Modules";
 import {
@@ -8,6 +9,7 @@ import {
   MessageEmbed,
   GuildBasedChannel,
   TextChannel,
+  Message,
 } from "discord.js";
 import ms from "ms";
 
@@ -15,7 +17,7 @@ export const command: Command = {
   name: "tempmute",
   aliases: ["tm"],
   description: "Comando para deixar o usuario mutado por tempo limitado.",
-  run: async (client, message, args) => {
+  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const memberAuthor: GuildMember = message.member;

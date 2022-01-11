@@ -1,15 +1,16 @@
+import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
-import { GuildMember, Role, User } from "discord.js";
+import { GuildMember, Message, Role, User } from "discord.js";
 
 export const command: Command = {
   name: "unmute",
   aliases: ["um", "desmutar"],
   description: "Comando para retirar o Mute de um usuario.",
-  run: async (client, message, args) => {
+  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
-      const Embeds = new EmbedTemplates(client);
+      const Embeds:EmbedTemplates = new EmbedTemplates(client);
       const authorRoleCheck: CheckRole = new CheckRole(client, message.member);
 
       if (!authorRoleCheck.CheckHighRoleBool())

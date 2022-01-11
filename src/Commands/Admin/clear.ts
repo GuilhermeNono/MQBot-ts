@@ -1,3 +1,4 @@
+import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
 import {
@@ -13,7 +14,7 @@ export const command: Command = {
   name: "clear",
   aliases: ["cl", "clean", "limpar"],
   description: "Comando para limpar o chat.",
-  run: async (client, message, args) => {
+  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
     try {
       //*1 Checando se o usuario tem permissão para limpar o char
       const rolesAgree: string[] = [
