@@ -17,19 +17,22 @@ export const command: Command = {
   name: "tempmute",
   aliases: ["tm"],
   description: "Comando para deixar o usuario mutado por tempo limitado.",
-  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
+  run: async (
+    client: ExtendedClient,
+    message: Message<boolean>,
+    args: string[]
+  ) => {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const memberAuthor: GuildMember = message.member;
-      
-      const newCheckAuthor: CheckRole = new CheckRole(
-        client,
-        memberAuthor,
-      );
+
+      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor);
       const Embeds: EmbedTemplates = new EmbedTemplates(client);
       const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
       if (!checkReturn)
-        return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+        return message.channel.send({
+          embeds: [Embeds.userCannotBePunished()],
+        });
 
       //*2 Puxando as informações do membro, verificando se o usuario não digitou errado e se o usuario pode ser punido.
 
@@ -115,7 +118,8 @@ export const command: Command = {
           : message.guild.members.cache.get(message.mentions.users.first().id);
       }
 
-      if (!person) return message.channel.send("Usuario inexistente");
+      if (!person)
+        return message.channel.send({ embeds: [Embeds.UserNotExist()] });
 
       /**
        * Checando se o tipo do usuario é diferente de "User".
@@ -125,19 +129,22 @@ export const command: Command = {
        *
        */
       if (!(person instanceof User)) {
-        const newCheckPerson: CheckRole = new CheckRole(
-          client,
-          person,
-        );
+        const newCheckPerson: CheckRole = new CheckRole(client, person);
 
         if (newCheckPerson.CheckHighRoleBool())
-          return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+          return message.channel.send({
+            embeds: [Embeds.userCannotBePunished()],
+          });
       } else {
-        return console.log("Esse usuario não está no servidor.");
+        let userOutOfServer: MessageEmbed = new MessageEmbed()
+          .setColor("DARK_RED")
+          .setTitle("Esse usuario não está no servidor.");
+        return message.channel.send({ embeds: [userOutOfServer] });
       }
 
       //Impedindo com que o author da mensagem se auto-mute.
-      if(person.id === message.author.id) return message.channel.send("Está tentando se auto mutar.")
+      if (person.id === message.author.id)
+        return message.channel.send({ embeds: [Embeds.AutoMute()] });
 
       //*3 Criando uma variavel que armazene o motivo.
 
@@ -167,43 +174,75 @@ export const command: Command = {
             ),
           ],
         });
-        
+
       //Definindo que o index 1 do array como o tempo.
       let time: number = ms(args[1]);
-
-      if (!time) return message.channel.send("Tempo invalido.");
+      let timeInvalid: MessageEmbed = new MessageEmbed()
+        .setColor("DARK_RED")
+        .setTitle("Tempo invalido.");
+      if (!time) return message.channel.send({ embeds: [timeInvalid] });
 
       //*4 Adicionando o timeout ao usuario.
 
       // Checando se o usuario já está mutado.
       const personAlreadyMuted: boolean = person.isCommunicationDisabled();
 
-      if (personAlreadyMuted)
-        return message.channel.send("Esse usuario já está mutado.");
-
+      if (personAlreadyMuted) {
+        let alreadyMuted: MessageEmbed = new MessageEmbed()
+          .setColor("DARK_RED")
+          .setTitle("Esse usuario já está mutado.");
+        return message.channel.send({ embeds: [alreadyMuted] });
+      }
       //Mutando o usuario.
       await person.timeout(time, reason);
 
-      //*5 Setando os canais publicos e privados.
+      //*5 Setando os canasi publicos e privados.
 
-      let embedPub: MessageEmbed = new MessageEmbed()
-        .setTitle("titulo")
-        .setThumbnail(
-          "https://cdn1.iconfinder.com/data/icons/social-messaging-ui-color/254000/46-512.png"
-        )
-        .setDescription(
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit, lorem ut commodo suscipit, massa augue finibus mi, vel viverra ex ex a justo. Sed id nunc non neque fermentum viverra."
-        )
-        .setFooter({ text: "Discord.", iconURL: message.author.avatarURL() });
+      const publicChannel: GuildBasedChannel =
+        message.guild.channels.cache.get("929441854469070949");
+      const privateChannel: GuildBasedChannel =
+        message.guild.channels.cache.get("929426733516615781");
 
-      //929426733516615781 idPunições > Canal Privado(Apenas moderação terá acesso)
-      //929441854469070949 Punições > Canal Publico(Todos terão acesso)
+      let gifEmbed: string =
+        "https://i.pinimg.com/originals/5b/cf/8a/5bcf8ac9cf808f8004b3dc682c16541e.gif";
 
-      //TODO: PEDIR PRA ALGUEM FAZER OS EMBEDS.
-
-      message.channel.send({ embeds: [embedPub] });
+      if (
+        publicChannel.type === "GUILD_TEXT" &&
+        privateChannel.type === "GUILD_TEXT"
+      ) {
+        publicChannel
+          .send({
+            embeds: [
+              Embeds.PublicDesc(
+                message,
+                reason,
+                person,
+                gifEmbed,
+                "DARK_GREEN",
+                args[1],
+                "https://media.discordapp.net/attachments/776094611470942208/888406945139154985/J4Qb.gif"
+              ),
+            ],
+          })
+          .then(async () => {
+            if (person instanceof GuildMember)
+              privateChannel.send({
+                embeds: [
+                  Embeds.PrivateDesc(
+                    message,
+                    person,
+                    reason,
+                    "__TempMute__➟ 🟢",
+                    args[1],
+                    "DARK_GREEN"
+                  ),
+                ],
+              });
+            await message.react("✅");
+          });
+      }
     } catch (error) {
-      await message.react("❌")
+      await message.react("❌");
       console.log(error);
     }
   },

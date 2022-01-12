@@ -4,8 +4,10 @@ import { CheckRole, EmbedTemplates } from "@Modules";
 import {
   Collection,
   GuildBan,
+  GuildBasedChannel,
   GuildMember,
   Message,
+  MessageAttachment,
   MessageEmbed,
   User,
 } from "discord.js";
@@ -14,7 +16,11 @@ export const command: Command = {
   name: "ban",
   aliases: ["b", "banir"],
   description: "Comando para banir usuarios por tempo indeterminado.",
-  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
+  run: async (
+    client: ExtendedClient,
+    message: Message<boolean>,
+    args: string[]
+  ) => {
     try {
       //PS: Inicializando os Embeds Templates.
       const Embeds: EmbedTemplates = new EmbedTemplates(client);
@@ -22,10 +28,7 @@ export const command: Command = {
       //*1 - Verificando se o usuario tem o cargo necessario para usar esse comando
 
       const memberAuthor: GuildMember = message.member;
-      const newCheckAuthor: CheckRole = new CheckRole(
-        client,
-        memberAuthor,
-      );
+      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor);
       const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
 
       if (!checkReturn)
@@ -110,9 +113,8 @@ export const command: Command = {
           : message.guild.members.cache.get(message.mentions.users.first().id);
       }
 
-      
-
-      if (!person) return message.channel.send({embeds:[Embeds.UserNotExist()]});
+      if (!person)
+        return message.channel.send({ embeds: [Embeds.UserNotExist()] });
 
       //*3 - Impedindo com que o usuario tente banir a si mesmo
       if (person.id === message.author.id)
@@ -121,35 +123,94 @@ export const command: Command = {
       //*4 - Impedindo com que o usuario tente banir alguem com cargo superior ou equivalente ao seu
 
       if (!(person instanceof User)) {
-        const newCheckPerson: CheckRole = new CheckRole(
-          client,
-          person,
-        );
+        const newCheckPerson: CheckRole = new CheckRole(client, person);
 
         if (newCheckPerson.CheckHighRoleBool())
-          return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+          return message.channel.send({
+            embeds: [Embeds.userCannotBePunished()],
+          });
       }
 
       //Impedindo com que o author da mensagem se auto-mute.
-      if(person.id === message.author.id) return message.channel.send({embeds:[Embeds.AutoMute()]})
+      if (person.id === message.author.id)
+        return message.channel.send({ embeds: [Embeds.AutoMute()] });
 
       // *5 - Armazenando o "motivo" da punição
 
       let reason: string = message.content.split(" ").splice(2).join(" ");
       if (reason === "") reason = "Indefinido";
 
-      // *6 - Checando se o usuario já foi banido
+      //*6 Verificando se tem alguma imagem enviada pelo ADM
+      let evidenceImage:any = message.attachments.first();
+      let reasonEvidence:string = "Evidencia da punição 🡹";
+        if (evidenceImage === undefined) {
+          evidenceImage = 'https://saocarlosemrede.com.br/wp-content/uploads/2020/01/placeholder-1200x500-1.png';
+          reasonEvidence = "Evidencia da punição não definida 🡹";
+        } else {
+          evidenceImage = evidenceImage.attachment;
+        }
+
+      // *7 - Checando se o usuario já foi banido
       let guildBans: Collection<string, GuildBan> =
         await message.guild.bans.fetch();
 
       if (guildBans.size === 0) {
-        await BanPerson(message, person, reason);
+        // await BanPerson(message, person, reason);
+        FinalEmbed();
       } else {
         if (guildBans.findKey((userBan) => userBan.user.id === person.id)) {
           return message.react("❌");
         } else {
-          await BanPerson(message, person, reason);
+          // await BanPerson(message, person, reason);
+          FinalEmbed();
+          //TODO: Criar um embed final.
+        }
+      }
+      function FinalEmbed() {
+        const publicChannel: GuildBasedChannel =
+          message.guild.channels.cache.get("929441854469070949");
+        const privateChannel: GuildBasedChannel =
+          message.guild.channels.cache.get("929426733516615781");
 
+        let gifEmbed: string =
+          "https://centraldecursos.com/wp-content/uploads/2015/12/apresentacao-power-point.73.gif";
+
+        if (
+          publicChannel.type === "GUILD_TEXT" &&
+          privateChannel.type === "GUILD_TEXT"
+        ) {
+          if (person instanceof GuildMember)
+            publicChannel
+              .send({
+                embeds: [
+                  Embeds.PublicDesc(
+                    message,
+                    reason,
+                    person,
+                    gifEmbed,
+                    "RED",
+                    "**:lock: Indeterminado**",
+                    "https://arquivosdedispositivosmoveis.files.wordpress.com/2013/05/anime-arquivos-de-dispositivos-mc3b3veis-one-piece.gif"
+                  ),
+                ],
+              })
+              .then(async () => {
+                if (person instanceof GuildMember)
+                  privateChannel.send({
+                    embeds: [
+                      Embeds.PrivateDesc(
+                        message,
+                        person,
+                        reason,
+                        "__Ban__ ➟ 🔴",
+                        "**:lock: Indeterminado**",
+                        "RED",
+                        evidenceImage
+                      ),
+                    ],
+                  });
+                await message.react("✅");
+              });
         }
       }
     } catch (error) {
@@ -173,7 +234,7 @@ async function BanPerson(
 
     await message.react("☑️");
   } catch (error) {
-    await message.react("❌")
+    await message.react("❌");
     console.log(`${error}`);
   }
 }

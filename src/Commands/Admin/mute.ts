@@ -1,25 +1,37 @@
 import ExtendedClient from "@Client";
 import { Command } from "@Interface";
-import { CheckRole, EmbedTemplates} from "@Modules";
-import { Collection, GuildMember, Role, User, MessageEmbed, TextChannel, Message} from "discord.js";
+import { CheckRole, EmbedTemplates } from "@Modules";
+import {
+  Collection,
+  GuildMember,
+  Role,
+  User,
+  MessageEmbed,
+  TextChannel,
+  Message,
+  GuildBasedChannel,
+} from "discord.js";
 
 export const command: Command = {
   name: "mute",
   aliases: ["m", "mutar"],
   description: "Comando para deixar o usuario mutado por tempo ilimitado.",
-  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
+  run: async (
+    client: ExtendedClient,
+    message: Message<boolean>,
+    args: string[]
+  ) => {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const memberAuthor: GuildMember = message.member;
-      
-      const newCheckAuthor: CheckRole = new CheckRole(
-        client,
-        memberAuthor,
-      );
-      const Embeds:EmbedTemplates = new EmbedTemplates(client);
+
+      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor);
+      const Embeds: EmbedTemplates = new EmbedTemplates(client);
       const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
       if (!checkReturn)
-        return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+        return message.channel.send({
+          embeds: [Embeds.userCannotBePunished()],
+        });
 
       //*2 Puxando as informações do membro, verificando se o usuario não digitou errado e se o usuario pode ser punido.
 
@@ -105,32 +117,35 @@ export const command: Command = {
           : message.guild.members.cache.get(message.mentions.users.first().id);
       }
 
-      if (!person) return message.channel.send("Usuario inexistente");
-
-      
+      if (!person)
+        return message.channel.send({ embeds: [Embeds.UserNotExist()] });
 
       /**
        * Checando se o tipo do usuario é diferente de "User".
-       * 
+       *
        * person: GuildMember = Está presente no servidor;
        * person: User = Não está presente no servidor.
-       * 
+       *
        */
       if (!(person instanceof User)) {
-        const newCheckPerson: CheckRole = new CheckRole(
-          client,
-          person,
-        );
+        const newCheckPerson: CheckRole = new CheckRole(client, person);
 
         if (newCheckPerson.CheckHighRoleBool())
-          return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+          return message.channel.send({
+            embeds: [Embeds.userCannotBePunished()],
+          });
       } else {
-        return console.log("Esse usuario não está no servidor.")
+        let userOutOfServer: MessageEmbed = new MessageEmbed()
+          .setColor("DARK_RED")
+          .setTitle("Esse usuario não está no servidor.");
+        return message.channel.send({ embeds: [userOutOfServer] });
       }
 
       //Impedindo com que o author da mensagem se auto-mute.
-      if(person.id === message.author.id) return message.channel.send("Está tentando se auto mutar.")
 
+      if (person.id === message.author.id) {
+        return message.channel.send({ embeds: [Embeds.AutoMute()] });
+      }
       //*3 Criando uma variavel que armazene o motivo.
 
       let reason: string = message.content.split(" ").splice(2).join(" ");
@@ -139,80 +154,119 @@ export const command: Command = {
       //*4 Criando, definindo a posição do cargo na hierarquia e setando para cada canal do servidor a devida permissão do cargo.
 
       //Procurando o cargo no servidor.
-      let muteRole:Role = message.guild.roles.cache.find(
-        (role:Role) => role.name === "Muted"
+      let muteRole: Role = message.guild.roles.cache.find(
+        (role: Role) => role.name === "Muted"
       );
 
       //Procurando a quantidade de cargos no servidor.
-      let cargos:number= await message.guild.roles.fetch().then((roles:Collection<string, Role>) => {
-        return roles.size;
-      });
+      let cargos: number = await message.guild.roles
+        .fetch()
+        .then((roles: Collection<string, Role>) => {
+          return roles.size;
+        });
 
       //Subtraindo 2 posições na hierarquia de cargos.
-      cargos -= 4
+      cargos -= 4;
 
       //Criando/setando o cargo "Muted" nos canais do servidor.
-      if(!muteRole) {
-        await message.guild.roles.create(
-          {
-            name:"Muted",
-            reason: "Cargo para os mutados, quem tiver esse cargo não consegue enviar mensagens.",
+      if (!muteRole) {
+        await message.guild.roles
+          .create({
+            name: "Muted",
+            reason:
+              "Cargo para os mutados, quem tiver esse cargo não consegue enviar mensagens.",
             permissions: ["VIEW_CHANNEL"],
             position: cargos,
             mentionable: false,
-          }
-        ).then((newRole:Role) => {
-          message.guild.channels.cache.each((channels:TextChannel) => {
-            channels.permissionOverwrites.edit(newRole.id, {
-              SEND_MESSAGES: false,
-              ADD_REACTIONS: false,
-            })
-          }) 
-          
-          muteRole = newRole;
-        })
+          })
+          .then((newRole: Role) => {
+            message.guild.channels.cache.each((channels: TextChannel) => {
+              channels.permissionOverwrites.edit(newRole.id, {
+                SEND_MESSAGES: false,
+                ADD_REACTIONS: false,
+              });
+            });
+
+            muteRole = newRole;
+          });
       } else {
-        message.guild.channels.cache.each((channels:TextChannel) => {
+        message.guild.channels.cache.each((channels: TextChannel) => {
           channels.permissionOverwrites.edit(muteRole.id, {
             SEND_MESSAGES: false,
             ADD_REACTIONS: false,
-          })
-        })
+          });
+        });
       }
 
       //*5 Adicionando o cargo de "Muted" no usuario mutado e criando os templates para as punições
 
       //Checando se o usuario já está mutado.
-      const personAlreadyMuted:CheckRole = new CheckRole(client, person, [muteRole.id]);
+      const personAlreadyMuted: CheckRole = new CheckRole(client, person, [
+        muteRole.id,
+      ]);
 
-      if(personAlreadyMuted.CheckReturnBoolean()) return message.channel.send("Esse usuario já está mutado.")
-
+      if (personAlreadyMuted.CheckReturnBoolean()) {
+        let alreadyMuted: MessageEmbed = new MessageEmbed()
+          .setColor("DARK_RED")
+          .setTitle("Esse usuario já está mutado.");
+        return message.channel.send({ embeds: [alreadyMuted] });
+      }
       //Adicionando o cargo "Muted" no usuario.
       person.roles.add(muteRole);
-
-      //TODO: 6 Setando os canais publicos e privados, e por ultimo, adicionando um teporizador para retirar o cargo de "Muted" depois de um certo tempo.
-
-      let embedPub:MessageEmbed = new MessageEmbed()
-      .setTitle("titulo")
-      .setThumbnail('https://cdn1.iconfinder.com/data/icons/social-messaging-ui-color/254000/46-512.png')
-      .setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit, lorem ut commodo suscipit, massa augue finibus mi, vel viverra ex ex a justo. Sed id nunc non neque fermentum viverra.")
-      .setFooter({text:"Discord.", iconURL:message.author.avatarURL()})
-
 
       //929426733516615781 idPunições > Priv
       //929441854469070949 Punições > Pub
 
-      //TODO: PEDIR PRA ALGUEM FAZER OS EMBEDS.
+      //*6 Setando os canasi publicos e privados.
 
-      message.channel.send({embeds:[embedPub]});
+      const publicChannel: GuildBasedChannel =
+        message.guild.channels.cache.get("929441854469070949");
+      const privateChannel: GuildBasedChannel =
+        message.guild.channels.cache.get("929426733516615781");
 
-      
+      let gifEmbed: string =
+        "https://i.pinimg.com/originals/62/59/87/62598722b7a66b461c06e75712b79132.gif";
+
+      if (
+        publicChannel.type === "GUILD_TEXT" &&
+        privateChannel.type === "GUILD_TEXT"
+      ) {
+        publicChannel
+          .send({
+            embeds: [
+              Embeds.PublicDesc(
+                message,
+                reason,
+                person,
+                gifEmbed,
+                "DARK_BLUE",
+                "**:lock: Indeterminado**",
+                "https://media.discordapp.net/attachments/776094611470942208/888405813687898132/tumblr_8eb6935c7349e6667f05e8af43aa174e_1dc8ac11_1280.gif"
+              ),
+            ],
+          })
+          .then(async () => {
+            if (person instanceof GuildMember)
+              privateChannel.send({
+                embeds: [
+                  Embeds.PrivateDesc(
+                    message,
+                    person,
+                    reason,
+                    "__Mute__ ➟ 🔵",
+                    "**:lock: Indeterminado**",
+                    "DARK_BLUE"
+                  ),
+                ],
+              });
+            await message.react("✅");
+          });
+      }
     } catch (error) {
-      await message.react("❌")
-      console.log(error)
+      await message.react("❌");
+      console.log(error);
     }
   },
 };
-
 
 //Lembrar de colocar o cargo da peach la pra cima dps.

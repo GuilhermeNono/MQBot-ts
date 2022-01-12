@@ -14,7 +14,11 @@ export const command: Command = {
   name: "kick",
   aliases: ["k", "kickar"],
   description: "Comando para limpar o chat.",
-  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
+  run: async (
+    client: ExtendedClient,
+    message: Message<boolean>,
+    args: string[]
+  ) => {
     try {
       //* 1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const authorHighRole: CheckRole = new CheckRole(client, message.member);
@@ -109,7 +113,8 @@ export const command: Command = {
           : message.guild.members.cache.get(message.mentions.users.first().id);
       }
 
-      if (!person) return message.channel.send("Usuario inexistente");
+      if (!person)
+        return message.channel.send({ embeds: [Embeds.UserNotExist()] });
 
       //* 3 Armazenando o motivo em uma variavel caso tenha.
 
@@ -118,16 +123,19 @@ export const command: Command = {
 
       //* 4 Checando se o usuario pode ser kickado.
 
-      const userKickable:CheckRole = new CheckRole(client, person)
-      if(userKickable.CheckHighRoleBool()) return message.channel.send({embeds: [Embeds.userCannotBePunished()]}) 
+      const userKickable: CheckRole = new CheckRole(client, person);
+      if (userKickable.CheckHighRoleBool())
+        return message.channel.send({
+          embeds: [Embeds.userCannotBePunished()],
+        });
 
       //todo 5 Kickando o usuario.
 
       await person.kick(reason);
-      await message.react("✅")
-
+      await message.react("✅");
+      //TODO: Criar um embed final.
     } catch (error) {
-        await message.react("❌")
+      await message.react("❌");
       console.log(`${error}`);
     }
   },

@@ -1,20 +1,26 @@
 import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
-import { GuildMember, Message, Role, User } from "discord.js";
+import { GuildMember, Message, MessageEmbed, Role, User } from "discord.js";
 
 export const command: Command = {
   name: "unmute",
   aliases: ["um", "desmutar"],
   description: "Comando para retirar o Mute de um usuario.",
-  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
+  run: async (
+    client: ExtendedClient,
+    message: Message<boolean>,
+    args: string[]
+  ) => {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
-      const Embeds:EmbedTemplates = new EmbedTemplates(client);
+      const Embeds: EmbedTemplates = new EmbedTemplates(client);
       const authorRoleCheck: CheckRole = new CheckRole(client, message.member);
 
       if (!authorRoleCheck.CheckHighRoleBool())
-        return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+        return message.channel.send({
+          embeds: [Embeds.userCannotBePunished()],
+        });
 
       //*2 Pegando as informações do usuario.
       //Checando se o argumento foi uma marcação.
@@ -101,7 +107,7 @@ export const command: Command = {
           : message.guild.members.cache.get(message.mentions.users.first().id);
       }
 
-      if (!person) return message.channel.send("Usuario inexistente");
+      if (!person) return message.channel.send({embeds:[Embeds.UserNotExist()]});
 
       //*3 Armazenando o motivo em uma variavel caso tenha.
 
@@ -127,14 +133,16 @@ export const command: Command = {
       //Caso tenha, quer dizer que ele foi mutado pelo .mute
       if (checkMuteRole.CheckReturnBoolean()) {
         await person.roles.remove(muteRole);
-        await message.react("✅");
+        await message.react("✅")
       } else {
         //Caso contrario, quer dizer que ele foi mutado pelo .tempmute
         await person.timeout(null);
-        await message.react("✅");
+        await message.react("✅")
       }
+      if(message.deletable) await message.delete()
+      //TODO: Criar um embed final.
     } catch (error) {
-      await message.react("❌")
+      await message.react("❌");
       console.log(`${error}`);
     }
   },

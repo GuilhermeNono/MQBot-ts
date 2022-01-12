@@ -14,15 +14,20 @@ export const command: Command = {
   name: "unban",
   aliases: ["ub", "desbanir"],
   description: "Comando para desbanir usuarios.",
-  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
+  run: async (
+    client: ExtendedClient,
+    message: Message<boolean>,
+    args: string[]
+  ) => {
     try {
-
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const Embeds = new EmbedTemplates(client);
       const authorRoleCheck: CheckRole = new CheckRole(client, message.member);
 
       if (!authorRoleCheck.CheckHighRoleBool())
-        return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+        return message.channel.send({
+          embeds: [Embeds.userCannotBePunished()],
+        });
 
       //*2 Criando uma variavel com as informações do membro, e logo abaixo, verificando se o usuario não digitou o membro errado e se o membro pode ser punido.
       var person: User;
@@ -84,9 +89,10 @@ export const command: Command = {
       if (!bannedUser) return message.channel.send({ embeds: [userIsNotBan] });
       await message.guild.members.unban(person, reason);
       message.react("✅").then(() => setTimeout(() => message.delete(), 5000));
+      //TODO: Criar um embed final.
     } catch (error) {
-      await message.react("❌")
-        console.log(`${error}`)
+      await message.react("❌");
+      console.log(`${error}`);
     }
   },
 };

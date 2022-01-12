@@ -4,6 +4,7 @@ import { CheckRole, EmbedTemplates, mTimer, Timer } from "@Modules";
 import {
   Collection,
   GuildBan,
+  GuildBasedChannel,
   GuildMember,
   Message,
   MessageEmbed,
@@ -15,7 +16,11 @@ export const command: Command = {
   name: "tempban",
   aliases: ["tb", "banirtemporario"],
   description: "Comando para banir usuarios por tempo determinado.",
-  run: async (client:ExtendedClient, message:Message<boolean>, args:string[]) => {
+  run: async (
+    client: ExtendedClient,
+    message: Message<boolean>,
+    args: string[]
+  ) => {
     try {
       //PS: Inicializando os Embeds Templates.
       const Embeds: EmbedTemplates = new EmbedTemplates(client);
@@ -23,11 +28,8 @@ export const command: Command = {
       //*1 - Verificando se o usuario tem o cargo necessario para usar esse comando
 
       const memberAuthor: GuildMember = message.member;
-      
-      const newCheckAuthor: CheckRole = new CheckRole(
-        client,
-        memberAuthor,
-      );
+
+      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor);
       const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
 
       if (!checkReturn)
@@ -117,7 +119,8 @@ export const command: Command = {
           : message.guild.members.cache.get(message.mentions.users.first().id);
       }
 
-      if (!person) return message.channel.send("Usuario inexistente");
+      if (!person)
+        return message.channel.send({ embeds: [Embeds.UserNotExist()] });
 
       //*3 - Impedindo com que o usuario tente banir a si mesmo
       if (person.id === message.author.id)
@@ -134,13 +137,12 @@ export const command: Command = {
        */
 
       if (!(person instanceof User)) {
-        const newCheckPerson: CheckRole = new CheckRole(
-          client,
-          person,
-        );
+        const newCheckPerson: CheckRole = new CheckRole(client, person);
 
         if (newCheckPerson.CheckHighRoleBool())
-          return message.channel.send({ embeds: [Embeds.userCannotBePunished()] });
+          return message.channel.send({
+            embeds: [Embeds.userCannotBePunished()],
+          });
       }
 
       // *5 - Armazenando o "motivo" da punição
@@ -153,7 +155,10 @@ export const command: Command = {
       //Definindo que o index 1 do array como o tempo.
       let time: number = ms(args[1]);
 
-      if (!time) return message.channel.send("Tempo invalido.");
+      let timeInvalid: MessageEmbed = new MessageEmbed()
+        .setColor("DARK_RED")
+        .setTitle("Tempo invalido.");
+      if (!time) return message.channel.send({ embeds: [timeInvalid] });
 
       // *6 - Checando se o usuario já foi banido
       //Procurando todos os bans presentes no servidor e armazenando eles numa vairavel.
@@ -163,6 +168,7 @@ export const command: Command = {
       //Checando se não existe nem um usuario banido no servidor.
       if (guildBans.size === 0) {
         await BanPerson(message, person, time, reason);
+        FinalEmbed();
       } else {
         //Se existir, checando se o id de pelo menos um desses usuario é igual ao do "person".
         if (guildBans.findKey((userBan) => userBan.user.id === person.id)) {
@@ -170,10 +176,58 @@ export const command: Command = {
         } else {
           //Caso esse usuario não esteja na lista de banidos, efetuamos o banimento.
           await BanPerson(message, person, time, reason);
+          FinalEmbed();
         }
       }
+
+      function FinalEmbed() {
+        const publicChannel: GuildBasedChannel =
+          message.guild.channels.cache.get("929441854469070949");
+        const privateChannel: GuildBasedChannel =
+          message.guild.channels.cache.get("929426733516615781");
+
+        let gifEmbed: string =
+          "https://centraldecursos.com/wp-content/uploads/2015/12/apresentacao-power-point-64.gif";
+        if (
+          publicChannel.type === "GUILD_TEXT" &&
+          privateChannel.type === "GUILD_TEXT"
+        ) {
+          if (person instanceof GuildMember)
+            publicChannel
+              .send({
+                embeds: [
+                  Embeds.PublicDesc(
+                    message,
+                    reason,
+                    person,
+                    gifEmbed,
+                    "DARK_ORANGE",
+                    args[1],
+                    "https://c.tenor.com/B5gtmtGeuL4AAAAd/kimetsu-no-yaiba-hashira.gif"
+                  ),
+                ],
+              })
+              .then(async () => {
+                if (person instanceof GuildMember)
+                  privateChannel.send({
+                    embeds: [
+                      Embeds.PrivateDesc(
+                        message,
+                        person,
+                        reason,
+                        "__TempBan__ ➟ 🟠",
+                        args[1],
+                        "DARK_ORANGE"
+                      ),
+                    ],
+                  });
+                await message.react("✅");
+              });
+        }
+      }
+      //TODO: Criar um embed final.
     } catch (error) {
-      await message.react("❌")
+      await message.react("❌");
       console.log(`${error}`);
     }
   },
