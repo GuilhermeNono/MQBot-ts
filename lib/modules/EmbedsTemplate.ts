@@ -41,6 +41,10 @@ class EmbedTemplates {
   /**
    * ❌ - Erro de digitação
    * @returns MessageEmbed()
+   * @param {String}errorType
+   * @param {String}description
+   * @param {String}commandName
+   * @param {EmbedFieldData[]}fields
    */
   errorCode(
     errorType: String,
@@ -68,12 +72,38 @@ class EmbedTemplates {
   /**
    * ❌ - Erro na hora de definir o tempo.
    * @returns MessageEmbed()
+   * @param {string | number} time
    */
   errorTime(time: string | number): MessageEmbed {
     return new MessageEmbed()
       .setTitle("**:warning: Erro de Sintaxe :warning:**")
       .setColor("#c5f542")
       .addField("Tempo Não definido.", `"${time}" não é um tempo valido.`);
+  }
+
+  /**
+   * ❌ - Usuario inexistente.
+   * @returns MessageEmbed()
+   */
+  UserNotExist():MessageEmbed {
+    return new MessageEmbed()
+    .setColor("DARK_RED")
+    .setTitle("🔺Usuario inexistente🔺")
+    .setAuthor({
+      name: `${this.client.user.username} 🡻 `,
+      iconURL: `${this.client.user.displayAvatarURL()}`,
+    });
+  }
+
+  AutoMute():MessageEmbed {
+    return new MessageEmbed()
+    .setTitle("Você não pode mutar a si proprio.")
+    .setFooter({text:"Por que você tentaria algo tão idiota?"})
+    .setColor("DARK_RED")
+    .setAuthor({
+      name: `${this.client.user.username} 🡻 `,
+      iconURL: `${this.client.user.displayAvatarURL()}`,
+    });
   }
 }
 

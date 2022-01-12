@@ -110,7 +110,9 @@ export const command: Command = {
           : message.guild.members.cache.get(message.mentions.users.first().id);
       }
 
-      if (!person) return message.channel.send("Usuario inexistente");
+      
+
+      if (!person) return message.channel.send({embeds:[Embeds.UserNotExist()]});
 
       //*3 - Impedindo com que o usuario tente banir a si mesmo
       if (person.id === message.author.id)
@@ -129,7 +131,7 @@ export const command: Command = {
       }
 
       //Impedindo com que o author da mensagem se auto-mute.
-      if(person.id === message.author.id) return message.channel.send("Está tentando se auto mutar.")
+      if(person.id === message.author.id) return message.channel.send({embeds:[Embeds.AutoMute()]})
 
       // *5 - Armazenando o "motivo" da punição
 
@@ -147,6 +149,7 @@ export const command: Command = {
           return message.react("❌");
         } else {
           await BanPerson(message, person, reason);
+
         }
       }
     } catch (error) {
