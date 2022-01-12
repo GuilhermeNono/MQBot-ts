@@ -60,9 +60,10 @@ export const command: Command = {
       const fetched: Collection<
         string,
         Message<boolean>
-      > = await message.channel.messages.fetch({ limit: qtd + 1 });
+      > = await message.channel.messages.fetch({ limit: qtd});
       //TODO: 4 Apagando "qtd" mensagens do canal e enviando uma confirmação ou erro
 
+      
       //Checando se existe mensagens para serem excluidas.
       if (fetched) {
         //Checando se o canal que será ecluida as mensagens é um canal de texto de servidor.
@@ -70,6 +71,8 @@ export const command: Command = {
           //Deletando "fetched" mensangens
 
           let msgEmbed: MessageEmbed = new MessageEmbed().setColor("GREYPLE");
+
+          if(message.deletable) await message.delete(); 
 
           message.channel
             .bulkDelete(fetched)

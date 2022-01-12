@@ -155,13 +155,13 @@ export const command: Command = {
         await message.guild.bans.fetch();
 
       if (guildBans.size === 0) {
-        // await BanPerson(message, person, reason);
+        await BanPerson(message, person, reason);
         FinalEmbed();
       } else {
         if (guildBans.findKey((userBan) => userBan.user.id === person.id)) {
           return message.react("❌");
         } else {
-          // await BanPerson(message, person, reason);
+          await BanPerson(message, person, reason);
           FinalEmbed();
           //TODO: Criar um embed final.
         }
@@ -209,7 +209,7 @@ export const command: Command = {
                       ),
                     ],
                   });
-                await message.react("✅");
+                await message.delete();
               });
         }
       }

@@ -3,6 +3,7 @@ import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
 import {
   Collection,
+  GuildBasedChannel,
   GuildMember,
   Message,
   Role,
@@ -131,9 +132,54 @@ export const command: Command = {
 
       //todo 5 Kickando o usuario.
 
-      await person.kick(reason);
-      await message.react("✅");
-      //TODO: Criar um embed final.
+      await person.kick(reason);      
+      //*6 Setando os canasi publicos e privados.
+
+      const publicChannel: GuildBasedChannel =
+        message.guild.channels.cache.get("929441854469070949");
+      const privateChannel: GuildBasedChannel =
+        message.guild.channels.cache.get("929426733516615781");
+
+      let gifEmbed: string =
+      "https://i.pinimg.com/originals/10/32/d5/1032d503ba62cc0de1e1e4e79b473547.gif";
+
+      if (
+        publicChannel.type === "GUILD_TEXT" &&
+        privateChannel.type === "GUILD_TEXT"
+      ) {
+        publicChannel
+          .send({
+            embeds: [
+              Embeds.PublicDesc(
+                message,
+                reason,
+                person,
+                gifEmbed,
+                "YELLOW",
+                "**:lock: Indeterminado**",
+                "https://uploads.spiritfanfiction.com/fanfics/historias/202009/ta-um-calor-do-cao-20461617-110920201528.gif"
+              ),
+            ],
+          })
+          .then(async () => {
+            if (person instanceof GuildMember)
+              privateChannel.send({
+                embeds: [
+                  Embeds.PrivateDesc(
+                    message,
+                    person,
+                    reason,
+                    "__Kick__➟ 🟡",
+                    "**:lock: Indeterminado**",
+                    "YELLOW"
+                  ),
+                ],
+              });
+            await message.react("✅");
+          });
+      }
+      
+
     } catch (error) {
       await message.react("❌");
       console.log(`${error}`);
