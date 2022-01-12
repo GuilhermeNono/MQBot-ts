@@ -10,7 +10,7 @@
 
 ### ✪ Objetivos primarios
 
-- [ ] Restaurar o bot e seus comandos por completo.
+- [x] Restaurar o bot e seus comandos por completo.
 
 #
 ![PlaceHolder](https://s2.glbimg.com/gNx3bSr2tVULc3kK9mqggKyKJOg=/696x390/smart/filters:cover():strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/h/w/Abq4oBSySsO0xmGnkDlg/discord.jpg)
