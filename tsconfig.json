@@ -16,6 +16,12 @@
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "baseUrl": ".",
     "paths": {
+      "@VersionAPP":[
+        "package.json"
+      ],
+      "@Assets/*":[
+        "src/Assets/*"
+      ],
       "@Models": [
         "models/index.ts"
       ],
