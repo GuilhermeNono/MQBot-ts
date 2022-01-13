@@ -177,7 +177,9 @@ export const command: Command = {
             await loading.delete();
             message.channel.send({ embeds: [embedSucess] }).then((msg) => {
               setTimeout(() => {
-                msg.delete();
+                if(msg.deletable){
+                  msg.delete();
+                }
               }, 15000);
             });
           });

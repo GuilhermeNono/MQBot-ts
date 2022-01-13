@@ -135,7 +135,7 @@ export const command: Command = {
 
           message.channel
             .send({ embeds: [channelRenameSucess] })
-            .then((msg) => setTimeout(() => msg.delete(), 15000));
+            .then((msg) => setTimeout(() => {if(msg.deletable) msg.delete()}, 15000));
 
       });
     } catch (error) {

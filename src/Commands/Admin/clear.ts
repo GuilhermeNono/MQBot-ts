@@ -60,7 +60,7 @@ export const command: Command = {
       const fetched: Collection<
         string,
         Message<boolean>
-      > = await message.channel.messages.fetch({ limit: qtd});
+      > = await message.channel.messages.fetch({ limit: qtd + 1});
       //TODO: 4 Apagando "qtd" mensagens do canal e enviando uma confirmação ou erro
 
       
@@ -85,7 +85,9 @@ export const command: Command = {
                   embeds: [msgEmbed],
                 });
                 setTimeout(() => {
-                  msg.delete();
+                  if(msg.deletable){
+                    msg.delete();
+                  }                 
                 }, 5000);
               } else {
                 msgEmbed.setTitle(`${qtd} mensagens foram excluidas! ✅`);
@@ -94,7 +96,9 @@ export const command: Command = {
                   embeds: [msgEmbed],
                 });
                 setTimeout(() => {
-                  msg_1.delete();
+                  if(msg_1.deletable){
+                    msg_1.delete();
+                  }  
                 }, 5000);
               }
             })

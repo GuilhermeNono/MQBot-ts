@@ -88,7 +88,7 @@ export const command: Command = {
 
       if (!bannedUser) return message.channel.send({ embeds: [userIsNotBan] });
       await message.guild.members.unban(person, reason);
-      message.react("✅").then(() => setTimeout(() => message.delete(), 5000));
+      message.react("✅").then(() => setTimeout(() => {if(message.deletable) message.delete()}, 5000));
       //TODO: Criar um embed final.
     } catch (error) {
       await message.react("❌");

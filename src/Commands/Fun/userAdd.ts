@@ -172,7 +172,7 @@ export const command: Command = {
           return message.channel
             .send({ embeds: [maxChannel] })
             .then(async (m) => {
-              setTimeout(() => m.delete(), 15000);
+              setTimeout(() => {if(m.deletable) m.delete()}, 15000);
               await loading.delete();
             });
 
