@@ -1,6 +1,7 @@
 import ExtendedClient from "@Client";
 import { Command } from "@Interface";
-import { CheckRole, EmbedTemplates } from "@Modules";
+import { UserDataModel } from "@Models";
+import { CheckRole, Databases, EmbedTemplates } from "@Modules";
 import {
   Collection,
   GuildMember,
@@ -261,6 +262,23 @@ export const command: Command = {
               });
             await message.react("✅");
           });
+      }
+
+      //*7 Somando +1 no contador de mutes do usuario.
+      try {
+        let userDB = await UserDataModel.findOne({ userId: person.id }).exec();
+        if (userDB === null) {
+          return await new Databases().UserData(person.id);
+        }
+
+        let userCountMute: number = userDB.countMute + 1;
+
+        await UserDataModel.findOneAndUpdate(
+          { userId: person.id },
+          { countMute: userCountMute }
+        ).exec();
+      } catch (error) {
+        console.log(error);
       }
     } catch (error) {
       await message.react("❌");

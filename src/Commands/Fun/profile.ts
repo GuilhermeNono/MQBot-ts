@@ -94,13 +94,13 @@ export const command: Command = {
         }
 
         //* 5 Definindo uma cor para a role conforme sua posição na hierarquia.
-        if (roleInfo.rolePosition <= 5) {
+        if (roleInfo.rolePosition <= 6) {
           roleInfo.roleColor = "#5ef016";
-        } else if (roleInfo.rolePosition <= 13) {
+        } else if (roleInfo.rolePosition <= 14) {
           roleInfo.roleColor = "#15edb7";
-        } else if (roleInfo.rolePosition <= 17 || roleInfo.rolePosition >= 15) {
+        } else if (roleInfo.rolePosition <= 18 || roleInfo.rolePosition >= 16) {
           roleInfo.roleColor = "#a114e3";
-        } else if (roleInfo.rolePosition <= 22 || roleInfo.rolePosition >= 18) {
+        } else if (roleInfo.rolePosition >= 19) {
           roleInfo.roleColor = "#e32222";
         }
 
