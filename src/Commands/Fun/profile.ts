@@ -10,8 +10,8 @@ import {
   MessageEmbed,
   Role,
 } from "discord.js";
-import path from "path/posix";
-registerFont(path.join(__dirname, "../../Assets/fonts/Montserrat-Black.ttf"), {
+import path from "path";
+registerFont(path.join(__dirname, "..", "..", "Assets", "fonts/Montserrat-Black.ttf"), {
   family: "Montserrat",
 });
 
@@ -160,7 +160,7 @@ export const command: Command = {
         const ctx = canvas.getContext("2d");
 
         const background = await loadImage(
-          path.join(__dirname, "../../Assets/img/png/Profile_Card2_.png")
+          path.join(__dirname,"..", "..", "Assets","/img/png/Profile_Card2_.png")
         );
         ctx.drawImage(background, 0, 0);
 
@@ -202,7 +202,7 @@ export const command: Command = {
 
         //Coins
         let coin:Image = await loadImage(
-          path.join(__dirname, "../../Assets/img/png/coin.png")
+          path.join(__dirname,"..", "..","Assets", "img/png/coin.png")
         );
 
         ctx.drawImage(coin, 480, 95, 50, 50);
@@ -249,7 +249,7 @@ export const command: Command = {
 
         //Mutes disponiveis
         let muteIcon = await loadImage(
-          path.join(__dirname, "../../Assets/img/png/mute.png")
+          path.join(__dirname,"..", "..","Assets","img/png/mute.png")
         );
 
         ctx.textAlign = "center";
