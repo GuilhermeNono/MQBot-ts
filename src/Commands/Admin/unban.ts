@@ -4,7 +4,6 @@ import { CheckRole, EmbedTemplates } from "@Modules";
 import {
   Collection,
   GuildBan,
-  GuildMember,
   Message,
   MessageEmbed,
   User,

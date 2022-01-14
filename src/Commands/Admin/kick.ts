@@ -2,13 +2,9 @@ import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
 import {
-  Collection,
   GuildBasedChannel,
   GuildMember,
   Message,
-  Role,
-  TextChannel,
-  User,
 } from "discord.js";
 
 export const command: Command = {

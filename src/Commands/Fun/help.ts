@@ -2,13 +2,10 @@ import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { version } from "@VersionAPP";
 import Pagination from "discordjs-button-pagination";
-import { Timer, mTimer, CheckRole, Databases } from "@Modules";
 import {
-  GuildMember,
   Message,
   MessageButton,
   MessageEmbed,
-  User,
 } from "discord.js";
 
 export const command: Command = {

@@ -3,12 +3,8 @@ import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
 import {
   Collection,
-  GuildMember,
   Message,
   MessageEmbed,
-  Role,
-  TextChannel,
-  User,
 } from "discord.js";
 
 export const command: Command = {

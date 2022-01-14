@@ -1,7 +1,7 @@
 import ExtendedClient from "@Client";
 import { Command } from "@Interface";
 import { CheckRole, EmbedTemplates } from "@Modules";
-import { GuildMember, Message, MessageEmbed, Role, User } from "discord.js";
+import { GuildMember, Message, Role} from "discord.js";
 
 export const command: Command = {
   name: "unmute",
