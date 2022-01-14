@@ -1,1 +1,1 @@
-worker: ts-node -r tsconfig-paths/register src/index.ts -e ts
+worker: node dist/index.js
