@@ -61,6 +61,7 @@ class ExtendedClient extends Client {
     const load_dir:(dir:string) => Promise<void> = async (dir: string) => {
       try {
         const eventPath = path.join(__dirname, "..", "Events", `${dir}`);
+        console.log(eventPath);
         const event_files = readdirSync(eventPath).filter(async (file) =>
           file.endsWith(".ts")
         );
