@@ -1,1 +1,1 @@
-worker: ts-node -r tsconfig-paths/register src/index.ts
+worker: ts-node -r tsconfig-paths/register src/index.ts -p
