@@ -1,1 +1,1 @@
-worker: ts-node -r tsconfig-paths/register src/index.ts -p
+worker: node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/index.js
