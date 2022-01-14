@@ -6,10 +6,8 @@ export const event: Event = {
   name: "ready",
   run: async (client: ExtendedClient) => {
     try {
-      InitDB(client).then(()=> {
-        console.log(cyan(`✨${client.user.tag}'s Online!✨`));
-      });
-
+      await InitDB(client)
+      console.log(cyan(`✨${client.user.tag}'s Online!✨`));
       await MuteRefil(client);
       await Contador(client);
     } catch (error) {
