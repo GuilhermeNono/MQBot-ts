@@ -12,7 +12,7 @@ import {
   User,
 } from "discord.js";
 import path from "path/posix";
-registerFont(path.join(__dirname, "../src/Assets/fonts/Montserrat-Black.ttf"), {
+registerFont(path.join(__dirname, "../../src/Assets/fonts/Montserrat-Black.ttf"), {
   family: "Montserrat",
 });
 
