@@ -8,6 +8,9 @@
     "npm": "8.3.0"
   },
   "scripts": {
+    "build": "tsc",
+    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/index.js",
+    "postinstall": "npm run build",
     "dev": "nodemon --watch src/ --exec ts-node -r tsconfig-paths/register src/index.ts -e ts"
   },
   "repository": {

@@ -22,7 +22,7 @@ export const event: Event = {
         .setColor("RED")
         .setTitle(`💢 Bot exclusivo do servidor "Brioco" 💢`);
 
-      if (message.guild.id !== "929417995325956177")
+      if (message.guild.id !== "929417995325956177")  
         return message.channel.send({ embeds: [embedIsNotOfficialServer] });
 
       const args = message.content

@@ -1,1 +1,1 @@
-worker: node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/index.js
+worker: npm start
