@@ -25,7 +25,7 @@ class ExtendedClient extends Client {
     readdirSync(commandPath).forEach((dir) => {
       try {
         const commands:string[] = readdirSync(`${commandPath}/${dir}`).filter((file) =>
-          file.endsWith(".ts")
+          file.endsWith(".ts" || "js")
         );
         for (const file of commands) {
           const { command } = require(`${commandPath}/${dir}/${file}`);
@@ -60,7 +60,7 @@ class ExtendedClient extends Client {
       try {
         const eventPath = path.join(__dirname, "..", "Events", `${dir}`);
         const event_files = readdirSync(eventPath).filter(async (file) =>
-          file.endsWith(".ts")
+          file.endsWith(".ts" || "js")
         );
 
         for (const file of event_files) {
@@ -85,7 +85,7 @@ class ExtendedClient extends Client {
       }
     };
 
-    ["Client", "Guild"].forEach((e) => load_dir(e));
+    ["Client", "Guild"].forEach(async (e) => await load_dir(e));
   }
 }
 
