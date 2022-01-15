@@ -1,4 +1,4 @@
-import ExtendedClient from "@Client";
+import ExtendedClient from "../../src/Client";
 import { MessageEmbed, EmbedFieldData, ColorResolvable, Message, GuildMember, User } from "discord.js";
 class EmbedTemplates {
   constructor(private client: ExtendedClient) {

@@ -1,6 +1,5 @@
-import Client from "@Client";
+import Client from "./Client";
 import { Intents } from "discord.js";
-import "tsconfig-paths";
 new Client({
   intents: [
     Intents.FLAGS.GUILDS,

@@ -1,5 +1,5 @@
-import ExtendedClient from "@Client";
-import { Command } from "@Interface";
+import ExtendedClient from "../../Client";
+import { Command } from "../../interfaces"
 import { Message } from "discord.js";
 
 export const command: Command = {

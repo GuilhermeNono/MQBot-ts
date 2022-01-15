@@ -1,7 +1,7 @@
-import ExtendedClient from "@Client";
-import { Event } from "@Interfaces/Event";
-import { UserDataModel } from "@Models";
-import { Databases } from "@Modules";
+import ExtendedClient from "../../Client";
+import { Event } from "../../interfaces";
+import { UserDataModel } from "../../../models";
+import { Databases } from "../../../lib/modules";
 import { Guild, GuildMember, Role } from "discord.js";
 
 export const event: Event = {

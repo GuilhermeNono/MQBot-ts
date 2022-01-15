@@ -1,5 +1,5 @@
-import ExtendedClient from "@Client";
-import { GuildMember, Message } from "discord.js";
+import ExtendedClient from "../../src/Client";
+import { GuildMember} from "discord.js";
 
 class CheckRole {
   idRolesWithPermission: string[];

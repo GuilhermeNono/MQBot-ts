@@ -1,7 +1,7 @@
-import ExtendedClient from "@Client";
-import { Command, RoleProfile } from "@Interface";
-import { CheckRole, Databases, EmbedTemplates } from "@Modules";
-import { UserDataModel } from "@Models";
+import ExtendedClient from "../../Client";
+import { Command, RoleProfile } from "../../interfaces"
+import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules";
+import { UserDataModel } from "../../../models";
 import { createCanvas, Image, loadImage, registerFont } from "canvas";
 import {
   GuildMember,

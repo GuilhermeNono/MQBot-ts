@@ -1,7 +1,7 @@
-import ExtendedClient from "@Client";
-import { UserBoostModel } from "@Models";
-import { CheckRole, Databases, EmbedTemplates } from "@Modules";
-import { Command } from "@Interface";
+import ExtendedClient from "../../Client";
+import { UserBoostModel } from "../../../models";
+import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules";
+import { Command } from "../../interfaces"
 import {
   GuildBasedChannel,
   GuildMember,

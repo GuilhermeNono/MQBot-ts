@@ -1,6 +1,6 @@
-import ExtendedClient from "@Client";
-import { Command } from "@Interface";
-import { CheckRole, EmbedTemplates } from "@Modules";
+import ExtendedClient from "../../Client";
+import { Command } from "../../interfaces"
+import { CheckRole, EmbedTemplates } from "../../../lib/modules";
 import {
   GuildBasedChannel,
   GuildMember,

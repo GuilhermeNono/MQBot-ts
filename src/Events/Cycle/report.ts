@@ -1,4 +1,4 @@
-import ExtendedClient from "@Client";
+import ExtendedClient from "../../Client";
 import { GuildBasedChannel, Message, MessageEmbed } from "discord.js";
 
 async function Report(message: Message, client: ExtendedClient): Promise<any> {

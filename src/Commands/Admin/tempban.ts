@@ -1,6 +1,6 @@
-import ExtendedClient from "@Client";
-import { Command } from "@Interface";
-import { CheckRole, EmbedTemplates, mTimer, Timer } from "@Modules";
+import ExtendedClient from "../../Client";
+import { Command } from "../../interfaces"
+import { CheckRole, EmbedTemplates, mTimer, Timer } from "../../../lib/modules";
 import {
   Collection,
   GuildBan,

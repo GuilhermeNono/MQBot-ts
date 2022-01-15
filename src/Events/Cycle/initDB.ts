@@ -1,6 +1,6 @@
-import ExtendedClient from "@Client";
-import { Databases } from "@Modules";
-import { UserDataModel } from "@Models";
+import ExtendedClient from '../../Client';
+import { Databases } from "../../../lib/modules";
+import { UserDataModel } from "../../../models";
 import { Guild } from "discord.js";
 import {green, red, yellow } from "colors";
 

@@ -1,7 +1,7 @@
-import ExtendedClient from "@Client";
-import { Command } from "@Interface";
-import { UserDataModel } from "@Models";
-import { CheckRole, Databases, EmbedTemplates } from "@Modules";
+import ExtendedClient from "../../Client";
+import { Command } from "../../interfaces"
+import { UserDataModel } from "../../../models";
+import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules";
 import {
   Collection,
   GuildMember,

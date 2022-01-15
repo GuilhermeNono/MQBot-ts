@@ -1,4 +1,4 @@
-import { UserDataModel, UserBoostModel } from "@Models";
+import { UserDataModel, UserBoostModel } from "../../models";
 
 class Databases {
   /**

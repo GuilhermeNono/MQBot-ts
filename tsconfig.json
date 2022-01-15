@@ -31,41 +31,41 @@
     "skipLibCheck": true,
     /* Skip type checking all .d.ts files. */
     "baseUrl": ".",
-    "paths": {
-      "@VersionAPP": [
-        "package.json"
-      ],
-      "@Assets/*": [
-        "src/Assets/*"
-      ],
-      "@Models": [
-        "models/index.ts"
-      ],
-      "@CMDAdmin/*": [
-        "src/Commands/Admin/*",
-      ],
-      "@Cycle": [
-        "src/Events/Cycle/index.ts",
-      ],
-      "@CMDFun/*": [
-        "src/Commands/Fun/*",
-      ],
-      "@Interfaces/*": [
-        "src/interfaces/*"
-      ],
-      "@Interface": [
-        "src/interfaces/index.ts"
-      ],
-      "@Modules": [
-        "lib/modules/index.ts",
-      ],
-      "@Client": [
-        "src/Client/index.ts"
-      ],
-      "@Client/*": [
-        "src/Client/*"
-      ]
-    }
+    // "paths": {
+    //   "@VersionAPP": [
+    //     "package.json"
+    //   ],
+    //   "@Assets/*": [
+    //     "src/Assets/*"
+    //   ],
+    //   "@Models": [
+    //     "models/index.ts"
+    //   ],
+    //   "@CMDAdmin/*": [
+    //     "src/Commands/Admin/*",
+    //   ],
+    //   "@Cycle": [
+    //     "src/Events/Cycle/index.ts",
+    //   ],
+    //   "@CMDFun/*": [
+    //     "src/Commands/Fun/*",
+    //   ],
+    //   "@Interfaces/*": [
+    //     "src/interfaces/*"
+    //   ],
+    //   "@Interface": [
+    //     "src/interfaces/index.ts"
+    //   ],
+    //   "@Modules": [
+    //     "lib/modules/index.ts",
+    //   ],
+    //   "@Client": [
+    //     "src/Client/index.ts"
+    //   ],
+    //   "@Client/*": [
+    //     "src/Client/*"
+    //   ]
+    // }
   },
   "include": ["src", "models", "lib/modules"],
   "exclude": ["node_modules", "dist/**/*"]

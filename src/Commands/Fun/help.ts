@@ -1,6 +1,6 @@
-import ExtendedClient from "@Client";
-import { Command } from "@Interface";
-import { version } from "@VersionAPP";
+import ExtendedClient from "../../Client";
+import { Command } from "../../interfaces"
+import { version } from "../../../package.json";
 import Pagination from "discordjs-button-pagination";
 import {
   Message,

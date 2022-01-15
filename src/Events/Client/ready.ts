@@ -1,7 +1,7 @@
-import { Event } from "@Interface";
+import { Event } from "../../interfaces";
 import { cyan } from "colors";
-import { Contador, MuteRefil, InitDB } from "@Cycle";
-import ExtendedClient from "@Client";
+import { Contador, MuteRefil, InitDB } from "../Cycle";
+import ExtendedClient from "../../Client";
 export const event: Event = {
   name: "ready",
   run: async (client: ExtendedClient) => {

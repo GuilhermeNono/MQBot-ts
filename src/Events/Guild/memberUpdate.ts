@@ -1,5 +1,5 @@
-import ExtendedClient from "@Client";
-import { Event } from "@Interface";
+import ExtendedClient from "../../Client";
+import { Event } from "../../interfaces";
 import { GuildBasedChannel, GuildMember, MessageEmbed, Role } from "discord.js";
 
 export const event: Event = {
