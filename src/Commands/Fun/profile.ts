@@ -1,7 +1,7 @@
-import ExtendedClient from "../../Client";
-import { Command, RoleProfile } from "../../interfaces"
-import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules";
-import { UserDataModel } from "../../../models";
+import ExtendedClient from "../../Client/index.js";
+import { Command, RoleProfile } from "../../interfaces/index.js"
+import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules/index.js";
+import { UserDataModel } from "../../../models/index.js";
 import { createCanvas, Image, loadImage, registerFont } from "canvas";
 import {
   GuildMember,

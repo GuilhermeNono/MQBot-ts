@@ -1,7 +1,7 @@
-import { Event, Command } from "../../interfaces";
-import { Report } from "../Cycle";
+import { Event, Command } from "../../interfaces/index.js";
+import { Report } from "../Cycle/index.js";
 import { Message, MessageEmbed } from "discord.js";
-import ExtendedClient from "../../Client";
+import ExtendedClient from "../../Client/index.js";
 
 export const event: Event = {
   name: "messageCreate",

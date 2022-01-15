@@ -2,7 +2,7 @@ import { Client, Collection } from "discord.js";
 import {connect} from "mongoose";
 import path from "path";
 import { readdirSync } from "fs";
-import { Command, Event } from "../interfaces";
+import { Command, Event } from "../interfaces/index.js";
 import dotenv from "dotenv";
 import { green, red, yellow } from "colors";
 
@@ -15,9 +15,7 @@ class ExtendedClient extends Client {
 
   public async init() {
     this.login(process.env["DISCORD_TOKEN"]);
-    await connect(process.env["MONGODB_LOGIN"], {
-      
-    });
+    await connect(process.env["MONGODB_LOGIN"]);
 
     //*Commands
 
@@ -61,7 +59,6 @@ class ExtendedClient extends Client {
     const load_dir:(dir:string) => Promise<void> = async (dir: string) => {
       try {
         const eventPath = path.join(__dirname, "..", "Events", `${dir}`);
-        console.log(eventPath);
         const event_files = readdirSync(eventPath).filter(async (file) =>
           file.endsWith(".ts")
         );

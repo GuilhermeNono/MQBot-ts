@@ -1,4 +1,4 @@
-import ExtendedClient from '../../Client';
+import ExtendedClient from '../../Client/index.js';
 import { Guild, GuildChannel, ThreadChannel } from 'discord.js';
 import ms from 'ms'
 

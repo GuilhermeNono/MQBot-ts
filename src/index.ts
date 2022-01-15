@@ -1,4 +1,4 @@
-import Client from "./Client";
+import Client from "./Client/index.js";
 import { Intents } from "discord.js";
 new Client({
   intents: [

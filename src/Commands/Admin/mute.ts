@@ -1,7 +1,7 @@
-import ExtendedClient from "../../Client";
-import { Command } from "../../interfaces"
-import { UserDataModel } from "../../../models";
-import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules";
+import ExtendedClient from "../../Client/index.js";
+import { Command } from "../../interfaces/index.js"
+import { UserDataModel } from "../../../models/index.js";
+import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules/index.js";
 import {
   Collection,
   GuildMember,

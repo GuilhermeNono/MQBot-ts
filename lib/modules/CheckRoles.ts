@@ -1,4 +1,4 @@
-import ExtendedClient from "../../src/Client";
+import ExtendedClient from "../../src/Client/index.js";
 import { GuildMember} from "discord.js";
 
 class CheckRole {

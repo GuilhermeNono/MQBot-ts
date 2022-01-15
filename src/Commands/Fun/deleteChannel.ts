@@ -1,7 +1,7 @@
-import ExtendedClient from "../../Client";
-import { UserBoostModel } from "../../../models";
-import { CheckRole, Databases } from "../../../lib/modules";
-import { Command } from "../../interfaces"
+import ExtendedClient from "../../Client/index.js";
+import { UserBoostModel } from "../../../models/index.js";
+import { CheckRole, Databases } from "../../../lib/modules/index.js";
+import { Command } from "../../interfaces/index.js"
 import { GuildBasedChannel, Message, MessageEmbed } from "discord.js";
 
 export const command: Command = {
