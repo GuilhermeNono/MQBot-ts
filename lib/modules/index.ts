@@ -1,5 +1,5 @@
-export { default as Timer } from "./Timer";
-export { default as CheckRole } from "./CheckRoles";
-export { mTimer } from "./Maps";
-export {default as Databases} from './Databases'
-export { default as EmbedTemplates } from "./EmbedsTemplate";
+export { default as Timer } from "./Timer.js";
+export { default as CheckRole } from "./CheckRoles.js";
+export { mTimer } from "./Maps.js";
+export {default as Databases} from './Databases.js'
+export { default as EmbedTemplates } from "./EmbedsTemplate.js";

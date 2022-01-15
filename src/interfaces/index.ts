@@ -1,3 +1,3 @@
-export { Command } from "./Command";
-export { Event } from "./Event";
-export { RoleProfile } from "./RolePosition";
+export { Command } from "./Command.js";
+export { Event } from "./Event.js";
+export { RoleProfile } from "./RolePosition.js";
