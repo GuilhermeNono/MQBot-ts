@@ -25,9 +25,7 @@
     "outDir": "./dist",
     "rootDir": ".",
     "typeRoots": ["src/interfaces", "node_modules/@types"],
-    "files": [
-      "src/index.ts"
-  ],
+
     /* Specify an output folder for all emitted files. */
     // "allowSyntheticDefaultImports": true,
     /* Allow 'import x from y' when a module doesn't have a default export. */
@@ -74,8 +72,11 @@
     //     "src/Client/*"
     //   ]
     // }
-    
+
   },
+  "files": [
+    "src/index.ts"
+  ],
   "include": ["./**/*.ts"],
   "exclude": ["node_modules", "dist"],
 }
