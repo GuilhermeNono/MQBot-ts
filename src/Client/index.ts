@@ -71,7 +71,6 @@ class ExtendedClient extends Client {
           const { event } = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
           this.on(event.name, event.run.bind(null, this));
-          console.log(`${file} Registrado. ✔`)
         }
 
         console.log(
