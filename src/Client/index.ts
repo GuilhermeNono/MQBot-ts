@@ -22,19 +22,15 @@ class ExtendedClient extends Client {
     console.log(yellow("⌛ Initializing Commands...⌛"));
 
     const commandPath: string = path.join(__dirname, "..", "Commands");
-    console.log("Command Path =>", commandPath)
     readdirSync(commandPath).forEach((dir) => {
-      console.log("dir => ",dir)
       try {
         //Possivel problema no momento de assinar os valores no "commands"
         let commands: string[] = readdirSync(`${commandPath}/${dir}`).filter(
           (file) => {
-            console.log(file)
-            if(endsWithAny([".js", ".ts"],file)) return file
+            if (endsWithAny([".js", ".ts"], file)) return file;
           }
         );
         console.log(commands);
-        console.log(`${commandPath}/${dir}`)
         for (const file of commands) {
           const { command } = require(`${commandPath}/${dir}/${file}`);
           this.commands.set(command.name, command);
@@ -72,11 +68,10 @@ class ExtendedClient extends Client {
             return file;
           }
         });
-
+        console.log(event_files);
         for (const file of event_files) {
           const { event } = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
-          // console.log(event);
           this.on(event.name, event.run.bind(null, this));
         }
 
