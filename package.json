@@ -8,9 +8,8 @@
     "npm": "8.x"
   },
   "scripts": {
-    "build": "cp -R src/Assets dist/src && node dist/src/index.js",
     "start": "node dist/src/index.js",
-    "postinstall": "tsc",
+    "postinstall": "tsc && cp -R src/Assets dist/src",
     "dev": "nodemon --watch src/ --exec ts-node -r tsconfig-paths/register src/index.ts -e ts"
   },
   "repository": {
