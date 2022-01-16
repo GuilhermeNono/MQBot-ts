@@ -30,7 +30,6 @@ class ExtendedClient extends Client {
             if (endsWithAny([".js", ".ts"], file)) return file;
           }
         );
-        console.log(commands);
         for (const file of commands) {
           const { command } = require(`${commandPath}/${dir}/${file}`);
           this.commands.set(command.name, command);
@@ -68,11 +67,11 @@ class ExtendedClient extends Client {
             return file;
           }
         });
-        console.log(event_files);
         for (const file of event_files) {
           const { event } = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
           this.on(event.name, event.run.bind(null, this));
+          console.log(`${file} Registrado. ✔`)
         }
 
         console.log(
