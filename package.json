@@ -2,7 +2,7 @@
   "name": "mqbot-ts",
   "version": "4.0.0",
   "description": "Uma portabilidade do bot de javascript para typescript",
-  "main": "index.js",
+  "main": "dist/src/index.js",
   "type": "commonjs",
   "engines": {
     "node": "16.x",
