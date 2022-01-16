@@ -1,5 +1,5 @@
 import ExtendedClient from "../../Client/index.js";
-import { Event } from "../../interfaces/index.js";
+import { Event } from "../../interfaces/Event";
 import { UserDataModel } from "../../../models/index.js";
 import { Databases } from "../../../lib/modules/index.js";
 import { Guild, GuildMember, Role } from "discord.js";

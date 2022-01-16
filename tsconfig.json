@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["ESNext"],
+    "target": "ES2020",
+    // "lib": ["ES2020"],
     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     // "allowJs": true,
     /* Specify a set of bundled library declaration files that describe the target runtime environment. */
@@ -16,6 +16,7 @@
     // "typeRoots": ["src/interfaces/*"],
     /* Specify how TypeScript looks up a file from a given module specifier. */
     "resolveJsonModule": true,
+    // "strict": true,
     /* Enable importing .json files */
     // "declaration": true,
     /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
@@ -34,7 +35,7 @@
     /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true,
     /* Skip type checking all .d.ts files. */
-    "baseUrl": ".",
+    // "baseUrl": ".",
     // "paths": {
     //   "@VersionAPP": [
     //     "package.json"
