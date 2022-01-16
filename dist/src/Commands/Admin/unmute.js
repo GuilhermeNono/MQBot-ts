@@ -1,0 +1,117 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.command = void 0;
+const index_js_1 = require("../../../lib/modules/index.js");
+exports.command = {
+    name: "unmute",
+    aliases: ["um", "desmutar"],
+    description: "Comando para retirar o Mute de um usuario.",
+    run: async (client, message, args) => {
+        try {
+            //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
+            const Embeds = new index_js_1.EmbedTemplates(client);
+            const authorRoleCheck = new index_js_1.CheckRole(client, message.member);
+            if (!authorRoleCheck.CheckHighRoleBool())
+                return message.channel.send({
+                    embeds: [Embeds.userCannotBePunished()],
+                });
+            //*2 Pegando as informações do usuario.
+            //Checando se o argumento foi uma marcação.
+            let personCheck = message.mentions.users.first() === undefined;
+            //Checando se o argumento é um parametro vazio.
+            if (args[0] === undefined || "")
+                return message.channel.send({
+                    embeds: [
+                        Embeds.errorCode("Usuario Invalido.", "Foi encontrado, no comando de mutar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ", "tempmute", [
+                            {
+                                name: ":purple_square:  Mutar temporariamente por Menção | ",
+                                value: "`.tempmute @Discord 1h Regra[1]`",
+                            },
+                            {
+                                name: ":purple_square:  Mutar temporariamente por ID | ",
+                                value: "`.tempmute 261945904829956097 1h Regra[1]`",
+                            },
+                        ]),
+                    ],
+                });
+            //Checando se o argumento começa com letras.
+            if (/^[a-zA-Z]+$/.test(args[0])) {
+                return message.channel.send({
+                    embeds: [
+                        Embeds.errorCode("Usuario Invalido.", "Foi encontrado, no comando de mutar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ", "tempmute", [
+                            {
+                                name: ":purple_square:  Mutar temporariamente por Menção | ",
+                                value: "`.tempmute @Discord 1h Regra[1]`",
+                            },
+                            {
+                                name: ":purple_square:  Mutar temporariamente por ID | ",
+                                value: "`.tempmute 261945904829956097 1h Regra[1]`",
+                            },
+                        ]),
+                    ],
+                });
+            }
+            let person;
+            //Checando se o argumento informado é igual a um numero.
+            if (!isNaN(parseInt(args[0]))) {
+                //Checando se contem alguma letra em meio aos numeros.
+                try {
+                    person = message.guild.members.cache.find((memberID) => memberID.id === args[0]);
+                }
+                catch {
+                    return message.channel.send({
+                        embeds: [
+                            Embeds.errorCode("Usuario Invalido.", "Foi encontrado, no comando de mutar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ", "tempmute", [
+                                {
+                                    name: ":purple_square:  Mutar temporariamente por Menção | ",
+                                    value: "`.tempmute @Discord 1h Regra[1]`",
+                                },
+                                {
+                                    name: ":purple_square:  Mutar temporariamente por ID | ",
+                                    value: "`.tempmute 261945904829956097 1h Regra[1]`",
+                                },
+                            ]),
+                        ],
+                    });
+                }
+            }
+            else {
+                person = personCheck
+                    ? message.guild.members.cache.get(args[0])
+                    : message.guild.members.cache.get(message.mentions.users.first().id);
+            }
+            if (!person)
+                return message.channel.send({ embeds: [Embeds.UserNotExist()] });
+            //*3 Armazenando o motivo em uma variavel caso tenha.
+            let reason = message.content.split(" ").splice(2).join(" ");
+            if (reason === "")
+                reason = "Indefinido";
+            //*4 Impedindo com que o author da mensagem se desmute.
+            if (person.id === message.author.id)
+                return message.channel.send({ embeds: [Embeds.autoBan()] });
+            //*5 Checando se o usuario foi mutado temporariamente pelo "timeout()" ou sem tempo definido pelo "cargo muted".
+            let muteRole = message.guild.roles.cache.find((role) => role.name === "Muted");
+            //Checando se o usuario tem o cargo muted em seu usuario
+            const checkMuteRole = new index_js_1.CheckRole(client, person, [
+                muteRole.id,
+            ]);
+            //Caso tenha, quer dizer que ele foi mutado pelo .mute
+            if (checkMuteRole.CheckReturnBoolean()) {
+                await person.roles.remove(muteRole);
+                await message.react("✅");
+            }
+            else {
+                //Caso contrario, quer dizer que ele foi mutado pelo .tempmute
+                await person.timeout(null);
+                await message.react("✅");
+            }
+            if (message.deletable)
+                await message.delete();
+            //TODO: Criar um embed final.
+        }
+        catch (error) {
+            await message.react("❌");
+            console.log(`${error}`);
+        }
+    },
+};
