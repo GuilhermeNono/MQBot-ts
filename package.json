@@ -9,7 +9,7 @@
     "npm": "8.3.0"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -R src/Assets dist/src",
     "start": "node dist/src/index.js",
     "postinstall": "npm run build",
     "dev": "nodemon --watch src/ --exec ts-node -r tsconfig-paths/register src/index.ts -e ts"

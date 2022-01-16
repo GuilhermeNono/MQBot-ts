@@ -1,5 +1,5 @@
 import { Client, Collection } from "discord.js";
-import {connect} from "mongoose";
+import { connect } from "mongoose";
 import path from "path";
 import { readdirSync } from "fs";
 import { Command, Event } from "../interfaces/index.js";
@@ -21,12 +21,20 @@ class ExtendedClient extends Client {
 
     console.log(yellow("⌛ Initializing Commands...⌛"));
 
-    const commandPath:string = path.join(__dirname, "..", "Commands");
+    const commandPath: string = path.join(__dirname, "..", "Commands");
+    console.log("Command Path =>", commandPath)
     readdirSync(commandPath).forEach((dir) => {
+      console.log("dir => ",dir)
       try {
-        const commands:string[] = readdirSync(`${commandPath}/${dir}`).filter((file) =>
-          file.endsWith(".ts" || "js")
+        //Possivel problema no momento de assinar os valores no "commands"
+        let commands: string[] = readdirSync(`${commandPath}/${dir}`).filter(
+          (file) => {
+            console.log(file)
+            if(endsWithAny([".js", ".ts"],file)) return file
+          }
         );
+        console.log(commands);
+        console.log(`${commandPath}/${dir}`)
         for (const file of commands) {
           const { command } = require(`${commandPath}/${dir}/${file}`);
           this.commands.set(command.name, command);
@@ -56,12 +64,14 @@ class ExtendedClient extends Client {
 
     console.log(yellow("⌛ Initializing Events...⌛"));
 
-    const load_dir:(dir:string) => Promise<void> = async (dir: string) => {
+    const load_dir: (dir: string) => Promise<void> = async (dir: string) => {
       try {
         const eventPath = path.join(__dirname, "..", "Events", `${dir}`);
-        const event_files = readdirSync(eventPath).filter(async (file) =>
-          file.endsWith(".ts" || "js")
-        );
+        const event_files = readdirSync(eventPath).filter(async (file) => {
+          if (endsWithAny([".ts", ".js"], file)) {
+            return file;
+          }
+        });
 
         for (const file of event_files) {
           const { event } = await import(`${eventPath}/${file}`);
@@ -90,3 +100,6 @@ class ExtendedClient extends Client {
 }
 
 export default ExtendedClient;
+function endsWithAny(suffixes: string[], string: string) {
+  return suffixes.some((suffix) => string.endsWith(suffix));
+}
