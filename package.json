@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node dist/src/index.js",
-    "heroku-prebuild": "tsc && cp -R src/Assets dist/src",
+    "heroku-cleanup": "tsc && cp -R src/Assets dist/src",
     "dev": "nodemon --watch src/ --exec ts-node -r tsconfig-paths/register src/index.ts -e ts"
   },
   "repository": {
