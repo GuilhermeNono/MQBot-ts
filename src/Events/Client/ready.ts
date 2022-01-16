@@ -1,5 +1,5 @@
 import { Event } from "../../interfaces/index.js";
-import { cyan } from "colors";
+// import { cyan } from "colors";
 import { Contador, MuteRefil, InitDB } from "../Cycle/index.js";
 import ExtendedClient from "../../Client/index.js";
 export const event: Event = {
