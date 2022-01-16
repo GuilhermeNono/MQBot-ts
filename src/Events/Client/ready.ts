@@ -5,13 +5,9 @@ import ExtendedClient from "../../Client/index.js";
 export const event: Event = {
   name: "ready",
   run: async (client: ExtendedClient) => {
-    try {
-      await InitDB(client)
+    await InitDB(client)
       console.log(`✨${client.user.tag}'s Online!✨`);
       await MuteRefil(client);
       await Contador(client);
-    } catch (error) {
-      console.log(error);
-    }
   },
 };

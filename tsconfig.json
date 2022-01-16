@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
+    "target": "ESNext",
+    "lib": ["ESNext"],
     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "allowJs": true,
     /* Specify a set of bundled library declaration files that describe the target runtime environment. */
