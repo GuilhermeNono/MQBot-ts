@@ -13,3 +13,4 @@ new Client({
   ],
   partials: ["USER", "REACTION", "MESSAGE", "GUILD_MEMBER"],
 }).init();
+

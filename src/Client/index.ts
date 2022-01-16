@@ -5,6 +5,7 @@ import { readdirSync } from "fs";
 import { Command, Event } from "../interfaces/index.js";
 import dotenv from "dotenv";
 import { green, red, yellow } from "colors";
+import { Contador, InitDB, MuteRefil } from "../Events/Cycle/index.js";
 
 dotenv.config();
 
@@ -89,6 +90,7 @@ class ExtendedClient extends Client {
     };
 
     ["Client", "Guild"].forEach(async (e) => await load_dir(e));
+    
   }
 }
 
