@@ -4,11 +4,11 @@
   "description": "Uma portabilidade do bot de javascript para typescript",
   "main": "dist/src/index.js",
   "engines": {
-    "node": "16.10.0",
+    "node": "16.x",
     "npm": "8.x"
   },
   "scripts": {
-    "build": "tsc && dist/src/index.js",
+    "build": "tsc && cp -R src/Assets dist/src && node dist/src/index.js",
     "start": "node dist/src/index.js",
     "dev": "nodemon --watch src/ --exec ts-node -r tsconfig-paths/register src/index.ts -e ts"
   },
