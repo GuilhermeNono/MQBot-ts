@@ -7,7 +7,7 @@ async function Contador(client:Client<true>): Promise<void> {
   /*Puxando o servidor pelo id*/
   const guild:Guild = client.guilds.cache.get("929417995325956177");
   /*Setando o tempo em 10 minutos*/
-  let time:number = ms("5s");
+  let time:number = ms("10m");
   /*Criando um temporizador para que a cada 10 minutos ele atualize o canal.*/
   setInterval(() => {
     /*Puxando a quantidade de membros no servidor*/
