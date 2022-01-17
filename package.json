@@ -4,7 +4,8 @@
   "description": "Uma portabilidade do bot de javascript para typescript",
   "main": "dist/src/index.js",
   "engines": {
-    "node": "16.10.0"
+    "node": "16.10.0",
+    "npm": "7.24.0"
   },
   "scripts": {
     "build": "cp -R src/Assets dist/src",
