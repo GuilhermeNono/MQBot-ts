@@ -72,7 +72,7 @@ class ExtendedClient extends Client {
           const {event} = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
           if(file == "ready.js" || file == "ready.ts"){
-            this.once(event.name, event.run.bind(null, this));
+            this.once(event.name, event.run.bind(this));
           } else {
             this.on(event.name, event.run.bind(null, this));
           }
