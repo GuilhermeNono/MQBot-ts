@@ -1,5 +1,5 @@
 import ExtendedClient from "../../src/Client/index";
-import { MessageEmbed, EmbedFieldData, ColorResolvable, Message, GuildMember, User } from "discord.js";
+import { MessageEmbed, EmbedFieldData, ColorResolvable, Message, GuildMember, User, Guild } from "discord.js";
 class EmbedTemplates {
   constructor(private client: ExtendedClient) {
     this.client = client;
@@ -106,22 +106,16 @@ class EmbedTemplates {
       });
   }
 
-  PrivateDesc(message:Message<boolean>, person: GuildMember, reason:string, typePunish:string, time:string, color:ColorResolvable, image?:string): MessageEmbed {
+  PrivateDesc(message:Message<boolean>, person: GuildMember | User, reason:string, typePunish:string, time:string, color:ColorResolvable, image?:string): MessageEmbed {
      
     let Embed:MessageEmbed = new MessageEmbed()
-      .setTitle(`${person.user.tag}`)
-      .setAuthor({name:message.author.username, iconURL:`${message.author.avatarURL()}`})
-      .setThumbnail(
+    Embed.setAuthor({name:message.author.username, iconURL:`${message.author.avatarURL()}`})
+    Embed.setThumbnail(
         "https://cdn-icons-png.flaticon.com/512/3094/3094851.png"
       )
-      .setColor(color)
-      .setDescription("**:clipboard: Informações do usuario:**")
-      .addFields(
-        {
-          name: ":mega: Username | ",
-          value: `${person.user.tag}`,
-          inline: true,
-        },
+      Embed.setColor(color)
+      Embed.setDescription("**:clipboard: Informações do usuario:**")
+      Embed.addFields(
         {
           name: ":mute: Tipo de punição | ",
           value: `${typePunish}`,
@@ -143,44 +137,62 @@ class EmbedTemplates {
           inline: true,
         }
       )
-      .setFooter({text:`id ➟ ${person.user.id}`});
+      
+      if(person instanceof GuildMember) {
+        Embed.setFooter({text:`id ➟ ${person.user.id}`});
+        Embed.addField(":mega: Username | ", `${person.user.tag}`,true)
+      } else {
+        Embed.setFooter({text:`id ➟ ${person.id}`});
+        Embed.addField(":mega: Username | ", `${person.tag}`,true)
+      }
 
       if(image) Embed.setImage(image);
 
       return Embed
   }
 
-  PublicDesc(message:Message<boolean>, reason:string, person:GuildMember, gifThumbnail:string, color:ColorResolvable, time:string | number, gifCenter:string): MessageEmbed {
+  PublicDesc(message:Message<boolean>, reason:string, person:GuildMember | User, gifThumbnail:string, color:ColorResolvable, time:string | number, gifCenter:string): MessageEmbed {
     //
-    return new MessageEmbed()
-      .setAuthor({
+     let embed = new MessageEmbed()
+     embed.setAuthor({
         name: message.author.username,
         iconURL: `${message.author.avatarURL()}`,
       })
-      .setColor(color)
-      .setDescription(`**:bookmark: Motivo da punição ➟ **${reason}`)
-      .setThumbnail(
+      embed.setColor(color)
+      embed.setDescription(`**:bookmark: Motivo da punição ➟ **${reason}`)
+      embed.setThumbnail(
         gifThumbnail
       )
-      .addField(
-        ":speak_no_evil: Usuario Punido | ",
-        `${person.user} 🡳 ${person.user.tag}`,
-        true
-      )
-      .addField(
+      
+      embed.addField(
         ":timer: Tempo de Punição | ",
         "➟ " + `${time}`,
         true
       )
-      .setImage(
+      embed.setImage(
         gifCenter
         
       )
-      .setFooter({
+      embed.setFooter({
         text: `➟ boo`,
         iconURL:
           "https://media.discordapp.net/attachments/776094611470942208/846246640867737610/peach_san.png?width=701&height=701",
       });
+      if(person instanceof GuildMember) {
+        embed.addField(
+          ":speak_no_evil: Usuario Punido | ",
+          `${person.user} 🡳 ${person.user.tag}`,
+          true
+        )
+      } else if(person instanceof GuildMember){
+        embed.addField(
+          ":speak_no_evil: Usuario Punido | ",
+          `${person} 🡳 ${person.tag}`,
+          true
+        )
+      }
+
+      return embed
   }
 }
 

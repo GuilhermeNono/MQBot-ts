@@ -179,7 +179,6 @@ export const command: Command = {
           publicChannel.type === "GUILD_TEXT" &&
           privateChannel.type === "GUILD_TEXT"
         ) {
-          if (person instanceof GuildMember)
             publicChannel
               .send({
                 embeds: [
@@ -195,7 +194,6 @@ export const command: Command = {
                 ],
               })
               .then(async () => {
-                if (person instanceof GuildMember)
                   privateChannel.send({
                     embeds: [
                       Embeds.PrivateDesc(
@@ -209,6 +207,7 @@ export const command: Command = {
                       ),
                     ],
                   });
+                  
                 await message.delete();
               });
         }
