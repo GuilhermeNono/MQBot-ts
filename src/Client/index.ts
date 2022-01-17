@@ -73,6 +73,8 @@ class ExtendedClient extends Client {
           this.events.set(event.name, event);
           if(file == "ready.js" || file == "ready.ts"){
             this.once(event.name, event.run.bind(null, this));
+          } else {
+            this.on(event.name, event.run.bind(null, this));
           }
           
         }
