@@ -15,7 +15,7 @@ class ExtendedClient extends Client {
   public aliases: Collection<string, Command> = new Collection();
 
   public async init() {
-    this.login(process.env["DISCORD_TOKEN"]);
+    await this.login(process.env["DISCORD_TOKEN"]);
     await connect(process.env["MONGODB_LOGIN"]);
 
     //*Commands
@@ -72,7 +72,7 @@ class ExtendedClient extends Client {
           const {event} = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
           if(event.name === "ready") {
-            this.on("shardDisconnect", (client) => {
+            this.on("", (client) => {
               console.log("teste")
             });
           }
