@@ -1,5 +1,4 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
-//@ts-ignore
 class GuildData {
     @prop()
     guildID: string;

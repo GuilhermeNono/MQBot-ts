@@ -1,6 +1,5 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
 
-//@ts-ignore
 class UserData {
   @prop()
   public userId: string;
