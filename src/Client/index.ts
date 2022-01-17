@@ -60,7 +60,7 @@ class ExtendedClient extends Client {
 
     console.log(yellow("⌛ Initializing Events...⌛"));
 
-    const load_dir: (dir: string) => Promise<void> = async (dir: string) => {
+    const load_dir= async (dir: string) => {
       try {
         const eventPath = path.join(__dirname, "..", "Events", `${dir}`);
         const event_files = readdirSync(eventPath).filter(async (file) => {
