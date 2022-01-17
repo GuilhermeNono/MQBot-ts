@@ -7,8 +7,9 @@
     "node": "16.10.0"
   },
   "scripts": {
-    "build": "tsc && cp -R src/Assets dist/src",
+    "build": "cp -R src/Assets dist/src",
     "start": "node dist/src/index.js",
+    "postinstall": "tsc",
     "dev": "nodemon --watch src/ --exec ts-node -r tsconfig-paths/register src/index.ts -e ts"
   },
   "repository": {
