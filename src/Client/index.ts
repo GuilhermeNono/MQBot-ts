@@ -72,7 +72,7 @@ class ExtendedClient extends Client {
           const {event} = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
           if(file == "ready.js" || file == "ready.ts"){
-            this.once(event.name, event.run.bind(this));
+            this.once(event.name, event.run.bind(null, this));
           } else {
             this.on(event.name, event.run.bind(null, this));
           }
@@ -95,6 +95,10 @@ class ExtendedClient extends Client {
     };
 
     ["Guild","Client"].forEach(async (e) => await load_dir(e));
+
+    this.on('ready', () => {
+      console.log('iniciado.')
+    })
     
   }
 }
