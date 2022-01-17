@@ -90,7 +90,7 @@ class ExtendedClient extends Client {
       }
     };
 
-    ["Guild", "Client"].forEach(async (e) => await load_dir(e));
+    ["Guild"].forEach(async (e) => await load_dir(e));
 
     console.log(`✨${this.user.tag}'s Online!✨`);
     await InitDB(this);
