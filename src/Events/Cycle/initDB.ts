@@ -1,10 +1,10 @@
 import ExtendedClient from '../../Client/index';
 import { Databases } from "../../../lib/modules/index";
 import { UserDataModel } from "../../../models/index";
-import { Guild } from "discord.js";
+import { Client, Guild } from "discord.js";
 import {green, red, yellow } from "colors";
 
-async function InitDB(client: ExtendedClient): Promise<any> {
+async function InitDB(client: Client<true>): Promise<any> {
   try {
     console.log(
         yellow(`⌛ Initiating members database verification...⌛`)

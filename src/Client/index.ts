@@ -61,7 +61,7 @@ class ExtendedClient extends Client {
 
     console.log(yellow("⌛ Initializing Events...⌛"));
 
-    const load_dir= async (dir: string) => {
+    const load_dir = async (dir: string) => {
       try {
         const eventPath = path.join(__dirname, "..", "Events", `${dir}`);
         const event_files = readdirSync(eventPath).filter(async (file) => {
@@ -70,13 +70,8 @@ class ExtendedClient extends Client {
           }
         });
         for (const file of event_files) {
-          const {event} = await import(`${eventPath}/${file}`);
+          const { event } = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
-          if(event.name === "ready") {
-            this.on("shardDisconnect", (client) => {
-              console.log("teste")
-            });
-          }
           this.on(event.name, event.run.bind(null, this));
         }
 
@@ -95,7 +90,12 @@ class ExtendedClient extends Client {
       }
     };
 
-     ["Guild","Client"].forEach(async (e) => await load_dir(e));
+    ["Guild", "Client"].forEach(async (e) => await load_dir(e));
+
+    console.log(`✨${this.user.tag}'s Online!✨`);
+    await InitDB(this);
+    await MuteRefil(this);
+    await Contador(this);
   }
 }
 

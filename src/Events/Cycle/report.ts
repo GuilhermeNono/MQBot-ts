@@ -1,7 +1,7 @@
 import ExtendedClient from "../../Client/index";
-import { GuildBasedChannel, Message, MessageEmbed } from "discord.js";
+import { Client, GuildBasedChannel, Message, MessageEmbed } from "discord.js";
 
-async function Report(message: Message, client: ExtendedClient): Promise<any> {
+async function Report(message: Message, client: Client<true>): Promise<any> {
   try {
     if(message.guild.id !== "929417995325956177") return
 

@@ -1,9 +1,9 @@
 import ExtendedClient from '../../Client/index';
-import { Guild, GuildChannel, ThreadChannel } from 'discord.js';
+import { Client, Guild, GuildChannel, ThreadChannel } from 'discord.js';
 //@ts-ignore
 import ms from 'ms'
 
-async function Contador(client:ExtendedClient): Promise<void> {
+async function Contador(client:Client<true>): Promise<void> {
   /*Puxando o servidor pelo id*/
   const guild:Guild = client.guilds.cache.get("929417995325956177");
   /*Setando o tempo em 10 minutos*/

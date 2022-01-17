@@ -2,6 +2,7 @@ import ExtendedClient from "../../Client/index";
 import { Databases } from "../../../lib/modules/index";
 import { UserDataModel } from "../../../models/index";
 import {
+  Client,
   Guild,
   GuildMember,
   Role,
@@ -9,7 +10,7 @@ import {
 //@ts-ignore
 import ms from "ms";
 
-async function MuteRefil(client: ExtendedClient): Promise<any> {
+async function MuteRefil(client: Client<true>): Promise<any> {
   try {
     setInterval(async () => {
       var today: Date = new Date();
