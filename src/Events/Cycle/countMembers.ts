@@ -1,14 +1,16 @@
 import ExtendedClient from '../../Client/index';
 import { Guild, GuildChannel, ThreadChannel } from 'discord.js';
+//@ts-ignore
 import ms from 'ms'
 
 async function Contador(client:ExtendedClient): Promise<void> {
   /*Puxando o servidor pelo id*/
   const guild:Guild = client.guilds.cache.get("929417995325956177");
   /*Setando o tempo em 10 minutos*/
-  let time:number = ms("10m");
+  let time:number = ms("5s");
   /*Criando um temporizador para que a cada 10 minutos ele atualize o canal.*/
   setInterval(() => {
+    console.log('123 testando')
     /*Puxando a quantidade de membros no servidor*/
     let memberCount:number | string = guild.memberCount;
     /*Setando o canal que será editado com o numero de pessoas presentes no servidor*/

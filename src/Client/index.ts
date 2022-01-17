@@ -71,6 +71,11 @@ class ExtendedClient extends Client {
         for (const file of event_files) {
           const {event} = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
+          if(event.name === "ready") {
+            this.on('ready', (client) => {
+              console.log("teste")
+            });
+          }
           this.on(event.name, event.run.bind(null, this));
         }
 
@@ -89,7 +94,7 @@ class ExtendedClient extends Client {
       }
     };
 
-    ["Guild","Client"].forEach(async (e) => await load_dir(e));
+     ["Guild","Client"].forEach(async (e) => await load_dir(e));
   }
 }
 

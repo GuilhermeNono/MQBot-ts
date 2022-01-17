@@ -6,6 +6,7 @@ import {
   GuildMember,
   Role,
 } from "discord.js";
+//@ts-ignore
 import ms from "ms";
 
 async function MuteRefil(client: ExtendedClient): Promise<any> {

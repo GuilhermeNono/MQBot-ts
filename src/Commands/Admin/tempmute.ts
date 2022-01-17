@@ -9,6 +9,7 @@ import {
   GuildBasedChannel,
   Message,
 } from "discord.js";
+//@ts-ignore
 import ms from "ms";
 
 export const command: Command = {
