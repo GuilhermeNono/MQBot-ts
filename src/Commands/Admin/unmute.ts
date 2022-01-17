@@ -139,7 +139,6 @@ export const command: Command = {
         await person.timeout(null);
         await message.react("✅")
       }
-      if(message.deletable) await message.delete()
       //TODO: Criar um embed final.
     } catch (error) {
       await message.react("❌");
