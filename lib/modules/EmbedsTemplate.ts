@@ -184,7 +184,7 @@ class EmbedTemplates {
           `${person.user} 🡳 ${person.user.tag}`,
           true
         )
-      } else if(person instanceof GuildMember){
+      } else {
         embed.addField(
           ":speak_no_evil: Usuario Punido | ",
           `${person} 🡳 ${person.tag}`,
