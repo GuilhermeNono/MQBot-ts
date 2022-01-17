@@ -90,7 +90,7 @@ class ExtendedClient extends Client {
     };
 
     ["Client", "Guild"].forEach(async (e) => await load_dir(e));
-    console.log(`${this.eventNames()}`)
+    console.log(`${this.events.map(t => t.name)}`)
   }
 }
 
