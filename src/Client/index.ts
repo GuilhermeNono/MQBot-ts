@@ -72,7 +72,7 @@ class ExtendedClient extends Client {
           const {event} = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
           if(event.name === "ready") {
-            this.on('ready', (client) => {
+            this.on("shardDisconnect", (client) => {
               console.log("teste")
             });
           }
