@@ -21,9 +21,16 @@ export const command: Command = {
     try {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const Embeds = new EmbedTemplates(client);
-      const authorRoleCheck: CheckRole = new CheckRole(client, message.member);
+      const rolesId: string[] = [
+        "929426173673500673", //Role "Fei" > brioco
+        "929418031795408916", //Role "Adm" > brioco
+        "929435905926791168", //Role "Mod" > brioco
+      ];
+      const newCheckAuthor: CheckRole = new CheckRole(client, message.member, rolesId);
 
-      if (!authorRoleCheck.CheckHighRoleBool())
+      const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
+
+      if (!checkReturn)
         return message.channel.send({
           embeds: [Embeds.userCannotBePunished()],
         });

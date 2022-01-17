@@ -28,8 +28,14 @@ export const command: Command = {
       //*1 - Verificando se o usuario tem o cargo necessario para usar esse comando
 
       const memberAuthor: GuildMember = message.member;
-      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor);
-      const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
+      const rolesId: string[] = [
+        "929426173673500673", //Role "Fei" > brioco
+        "929418031795408916", //Role "Adm" > brioco
+        "929435905926791168", //Role "Mod" > brioco
+      ];
+      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor, rolesId);
+
+      const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
 
       if (!checkReturn)
         return message.channel.send({ embeds: [Embeds.missingPermission()] });
@@ -141,14 +147,15 @@ export const command: Command = {
       if (reason === "") reason = "Indefinido";
 
       //*6 Verificando se tem alguma imagem enviada pelo ADM
-      let evidenceImage:any = message.attachments.first();
-      let reasonEvidence:string = "Evidencia da punição 🡹";
-        if (evidenceImage === undefined) {
-          evidenceImage = 'https://saocarlosemrede.com.br/wp-content/uploads/2020/01/placeholder-1200x500-1.png';
-          reasonEvidence = "Evidencia da punição não definida 🡹";
-        } else {
-          evidenceImage = evidenceImage.attachment;
-        }
+      let evidenceImage: any = message.attachments.first();
+      let reasonEvidence: string = "Evidencia da punição 🡹";
+      if (evidenceImage === undefined) {
+        evidenceImage =
+          "https://saocarlosemrede.com.br/wp-content/uploads/2020/01/placeholder-1200x500-1.png";
+        reasonEvidence = "Evidencia da punição não definida 🡹";
+      } else {
+        evidenceImage = evidenceImage.attachment;
+      }
 
       // *7 - Checando se o usuario já foi banido
       let guildBans: Collection<string, GuildBan> =
@@ -179,37 +186,37 @@ export const command: Command = {
           publicChannel.type === "GUILD_TEXT" &&
           privateChannel.type === "GUILD_TEXT"
         ) {
-            publicChannel
-              .send({
+          publicChannel
+            .send({
+              embeds: [
+                Embeds.PublicDesc(
+                  message,
+                  reason,
+                  person,
+                  gifEmbed,
+                  "RED",
+                  "**:lock: Indeterminado**",
+                  "https://arquivosdedispositivosmoveis.files.wordpress.com/2013/05/anime-arquivos-de-dispositivos-mc3b3veis-one-piece.gif"
+                ),
+              ],
+            })
+            .then(async () => {
+              privateChannel.send({
                 embeds: [
-                  Embeds.PublicDesc(
+                  Embeds.PrivateDesc(
                     message,
-                    reason,
                     person,
-                    gifEmbed,
-                    "RED",
+                    reason,
+                    "__Ban__ ➟ 🔴",
                     "**:lock: Indeterminado**",
-                    "https://arquivosdedispositivosmoveis.files.wordpress.com/2013/05/anime-arquivos-de-dispositivos-mc3b3veis-one-piece.gif"
+                    "RED",
+                    evidenceImage
                   ),
                 ],
-              })
-              .then(async () => {
-                  privateChannel.send({
-                    embeds: [
-                      Embeds.PrivateDesc(
-                        message,
-                        person,
-                        reason,
-                        "__Ban__ ➟ 🔴",
-                        "**:lock: Indeterminado**",
-                        "RED",
-                        evidenceImage
-                      ),
-                    ],
-                  });
-                  
-                await message.delete();
               });
+
+              await message.delete();
+            });
         }
       }
     } catch (error) {

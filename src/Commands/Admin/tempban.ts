@@ -30,8 +30,14 @@ export const command: Command = {
 
       const memberAuthor: GuildMember = message.member;
 
-      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor);
-      const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
+      const rolesId: string[] = [
+        "929426173673500673", //Role "Fei" > brioco
+        "929418031795408916", //Role "Adm" > brioco
+        "929435905926791168", //Role "Mod" > brioco
+      ];
+      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor, rolesId);
+
+      const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
 
       if (!checkReturn)
         return message.channel.send({ embeds: [Embeds.missingPermission()] });

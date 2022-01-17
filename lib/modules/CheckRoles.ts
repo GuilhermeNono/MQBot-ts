@@ -68,6 +68,7 @@ class CheckRole {
     this.idRolesWithPermission = [
       "929426173673500673", //Role "Fei" > brioco
       "929418031795408916", //Role "Adm" > brioco
+      "932132044727795712", //Role "Tio do RH" brioco
       "929435905926791168", //Role "Mod" > brioco
       "735147189432483920", //Role "Zé" > Peach Server
       "716006513818468404", //Role "MACACOS" > Muquifo
