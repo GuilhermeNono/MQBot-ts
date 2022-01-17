@@ -89,7 +89,7 @@ class ExtendedClient extends Client {
       }
     };
 
-    ["Client", "Guild"].forEach(async (e) => await load_dir(e));
+    ["Guild","Client"].forEach(async (e) => await load_dir(e));
     
   }
 }
