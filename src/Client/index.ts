@@ -15,7 +15,8 @@ class ExtendedClient extends Client {
   public aliases: Collection<string, Command> = new Collection();
 
   public async init() {
-    await this.login(process.env["DISCORD_TOKEN"]);
+    const dToken = process.env["DISCORD_TOKEN"];
+    await this.login(dToken);
     await connect(process.env["MONGODB_LOGIN"]);
 
     //*Commands
