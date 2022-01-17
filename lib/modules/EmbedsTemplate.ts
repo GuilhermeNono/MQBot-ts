@@ -106,7 +106,7 @@ class EmbedTemplates {
       });
   }
 
-  PrivateDesc(message:Message<boolean>, person: GuildMember, reason:string, typePunish:string, time:string, color:ColorResolvable, image?): MessageEmbed {
+  PrivateDesc(message:Message<boolean>, person: GuildMember, reason:string, typePunish:string, time:string, color:ColorResolvable, image?:string): MessageEmbed {
      
     let Embed:MessageEmbed = new MessageEmbed()
       .setTitle(`${person.user.tag}`)

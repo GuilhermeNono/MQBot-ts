@@ -181,21 +181,25 @@ export const command: Command = {
             mentionable: false,
           })
           .then((newRole: Role) => {
-            message.guild.channels.cache.each((channels: TextChannel) => {
-              channels.permissionOverwrites.edit(newRole.id, {
-                SEND_MESSAGES: false,
-                ADD_REACTIONS: false,
-              });
+            message.guild.channels.cache.each((channels: GuildBasedChannel) => {
+              if(channels.type === 'GUILD_TEXT'){
+                channels.permissionOverwrites.edit(newRole.id, {
+                  SEND_MESSAGES: false,
+                  ADD_REACTIONS: false,
+                });
+              }
             });
 
             muteRole = newRole;
           });
       } else {
-        message.guild.channels.cache.each((channels: TextChannel) => {
-          channels.permissionOverwrites.edit(muteRole.id, {
-            SEND_MESSAGES: false,
-            ADD_REACTIONS: false,
-          });
+        message.guild.channels.cache.each((channels: GuildBasedChannel) => {
+          if(channels.type === 'GUILD_TEXT') {
+            channels.permissionOverwrites.edit(muteRole.id, {
+              SEND_MESSAGES: false,
+              ADD_REACTIONS: false,
+            });
+          }
         });
       }
 

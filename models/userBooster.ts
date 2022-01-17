@@ -1,5 +1,5 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
-
+//@ts-ignore
 class userBoost {
     @prop()
     userId: string;

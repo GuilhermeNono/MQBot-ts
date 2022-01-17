@@ -14,7 +14,7 @@ export const event: Event = {
       if (
         message.author.bot ||
         !message.guild ||
-        !message.content.startsWith(process.env["BOT_PREFIX"])
+        !message.content.startsWith(process?.env["BOT_PREFIX"])
       )
         return;
 
@@ -25,15 +25,16 @@ export const event: Event = {
       if (message.guild.id !== "929417995325956177")  
         return message.channel.send({ embeds: [embedIsNotOfficialServer] });
 
-      const args = message.content
-        .slice(process.env["BOT_PREFIX"].length)
+      const args = message?.content
+        .slice(process.env["BOT_PREFIX"]?.length)
         .trim()
         .split(/ +/g);
 
-      const cmd: string = args.shift().toLowerCase();
+      const cmd: string | undefined= args?.shift()?.toLowerCase();
       if (!cmd) return;
-      const command: Command =
+      const command: Command | undefined=
         client.commands.get(cmd) || client.aliases.get(cmd);
+        if(!command) return
       if (command) (command as Command).run(client, message, args);
     } catch (error) {}
   },

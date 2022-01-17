@@ -34,6 +34,9 @@
     /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
     // "skipDefaultLibCheck": true,
     /* Skip type checking .d.ts files that are included with TypeScript. */
+    "strict": true,
+    "noImplicitReturns": false,
+    "strictNullChecks": false,
     "skipLibCheck": true,
     /* Skip type checking all .d.ts files. */
     // "baseUrl": ".",

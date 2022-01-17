@@ -6,7 +6,7 @@ export const event: Event = {
   name: "ready",
   run: async (client: ExtendedClient) => {
       console.log(`✨${client.user.tag}'s Online!✨`);
-      await InitDB(this);
+      await InitDB(client);
       await MuteRefil(client);
       await Contador(client);
   },
