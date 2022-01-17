@@ -1,6 +1,6 @@
-import ExtendedClient from "../../Client/index.js";
-import { Command } from "../../interfaces/index.js"
-import { CheckRole, EmbedTemplates } from "../../../lib/modules/index.js";
+import ExtendedClient from "../../Client/index";
+import { Command } from "../../interfaces/index"
+import { CheckRole, EmbedTemplates } from "../../../lib/modules/index";
 import { GuildMember, Message, Role} from "discord.js";
 
 export const command: Command = {

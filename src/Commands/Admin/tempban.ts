@@ -1,6 +1,6 @@
-import ExtendedClient from "../../Client/index.js";
-import { Command } from "../../interfaces/index.js"
-import { CheckRole, EmbedTemplates, mTimer, Timer } from "../../../lib/modules/index.js";
+import ExtendedClient from "../../Client/index";
+import { Command } from "../../interfaces/index"
+import { CheckRole, EmbedTemplates, mTimer, Timer } from "../../../lib/modules/index";
 import {
   Collection,
   GuildBan,

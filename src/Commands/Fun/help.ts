@@ -1,5 +1,5 @@
-import ExtendedClient from "../../Client/index.js";
-import { Command } from "../../interfaces/index.js"
+import ExtendedClient from "../../Client/index";
+import { Command } from "../../interfaces/index"
 import { version } from "../../../package.json";
 //@ts-ignore
 import Pagination from "discordjs-button-pagination";

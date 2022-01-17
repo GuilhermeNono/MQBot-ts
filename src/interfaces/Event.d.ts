@@ -1,5 +1,5 @@
-import Client from "../Client/index.js";
-import { ClientEvents } from "discord.js";
+import Client from "../Client/index";
+import { ClientEvents } from "discord";
 
 interface Run {
   (client: Client, ...args: any[]): Promise<unknown>;

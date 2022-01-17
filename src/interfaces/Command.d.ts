@@ -1,4 +1,4 @@
-import Client from "../Client/index.js";
+import Client from "../Client/index";
 import { Message } from "discord.js";
 
 interface Run {

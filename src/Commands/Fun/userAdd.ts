@@ -1,7 +1,7 @@
-import ExtendedClient from "../../Client/index.js";
-import { UserBoostModel } from "../../../models/index.js";
-import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules/index.js";
-import { Command } from "../../interfaces/index.js"
+import ExtendedClient from "../../Client/index";
+import { UserBoostModel } from "../../../models/index";
+import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules/index";
+import { Command } from "../../interfaces/index"
 import {
   GuildBasedChannel,
   GuildMember,

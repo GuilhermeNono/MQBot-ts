@@ -2,10 +2,10 @@ import { Client, Collection } from "discord.js";
 import { connect } from "mongoose";
 import path from "path";
 import { readdirSync } from "fs";
-import { Command, Event } from "../interfaces/index.js";
+import { Command, Event } from "../interfaces/index";
 import dotenv from "dotenv";
 import { green, red, yellow } from "colors";
-import { Contador, InitDB, MuteRefil } from "../Events/Cycle/index.js";
+import { Contador, InitDB, MuteRefil } from "../Events/Cycle/index";
 
 dotenv.config();
 
@@ -71,12 +71,7 @@ class ExtendedClient extends Client {
         for (const file of event_files) {
           const {event} = await import(`${eventPath}/${file}`);
           this.events.set(event.name, event);
-          if(file == "ready.js" || file == "ready.ts"){
-            this.once(event.name, event.run.bind(null, this));
-          } else {
-            this.on(event.name, event.run.bind(null, this));
-          }
-          
+          this.on(event.name, event.run.bind(null, this));
         }
 
         console.log(
@@ -95,11 +90,6 @@ class ExtendedClient extends Client {
     };
 
     ["Guild","Client"].forEach(async (e) => await load_dir(e));
-
-    this.on('ready', () => {
-      console.log('iniciado.')
-    })
-    
   }
 }
 

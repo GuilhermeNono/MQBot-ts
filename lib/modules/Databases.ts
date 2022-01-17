@@ -1,4 +1,4 @@
-import { UserDataModel, UserBoostModel } from "../../models/index.js";
+import { UserDataModel, UserBoostModel } from "../../models/index";
 
 class Databases {
   /**

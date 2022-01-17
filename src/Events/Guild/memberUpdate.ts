@@ -1,4 +1,4 @@
-import ExtendedClient from "../../Client/index.js";
+import ExtendedClient from "../../Client/index";
 import { Event } from "../../interfaces/Event";
 import { GuildBasedChannel, GuildMember, MessageEmbed, Role } from "discord.js";
 
