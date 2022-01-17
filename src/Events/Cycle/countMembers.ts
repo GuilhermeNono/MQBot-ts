@@ -10,7 +10,6 @@ async function Contador(client:Client<true>): Promise<void> {
   let time:number = ms("5s");
   /*Criando um temporizador para que a cada 10 minutos ele atualize o canal.*/
   setInterval(() => {
-    console.log('123 testando')
     /*Puxando a quantidade de membros no servidor*/
     let memberCount:number | string = guild.memberCount;
     /*Setando o canal que será editado com o numero de pessoas presentes no servidor*/
