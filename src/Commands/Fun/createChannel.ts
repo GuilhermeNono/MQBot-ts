@@ -1,7 +1,7 @@
 import ExtendedClient from "../../Client/index";
 import { UserBoostModel } from "../../../models/index";
 import { CheckRole, Databases } from "../../../lib/modules/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { GuildBasedChannel, Message, MessageEmbed } from "discord.js";
 
 export const command: Command = {
@@ -63,7 +63,9 @@ export const command: Command = {
 
       if (nameChannel.trim() === "")
         return message.channel.send({ embeds: [missingName] }).then((m) => {
-          setTimeout(() => m.delete(), 15000);
+          setTimeout(() => {
+            if (m.deletable) m.delete();
+          }, 15000);
         });
       //*3 Enviando uma mensagem de Loading até que todas as informações estejam carregadas
       let embedLoading: MessageEmbed = new MessageEmbed()
@@ -97,8 +99,10 @@ export const command: Command = {
           return message.channel
             .send({ embeds: [maxChannel] })
             .then(async (m) => {
-              setTimeout(() => m.delete(), 15000);
-              await loading.delete();
+              setTimeout(() => {
+                if (m.deletable) m.delete();
+              }, 15000);
+              if (loading.deletable) await loading.delete();
             });
 
         //* 5 Registrando a categoria que os canais de bufadores ficam
@@ -174,10 +178,12 @@ export const command: Command = {
               .setFooter({ text: "Obrigado por impulsionar o servidor!❤" });
             //#endregion
 
-            await loading.delete();
+            if (loading.deletable) {
+              await loading.delete();
+            }
             message.channel.send({ embeds: [embedSucess] }).then((msg) => {
               setTimeout(() => {
-                if(msg.deletable){
+                if (msg.deletable) {
                   msg.delete();
                 }
               }, 15000);

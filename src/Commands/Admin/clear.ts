@@ -1,11 +1,7 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { CheckRole, EmbedTemplates } from "../../../lib/modules/index";
-import {
-  Collection,
-  Message,
-  MessageEmbed,
-} from "discord.js";
+import { Collection, Message, MessageEmbed } from "discord.js";
 
 export const command: Command = {
   name: "clear",
@@ -56,10 +52,9 @@ export const command: Command = {
       const fetched: Collection<
         string,
         Message<boolean>
-      > = await message.channel.messages.fetch({ limit: qtd + 1});
+      > = await message.channel.messages.fetch({ limit: qtd + 1 });
       //TODO: 4 Apagando "qtd" mensagens do canal e enviando uma confirmação ou erro
 
-      
       //Checando se existe mensagens para serem excluidas.
       if (fetched) {
         //Checando se o canal que será ecluida as mensagens é um canal de texto de servidor.
@@ -68,7 +63,7 @@ export const command: Command = {
 
           let msgEmbed: MessageEmbed = new MessageEmbed().setColor("GREYPLE");
 
-          if(message.deletable) await message.delete(); 
+          if (message.deletable) await message.delete();
 
           message.channel
             .bulkDelete(fetched)
@@ -81,9 +76,9 @@ export const command: Command = {
                   embeds: [msgEmbed],
                 });
                 setTimeout(() => {
-                  if(msg.deletable){
+                  if (msg.deletable) {
                     msg.delete();
-                  }                 
+                  }
                 }, 5000);
               } else {
                 msgEmbed.setTitle(`${qtd} mensagens foram excluidas! ✅`);
@@ -92,9 +87,9 @@ export const command: Command = {
                   embeds: [msgEmbed],
                 });
                 setTimeout(() => {
-                  if(msg_1.deletable){
+                  if (msg_1.deletable) {
                     msg_1.delete();
-                  }  
+                  }
                 }, 5000);
               }
             })

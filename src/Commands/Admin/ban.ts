@@ -33,7 +33,11 @@ export const command: Command = {
         "929418031795408916", //Role "Adm" > brioco
         "929435905926791168", //Role "Mod" > brioco
       ];
-      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor, rolesId);
+      const newCheckAuthor: CheckRole = new CheckRole(
+        client,
+        memberAuthor,
+        rolesId
+      );
 
       const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
 
@@ -215,7 +219,7 @@ export const command: Command = {
                 ],
               });
 
-              await message.delete();
+              if (message.deletable) await message.delete();
             });
         }
       }

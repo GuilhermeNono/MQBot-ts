@@ -1,13 +1,9 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { version } from "../../../package.json";
 //@ts-ignore
 import Pagination from "discordjs-button-pagination";
-import {
-  Message,
-  MessageButton,
-  MessageEmbed,
-} from "discord.js";
+import { Message, MessageButton, MessageEmbed } from "discord.js";
 
 export const command: Command = {
   name: "help",
@@ -71,14 +67,14 @@ export const command: Command = {
             name: "Comando para retirar o Mute de um usuario.",
             value: "`.unmute {user✅} {reason❌}`",
           },
-        //   {
-        //     name: "Informa o tempo restante até acabar a punição do usuario.",
-        //     value: "`.timeleft {user❌}`",
-        //   },
-        //   {
-        //     name: 'Comando que envia uma marcação para o usuario "@Fuzii"',
-        //     value: "`.fuzi {on/off❌}`",
-        //   },
+          //   {
+          //     name: "Informa o tempo restante até acabar a punição do usuario.",
+          //     value: "`.timeleft {user❌}`",
+          //   },
+          //   {
+          //     name: 'Comando que envia uma marcação para o usuario "@Fuzii"',
+          //     value: "`.fuzi {on/off❌}`",
+          //   },
           {
             name: "Comando para mostrar o perfil do usuario.",
             value: "`.profile {user❌}`",
@@ -197,8 +193,8 @@ export const command: Command = {
         .setLabel("》")
         .setStyle("SUCCESS");
 
-      const buttonList:MessageButton[] = [button1, button2];
-      const timeout:string = "120000";
+      const buttonList: MessageButton[] = [button1, button2];
+      const timeout: string = "120000";
 
       Pagination(message, pages, buttonList, timeout);
       //TODO: Colocar os botoes.

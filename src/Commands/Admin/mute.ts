@@ -1,7 +1,11 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { UserDataModel } from "../../../models/index";
-import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules/index";
+import {
+  CheckRole,
+  Databases,
+  EmbedTemplates,
+} from "../../../lib/modules/index";
 import {
   Collection,
   GuildMember,
@@ -182,7 +186,7 @@ export const command: Command = {
           })
           .then((newRole: Role) => {
             message.guild.channels.cache.each((channels: GuildBasedChannel) => {
-              if(channels.type === 'GUILD_TEXT'){
+              if (channels.type === "GUILD_TEXT") {
                 channels.permissionOverwrites.edit(newRole.id, {
                   SEND_MESSAGES: false,
                   ADD_REACTIONS: false,
@@ -194,7 +198,7 @@ export const command: Command = {
           });
       } else {
         message.guild.channels.cache.each((channels: GuildBasedChannel) => {
-          if(channels.type === 'GUILD_TEXT') {
+          if (channels.type === "GUILD_TEXT") {
             channels.permissionOverwrites.edit(muteRole.id, {
               SEND_MESSAGES: false,
               ADD_REACTIONS: false,

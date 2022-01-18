@@ -1,5 +1,5 @@
 import ExtendedClient from "../../src/Client/index";
-import { GuildMember} from "discord.js";
+import { GuildMember } from "discord.js";
 
 class CheckRole {
   idRolesWithPermission: string[];
@@ -23,7 +23,7 @@ class CheckRole {
     if (!this.idRolesWithPermission)
       throw "Não foi informado os ids dos cargos no cosntrutor da classe.";
 
-    const userRolesMap:string[] = this.guildMemberUser.roles.cache.map(
+    const userRolesMap: string[] = this.guildMemberUser.roles.cache.map(
       (roles) => roles.id
     );
     for (const keyPerm in this.idRolesWithPermission) {
@@ -44,7 +44,7 @@ class CheckRole {
     if (!this.idRolesWithPermission)
       throw "Não foi informado os ids dos cargos no cosntrutor da classe.";
 
-    const userRolesMap:string[] = this.guildMemberUser.roles.cache.map(
+    const userRolesMap: string[] = this.guildMemberUser.roles.cache.map(
       (roles) => roles.id
     );
     const newArrayList: string[] = [];
@@ -52,7 +52,10 @@ class CheckRole {
     for (const keyPerm in this.idRolesWithPermission) {
       for (const keyPermUser in userRolesMap) {
         if (this.idRolesWithPermission[keyPerm] === userRolesMap[keyPermUser]) {
-          if(this.idRolesWithPermission[keyPerm] !== this.guildMemberUser.guild.id){
+          if (
+            this.idRolesWithPermission[keyPerm] !==
+            this.guildMemberUser.guild.id
+          ) {
             newArrayList.push(userRolesMap[keyPermUser]);
           }
         }

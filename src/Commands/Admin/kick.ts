@@ -1,11 +1,7 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { CheckRole, EmbedTemplates } from "../../../lib/modules/index";
-import {
-  GuildBasedChannel,
-  GuildMember,
-  Message,
-} from "discord.js";
+import { GuildBasedChannel, GuildMember, Message } from "discord.js";
 
 export const command: Command = {
   name: "kick",
@@ -128,7 +124,7 @@ export const command: Command = {
 
       //todo 5 Kickando o usuario.
 
-      await person.kick(reason);      
+      await person.kick(reason);
       //*6 Setando os canasi publicos e privados.
 
       const publicChannel: GuildBasedChannel =
@@ -137,7 +133,7 @@ export const command: Command = {
         message.guild.channels.cache.get("929426733516615781");
 
       let gifEmbed: string =
-      "https://i.pinimg.com/originals/10/32/d5/1032d503ba62cc0de1e1e4e79b473547.gif";
+        "https://i.pinimg.com/originals/10/32/d5/1032d503ba62cc0de1e1e4e79b473547.gif";
 
       if (
         publicChannel.type === "GUILD_TEXT" &&
@@ -174,8 +170,6 @@ export const command: Command = {
             await message.react("✅");
           });
       }
-      
-
     } catch (error) {
       await message.react("❌");
       console.log(`${error}`);

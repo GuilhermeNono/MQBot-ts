@@ -3,7 +3,7 @@ import { Client, GuildBasedChannel, Message, MessageEmbed } from "discord.js";
 
 async function Report(message: Message, client: Client<true>): Promise<any> {
   try {
-    if(message.guild.id !== "929417995325956177") return
+    if (message.guild.id !== "929417995325956177") return;
 
     //*1 Pegando as informações do canal.
     let channelReports: GuildBasedChannel =
@@ -39,7 +39,7 @@ async function Report(message: Message, client: Client<true>): Promise<any> {
 
       //*5 Setando as variaveis para pegar imagens enviadas pelo usuario
 
-      let evidenceImage: any = message.attachments.first()
+      let evidenceImage: any = message.attachments.first();
       if (!evidenceImage) {
         evidenceImage =
           "http://www.junata.com.br/wp-content/uploads/2013/05/placeholder3.png";

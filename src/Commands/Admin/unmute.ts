@@ -1,7 +1,7 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { CheckRole, EmbedTemplates } from "../../../lib/modules/index";
-import { GuildMember, Message, Role} from "discord.js";
+import { GuildMember, Message, Role } from "discord.js";
 
 export const command: Command = {
   name: "unmute",
@@ -107,7 +107,8 @@ export const command: Command = {
           : message.guild.members.cache.get(message.mentions.users.first().id);
       }
 
-      if (!person) return message.channel.send({embeds:[Embeds.UserNotExist()]});
+      if (!person)
+        return message.channel.send({ embeds: [Embeds.UserNotExist()] });
 
       //*3 Armazenando o motivo em uma variavel caso tenha.
 
@@ -133,11 +134,11 @@ export const command: Command = {
       //Caso tenha, quer dizer que ele foi mutado pelo .mute
       if (checkMuteRole.CheckReturnBoolean()) {
         await person.roles.remove(muteRole);
-        await message.react("✅")
+        await message.react("✅");
       } else {
         //Caso contrario, quer dizer que ele foi mutado pelo .tempmute
         await person.timeout(null);
-        await message.react("✅")
+        await message.react("✅");
       }
       //TODO: Criar um embed final.
     } catch (error) {

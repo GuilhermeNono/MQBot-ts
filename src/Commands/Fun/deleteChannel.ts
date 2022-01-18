@@ -1,7 +1,7 @@
 import ExtendedClient from "../../Client/index";
 import { UserBoostModel } from "../../../models/index";
 import { CheckRole, Databases } from "../../../lib/modules/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { GuildBasedChannel, Message, MessageEmbed } from "discord.js";
 
 export const command: Command = {
@@ -79,8 +79,10 @@ export const command: Command = {
           return message.channel
             .send({ embeds: [maxChannel] })
             .then(async (m) => {
-              setTimeout(() => {if(m.deletable) m.delete()}, 15000);
-              await loading.delete();
+              setTimeout(() => {
+                if (m.deletable) m.delete();
+              }, 15000);
+              if (loading.deletable) await loading.delete();
             });
 
         if (!channelExistCheck) {
@@ -109,7 +111,9 @@ export const command: Command = {
 
         //TODO:5 Deletando o canal e atualizando os dados no banco
 
-        await loading.delete();
+        if (loading.deletable) {
+          await loading.delete();
+        }
         message.channel
           .send({ embeds: [channelDeleteSucess] })
           .then(async () => {

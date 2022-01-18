@@ -1,7 +1,11 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { UserDataModel } from "../../../models/index";
-import { CheckRole, EmbedTemplates, Databases } from "../../../lib/modules/index";
+import {
+  CheckRole,
+  EmbedTemplates,
+  Databases,
+} from "../../../lib/modules/index";
 import {
   GuildMember,
   User,

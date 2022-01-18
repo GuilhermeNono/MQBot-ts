@@ -1,7 +1,7 @@
 import ExtendedClient from "../../Client/index";
 import { UserBoostModel } from "../../../models/index";
 import { CheckRole, Databases } from "../../../lib/modules/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { GuildBasedChannel, Message, MessageEmbed } from "discord.js";
 
 export const command: Command = {
@@ -63,7 +63,9 @@ export const command: Command = {
 
       if (nameChannel.trim() === "")
         return message.channel.send({ embeds: [missingName] }).then((m) => {
-          setTimeout(() => m.delete(), 15000);
+          setTimeout(() => {
+            if (m.deletable) m.delete();
+          }, 15000);
         });
       //*3 Enviando uma mensagem de Loading até que todas as informações estejam carregadas
       let embedLoading: MessageEmbed = new MessageEmbed()
@@ -86,8 +88,9 @@ export const command: Command = {
           if (!userBoosterdb) throw "Erro ao criar o BDD dos bufadores.";
           numberChannels = 0;
         } else {
-            channelExistCheck=
-            message.guild.channels.cache.get(userBooster.idChannel);
+          channelExistCheck = message.guild.channels.cache.get(
+            userBooster.idChannel
+          );
           if (!channelExistCheck) {
             numberChannels = 0;
           } else {
@@ -99,8 +102,10 @@ export const command: Command = {
           return message.channel
             .send({ embeds: [maxChannel] })
             .then(async (m) => {
-              setTimeout(() => m.delete(), 15000);
-              await loading.delete();
+              setTimeout(() => {
+                if (m.deletable) m.delete();
+              }, 15000);
+              if (loading.deletable) await loading.delete();
             });
 
         if (!channelExistCheck) {
@@ -113,30 +118,31 @@ export const command: Command = {
         //* 5 Registrando a categoria que os canais de bufadores ficam
 
         await channelExistCheck.setName(nameChannel);
-        await loading.delete();
+        if (loading.deletable) await loading.delete();
 
-        let channelRenameSucess:MessageEmbed = new MessageEmbed()
-            .setTitle(
-              "**:white_check_mark: Nome alterado com sucesso. :white_check_mark:**"
-            )
-            .setAuthor({
-                name: `${client.user.username}`,
-                iconURL: `${client.user.displayAvatarURL()}`,
-              })
-            .setColor("#21c918")
-            .addField(
-              "O nome do canal foi alterado com sucesso.",
-              `O nome do seu canal a partir de agora será "${nameChannel}".`
-            )
-            .addField(
-              "❌ O discord, por padrão, requer um intervalo de tempo de 10 minutos a cada 2 alterações para renomear canais via bot. Então caso precise alterar o nome do seu canal, contate um admin.",
-              "\u200b"
-            );
+        let channelRenameSucess: MessageEmbed = new MessageEmbed()
+          .setTitle(
+            "**:white_check_mark: Nome alterado com sucesso. :white_check_mark:**"
+          )
+          .setAuthor({
+            name: `${client.user.username}`,
+            iconURL: `${client.user.displayAvatarURL()}`,
+          })
+          .setColor("#21c918")
+          .addField(
+            "O nome do canal foi alterado com sucesso.",
+            `O nome do seu canal a partir de agora será "${nameChannel}".`
+          )
+          .addField(
+            "❌ O discord, por padrão, requer um intervalo de tempo de 10 minutos a cada 2 alterações para renomear canais via bot. Então caso precise alterar o nome do seu canal, contate um admin.",
+            "\u200b"
+          );
 
-          message.channel
-            .send({ embeds: [channelRenameSucess] })
-            .then((msg) => setTimeout(() => {if(msg.deletable) msg.delete()}, 15000));
-
+        message.channel.send({ embeds: [channelRenameSucess] }).then((msg) =>
+          setTimeout(() => {
+            if (msg.deletable) msg.delete();
+          }, 15000)
+        );
       });
     } catch (error) {
       console.log(error);

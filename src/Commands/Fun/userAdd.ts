@@ -1,7 +1,11 @@
 import ExtendedClient from "../../Client/index";
 import { UserBoostModel } from "../../../models/index";
-import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules/index";
-import { Command } from "../../interfaces/index"
+import {
+  CheckRole,
+  Databases,
+  EmbedTemplates,
+} from "../../../lib/modules/index";
+import { Command } from "../../interfaces/index";
 import {
   GuildBasedChannel,
   GuildMember,
@@ -51,7 +55,7 @@ export const command: Command = {
         return message.channel.send({ embeds: [missingPermission] });
 
       //*2 Pegando as informações do usuario informado
-      
+
       //Checando se o argumento foi uma marcação.
       let personCheck: Boolean = message.mentions.users.first() === undefined;
 
@@ -60,20 +64,20 @@ export const command: Command = {
         return message.channel.send({
           embeds: [
             Embeds.errorCode(
-                "Usuario Invalido.",
-                "Foi encontrado, no comando de adicionar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
-                "tempmute",
-                [
-                  {
-                    name: ":purple_square:  Adicionar usuario por Menção | ",
-                    value: "`.ua @Discord`",
-                  },
-                  {
-                    name: ":purple_square:  Adicionar usuario por ID | ",
-                    value: "`.ua 261945904829956097`",
-                  },
-                ]
-              ),
+              "Usuario Invalido.",
+              "Foi encontrado, no comando de adicionar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
+              "tempmute",
+              [
+                {
+                  name: ":purple_square:  Adicionar usuario por Menção | ",
+                  value: "`.ua @Discord`",
+                },
+                {
+                  name: ":purple_square:  Adicionar usuario por ID | ",
+                  value: "`.ua 261945904829956097`",
+                },
+              ]
+            ),
           ],
         });
 
@@ -82,20 +86,20 @@ export const command: Command = {
         return message.channel.send({
           embeds: [
             Embeds.errorCode(
-                "Usuario Invalido.",
-                "Foi encontrado, no comando de adicionar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
-                "tempmute",
-                [
-                  {
-                    name: ":purple_square:  Adicionar usuario por Menção | ",
-                    value: "`.ua @Discord`",
-                  },
-                  {
-                    name: ":purple_square:  Adicionar usuario por ID | ",
-                    value: "`.ua 261945904829956097`",
-                  },
-                ]
-              ),
+              "Usuario Invalido.",
+              "Foi encontrado, no comando de adicionar usuarios, um erro de Sintaxe. Caso esteja com duvidas de como usar, por favor, siga as instruções abaixo: ",
+              "tempmute",
+              [
+                {
+                  name: ":purple_square:  Adicionar usuario por Menção | ",
+                  value: "`.ua @Discord`",
+                },
+                {
+                  name: ":purple_square:  Adicionar usuario por ID | ",
+                  value: "`.ua 261945904829956097`",
+                },
+              ]
+            ),
           ],
         });
       }
@@ -172,8 +176,10 @@ export const command: Command = {
           return message.channel
             .send({ embeds: [maxChannel] })
             .then(async (m) => {
-              setTimeout(() => {if(m.deletable) m.delete()}, 15000);
-              await loading.delete();
+              setTimeout(() => {
+                if (m.deletable) m.delete();
+              }, 15000);
+              if (loading.deletable) await loading.delete();
             });
 
         if (!channelExistCheck) {
@@ -191,7 +197,7 @@ export const command: Command = {
           });
         }
 
-        await loading.delete();
+        if (loading.deletable) await loading.delete();
         let userAddSucess: MessageEmbed = new MessageEmbed()
           .setTitle("**🔰 Usuario adicionado 🔰**")
           .setAuthor({
@@ -201,9 +207,11 @@ export const command: Command = {
           })
           .setColor("#a142f5");
 
-        message.channel
-          .send({ embeds: [userAddSucess] })
-          .then((msg) => setTimeout(() => msg.delete(), 15000));
+        message.channel.send({ embeds: [userAddSucess] }).then((msg) =>
+          setTimeout(() => {
+            if (msg.deletable) msg.delete();
+          }, 15000)
+        );
       });
     } catch (error) {
       console.log(error);

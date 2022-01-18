@@ -1,6 +1,11 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index"
-import { CheckRole, EmbedTemplates, mTimer, Timer } from "../../../lib/modules/index";
+import { Command } from "../../interfaces/index";
+import {
+  CheckRole,
+  EmbedTemplates,
+  mTimer,
+  Timer,
+} from "../../../lib/modules/index";
 import {
   Collection,
   GuildBan,
@@ -35,7 +40,11 @@ export const command: Command = {
         "929418031795408916", //Role "Adm" > brioco
         "929435905926791168", //Role "Mod" > brioco
       ];
-      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor, rolesId);
+      const newCheckAuthor: CheckRole = new CheckRole(
+        client,
+        memberAuthor,
+        rolesId
+      );
 
       const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
 

@@ -1,14 +1,12 @@
-import ExtendedClient from '../../Client/index';
+import ExtendedClient from "../../Client/index";
 import { Databases } from "../../../lib/modules/index";
 import { UserDataModel } from "../../../models/index";
 import { Client, Guild } from "discord.js";
-import {green, red, yellow } from "colors";
+import { green, red, yellow } from "colors";
 
 async function InitDB(client: Client<true>): Promise<any> {
   try {
-    console.log(
-        yellow(`⌛ Initiating members database verification...⌛`)
-      );
+    console.log(yellow(`⌛ Initiating members database verification...⌛`));
     const guildNone: Guild = client.guilds.cache.get(process.env["GUILD_ID"]);
 
     guildNone.members.cache.forEach(async (member) => {
@@ -19,13 +17,9 @@ async function InitDB(client: Client<true>): Promise<any> {
         await new Databases().UserData(member.id);
       }
     });
-    console.log(
-        green.bold(`✔ Database checking with no apparent errors. ✔`)
-      );
+    console.log(green.bold(`✔ Database checking with no apparent errors. ✔`));
   } catch (error) {
-    console.log(
-        red.bold(`❌ Error while checking databases. ❌`)
-      );
+    console.log(red.bold(`❌ Error while checking databases. ❌`));
     throw error;
   }
 }

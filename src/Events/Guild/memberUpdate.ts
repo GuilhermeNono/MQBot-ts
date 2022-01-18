@@ -28,7 +28,7 @@ export const event: Event = {
       .setColor("#800080");
 
     //*2 Checando se o usuario não tinha o cargo "Server Booster" e agora tem
-    
+
     if (!hadRole && hasRole) {
       let channelBooster: GuildBasedChannel =
         newMember.guild.channels.cache.get("929440410496020510");

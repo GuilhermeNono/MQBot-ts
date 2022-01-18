@@ -1,7 +1,11 @@
 import ExtendedClient from "../../Client/index";
 import { UserBoostModel } from "../../../models/index";
-import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules/index";
-import { Command } from "../../interfaces/index"
+import {
+  CheckRole,
+  Databases,
+  EmbedTemplates,
+} from "../../../lib/modules/index";
+import { Command } from "../../interfaces/index";
 import {
   GuildBasedChannel,
   GuildMember,
@@ -171,8 +175,10 @@ export const command: Command = {
           return message.channel
             .send({ embeds: [maxChannel] })
             .then(async (m) => {
-              setTimeout(() => {if(m.deletable) m.delete()}, 15000);
-              await loading.delete();
+              setTimeout(() => {
+                if (m.deletable) m.delete();
+              }, 15000);
+              if (loading.deletable) await loading.delete();
             });
 
         if (!channelExistCheck) {
@@ -189,19 +195,22 @@ export const command: Command = {
             CONNECT: false,
           });
         }
-        
-        await loading.delete();
-        let userlDeleteSucess:MessageEmbed = new MessageEmbed()
-        .setTitle("**⭕ Usuario Removido ⭕**")
-        .setAuthor(
-          `Peach`,
-          "https://media.discordapp.net/attachments/776094611470942208/846246640867737610/peach_san.png"
-        )
-        .setColor("#a142f5");
 
-        message.channel
-          .send({ embeds: [userlDeleteSucess] })
-          .then((msg) => setTimeout(() => msg.delete(), 15000));
+        if (loading.deletable) await loading.delete();
+        let userlDeleteSucess: MessageEmbed = new MessageEmbed()
+          .setTitle("**⭕ Usuario Removido ⭕**")
+          .setAuthor({
+            name: `Peach`,
+            iconURL:
+              "https://media.discordapp.net/attachments/776094611470942208/846246640867737610/peach_san.png",
+          })
+          .setColor("#a142f5");
+
+        message.channel.send({ embeds: [userlDeleteSucess] }).then((msg) =>
+          setTimeout(() => {
+            if (msg.deletable) msg.delete();
+          }, 15000)
+        );
       });
     } catch (error) {
       console.log(error);

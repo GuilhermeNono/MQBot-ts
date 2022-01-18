@@ -1,12 +1,7 @@
 import ExtendedClient from "../../Client/index";
 import { Databases } from "../../../lib/modules/index";
 import { UserDataModel } from "../../../models/index";
-import {
-  Client,
-  Guild,
-  GuildMember,
-  Role,
-} from "discord.js";
+import { Client, Guild, GuildMember, Role } from "discord.js";
 //@ts-ignore
 import ms from "ms";
 

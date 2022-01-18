@@ -1,13 +1,7 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index"
+import { Command } from "../../interfaces/index";
 import { CheckRole, EmbedTemplates } from "../../../lib/modules/index";
-import {
-  Collection,
-  GuildBan,
-  Message,
-  MessageEmbed,
-  User,
-} from "discord.js";
+import { Collection, GuildBan, Message, MessageEmbed, User } from "discord.js";
 
 export const command: Command = {
   name: "unban",
@@ -26,7 +20,11 @@ export const command: Command = {
         "929418031795408916", //Role "Adm" > brioco
         "929435905926791168", //Role "Mod" > brioco
       ];
-      const newCheckAuthor: CheckRole = new CheckRole(client, message.member, rolesId);
+      const newCheckAuthor: CheckRole = new CheckRole(
+        client,
+        message.member,
+        rolesId
+      );
 
       const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
 
@@ -94,7 +92,11 @@ export const command: Command = {
 
       if (!bannedUser) return message.channel.send({ embeds: [userIsNotBan] });
       await message.guild.members.unban(person, reason);
-      message.react("✅").then(() => setTimeout(() => {if(message.deletable) message.delete()}, 5000));
+      message.react("✅").then(() =>
+        setTimeout(() => {
+          if (message.deletable) message.delete();
+        }, 5000)
+      );
       //TODO: Criar um embed final.
     } catch (error) {
       await message.react("❌");

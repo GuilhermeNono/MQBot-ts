@@ -1,6 +1,10 @@
 import ExtendedClient from "../../Client/index";
-import { Command, RoleProfile } from "../../interfaces/index"
-import { CheckRole, Databases, EmbedTemplates } from "../../../lib/modules/index";
+import { Command, RoleProfile } from "../../interfaces/index";
+import {
+  CheckRole,
+  Databases,
+  EmbedTemplates,
+} from "../../../lib/modules/index";
 import { UserDataModel } from "../../../models/index";
 import { createCanvas, Image, loadImage, registerFont } from "canvas";
 import {
@@ -11,10 +15,12 @@ import {
   Role,
 } from "discord.js";
 import path from "path";
-registerFont(path.join(__dirname, "..", "..", "Assets", "fonts/Montserrat-Black.ttf"), {
-  family: "Montserrat",
-});
-
+registerFont(
+  path.join(__dirname, "..", "..", "Assets", "fonts/Montserrat-Black.ttf"),
+  {
+    family: "Montserrat",
+  }
+);
 
 export const command: Command = {
   name: "profile",
@@ -117,7 +123,6 @@ export const command: Command = {
 
         let userDB = await UserDataModel.findOne({ userId: person.id }).exec();
         if (userDB === null) {
-
           //#region Embed
 
           let databaseNotFound: MessageEmbed = new MessageEmbed()
@@ -138,14 +143,29 @@ export const command: Command = {
         const mutesInAccount: number = userDB.countMute;
 
         //*8 Pegando a informação do avatar do membro.
-        let memberAvatar:Image = await loadImage(person.user.avatarURL({ format: "jpeg" }));
+        let memberAvatar: Image = await loadImage(
+          person.user.avatarURL({ format: "jpeg" })
+        );
 
         //*9 Retornando o Canvas para o usuario
-        message.delete().then(async () => {
-          await loading.delete();
-        });
+        if (message.deletable) {
+          message.delete().then(async () => {
+            if (loading.deletable) await loading.delete();
+          });
+        }
 
-        message.channel.send({ files: [await MakeCanvas(dateMember, timeDate, roleInfo, availableMutes, mutesInAccount, memberAvatar)] });
+        message.channel.send({
+          files: [
+            await MakeCanvas(
+              dateMember,
+              timeDate,
+              roleInfo,
+              availableMutes,
+              mutesInAccount,
+              memberAvatar
+            ),
+          ],
+        });
       });
 
       async function MakeCanvas(
@@ -160,7 +180,13 @@ export const command: Command = {
         const ctx = canvas.getContext("2d");
 
         const background = await loadImage(
-          path.join(__dirname,"..", "..", "Assets","/img/png/Profile_Card2_.png")
+          path.join(
+            __dirname,
+            "..",
+            "..",
+            "Assets",
+            "/img/png/Profile_Card2_.png"
+          )
         );
         ctx.drawImage(background, 0, 0);
 
@@ -201,8 +227,8 @@ export const command: Command = {
         ctx.fillText(`${person.id}`, 565, 50);
 
         //Coins
-        let coin:Image = await loadImage(
-          path.join(__dirname,"..", "..","Assets", "img/png/coin.png")
+        let coin: Image = await loadImage(
+          path.join(__dirname, "..", "..", "Assets", "img/png/coin.png")
         );
 
         ctx.drawImage(coin, 480, 95, 50, 50);
@@ -249,7 +275,7 @@ export const command: Command = {
 
         //Mutes disponiveis
         let muteIcon = await loadImage(
-          path.join(__dirname,"..", "..","Assets","img/png/mute.png")
+          path.join(__dirname, "..", "..", "Assets", "img/png/mute.png")
         );
 
         ctx.textAlign = "center";

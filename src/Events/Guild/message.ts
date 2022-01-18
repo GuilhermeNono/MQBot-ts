@@ -5,7 +5,7 @@ import ExtendedClient from "../../Client/index";
 
 export const event: Event = {
   name: "messageCreate",
-  run: async (client:ExtendedClient, message: Message<boolean>) => {
+  run: async (client: ExtendedClient, message: Message<boolean>) => {
     try {
       if (message.author.bot) return;
 
@@ -22,7 +22,7 @@ export const event: Event = {
         .setColor("RED")
         .setTitle(`💢 Bot exclusivo do servidor "Brioco" 💢`);
 
-      if (message.guild.id !== "929417995325956177")  
+      if (message.guild.id !== "929417995325956177")
         return message.channel.send({ embeds: [embedIsNotOfficialServer] });
 
       const args = message?.content
@@ -30,11 +30,11 @@ export const event: Event = {
         .trim()
         .split(/ +/g);
 
-      const cmd: string | undefined= args?.shift()?.toLowerCase();
+      const cmd: string | undefined = args?.shift()?.toLowerCase();
       if (!cmd) return;
-      const command: Command | undefined=
+      const command: Command | undefined =
         client.commands.get(cmd) || client.aliases.get(cmd);
-        if(!command) return
+      if (!command) return;
       if (command) (command as Command).run(client, message, args);
     } catch (error) {}
   },
