@@ -98,19 +98,11 @@ export const command: Command = {
           }
         }
 
-        const numberOfRoles : number = highMemberRole.length - 1;
+        const numberOfRoles: number = highMemberRole.length - 1;
 
         //* 5 Definindo uma cor para a role conforme sua posição na hierarquia.
 
-        if (roleInfo.rolePosition <= 6) {
-          roleInfo.roleColor = "#5ef016";
-        } else if (roleInfo.rolePosition <= 14) {
-          roleInfo.roleColor = "#15edb7";
-        } else if (roleInfo.rolePosition < (numberOfRoles - 1) || roleInfo.rolePosition > (numberOfRoles - 8)) {
-          roleInfo.roleColor = "#a114e3";
-        } else if (roleInfo.rolePosition >= (numberOfRoles - 1) ) {
-          roleInfo.roleColor = "#e32222";
-        }
+        roleInfo.roleColor = setTier(numberOfRoles, roleInfo.rolePosition);
 
         //*6 Criando uma variavel que armazene a data em que o usuario entrou no servidor
         let dateMemberJoinedAt: Date = person.joinedAt;
@@ -149,12 +141,10 @@ export const command: Command = {
 
         let personAvatar = person.user.avatarURL({ format: "jpeg" });
 
-        let memberAvatar:Image;
+        let memberAvatar: Image;
 
         try {
-          memberAvatar = await loadImage(
-            personAvatar
-          );
+          memberAvatar = await loadImage(personAvatar);
         } catch {
           memberAvatar = await loadImage(
             "https://jsl-online.com/wp-content/uploads/2017/01/placeholder-user.png"
@@ -313,6 +303,68 @@ export const command: Command = {
           `Profile_${person.user.id}_.png`
         );
       }
+
+      //TODO: utilizar um cargo chamado tier para separar.
+      function setTier(numberRoles: number, highUserRolePosition: number) {
+        let t1;
+        let t2;
+        let t3;
+        let t4;
+        let t5;
+        let t6;
+
+        const assignTier = (i: number, tierEnd: string) => {
+          let index = i;
+          let tier = [];
+          for (let j: number = 0; j <= i; j++) {
+            index--;
+            let roleUnique = message.guild.roles.cache.find(
+              (f) => f.position === index
+            );
+            if (roleUnique.name === tierEnd) break;
+            tier.push(roleUnique.position);
+          }
+          return tier;
+        };
+
+        for (let i: number = numberRoles; i >= 0; i--) {
+          let role = message.guild.roles.cache.find((f) => f.position === i);
+          switch (role.name) {
+            case "====T1S====":
+              t1 = assignTier(i, "====T1E====");
+              break;
+            case "====T2S====":
+              t2 = assignTier(i, "====T2E====");
+              break;
+            case "====T3S====":
+              t3 = assignTier(i, "====T3E====");
+              break;
+            case "====T4S====":
+              t4 = assignTier(i, "====T4E====");
+              break;
+            case "====T5S====":
+              t5 = assignTier(i, "====T5E====");
+              break;
+            case "====T6S====":
+              t6 = assignTier(i, "====T6E====");
+              break;
+          }
+        }
+
+        if (t1.includes(highUserRolePosition)) {
+          return "#e32222";
+        } else if (t2.includes(highUserRolePosition)) {
+          return "#a114e3";
+        } else if (t3.includes(highUserRolePosition)) {
+          return "#d907ab";
+        } else if (t4.includes(highUserRolePosition)) {
+          return "#16f0c8";
+        } else if(t5.includes(highUserRolePosition)) {
+          return "#64f720";
+        } else if (t6.includes(highUserRolePosition)) {
+          return "#1387ed";
+        }
+      }
     } catch (error) {
       message.react("❌");
       console.log(error);
@@ -358,4 +410,3 @@ function attDate(date: string[]) {
     return date.splice(0, 1, rpcr);
   }
 }
-
