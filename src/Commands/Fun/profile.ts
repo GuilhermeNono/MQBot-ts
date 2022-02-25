@@ -98,14 +98,17 @@ export const command: Command = {
           }
         }
 
+        const numberOfRoles : number = highMemberRole.length - 1;
+
         //* 5 Definindo uma cor para a role conforme sua posição na hierarquia.
+
         if (roleInfo.rolePosition <= 6) {
           roleInfo.roleColor = "#5ef016";
         } else if (roleInfo.rolePosition <= 14) {
           roleInfo.roleColor = "#15edb7";
-        } else if (roleInfo.rolePosition <= 18 || roleInfo.rolePosition >= 16) {
+        } else if (roleInfo.rolePosition < (numberOfRoles - 1) || roleInfo.rolePosition > (numberOfRoles - 8)) {
           roleInfo.roleColor = "#a114e3";
-        } else if (roleInfo.rolePosition >= 19) {
+        } else if (roleInfo.rolePosition >= (numberOfRoles - 1) ) {
           roleInfo.roleColor = "#e32222";
         }
 
@@ -143,9 +146,20 @@ export const command: Command = {
         const mutesInAccount: number = userDB.countMute;
 
         //*8 Pegando a informação do avatar do membro.
-        let memberAvatar: Image = await loadImage(
-          person.user.avatarURL({ format: "jpeg" })
-        );
+
+        let personAvatar = person.user.avatarURL({ format: "jpeg" });
+
+        let memberAvatar:Image;
+
+        try {
+          memberAvatar = await loadImage(
+            personAvatar
+          );
+        } catch {
+          memberAvatar = await loadImage(
+            "https://jsl-online.com/wp-content/uploads/2017/01/placeholder-user.png"
+          );
+        }
 
         //*9 Retornando o Canvas para o usuario
         if (message.deletable) {
@@ -174,7 +188,7 @@ export const command: Command = {
         roleinfo: RoleProfile,
         availableMutes: number,
         mutes: number,
-        memberAvatar: Image
+        memberAvatar: Image | string
       ) {
         const canvas = createCanvas(800, 450);
         const ctx = canvas.getContext("2d");
@@ -344,3 +358,4 @@ function attDate(date: string[]) {
     return date.splice(0, 1, rpcr);
   }
 }
+
