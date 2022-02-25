@@ -2,6 +2,6 @@ import { Role } from "discord.js";
 
 export interface RoleProfile {
   role?: Role;
-  rolePosition?: Number;
+  rolePosition?: number;
   roleColor?: string;
 }
