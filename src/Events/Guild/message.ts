@@ -1,6 +1,7 @@
 import { Event, Command } from "../../interfaces/index.js";
+import { CheckRole } from "../../../lib/modules/index";
 import { Report } from "../Cycle/index";
-import { Message, MessageEmbed } from "discord.js";
+import { GuildMember, Message, MessageEmbed, User } from "discord.js";
 import ExtendedClient from "../../Client/index";
 
 export const event: Event = {
@@ -8,6 +9,22 @@ export const event: Event = {
   run: async (client: ExtendedClient, message: Message<boolean>) => {
     try {
       if (message.author.bot) return;
+
+      let userKojj: User = client.users.cache.get("273322824318582785");
+      let userCaiera: User = client.users.cache.get("429737792789282816");
+      let userFelipe: User = client.users.cache.get("404299096967610370");
+
+      if (
+        message.content === `<@!${userKojj.id}>` ||
+        message.content === `<@!${userCaiera.id}>` ||
+        (message.content === `<@!${userFelipe.id}>` && message.deletable)
+      ) {
+        let memberGuild: GuildMember = message.guild.members.cache.get(
+          message.author.id
+        );
+        const newCheckAuthor: CheckRole = new CheckRole(client, memberGuild);
+        if (!newCheckAuthor.CheckHighRoleBool()) message.delete();
+      }
 
       Report(message, client);
 
