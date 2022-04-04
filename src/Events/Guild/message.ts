@@ -1,7 +1,14 @@
 import { Event, Command } from "../../interfaces/index.js";
 import { CheckRole } from "../../../lib/modules/index";
-import { Report } from "../Cycle/index";
-import { GuildMember, Message, MessageEmbed, User } from "discord.js";
+import { Report, levelCheck} from "../Cycle/index";
+import {
+  Guild,
+  GuildBasedChannel,
+  GuildMember,
+  Message,
+  MessageEmbed,
+  User,
+} from "discord.js";
 import ExtendedClient from "../../Client/index";
 
 export const event: Event = {
@@ -26,7 +33,49 @@ export const event: Event = {
         if (!newCheckAuthor.CheckHighRoleBool()) message.delete();
       }
 
+      //#region DEPRECATED
+      // // if (message.content.includes("@everyone")) {
+      // //   let memberGuild: GuildMember = message.guild.members.cache.get(
+      // //     message.author.id
+      // //   );
+      // //   let verification = new CheckRole(
+      // //     client,
+      // //     memberGuild
+      // //   ).CheckHighRoleBool();
+      // //   if (!verification) {
+      // //     let guild: Guild = message.guild;
+      // //     if (guild.id != "715957077939454079") return;
+      // //     let channel: GuildBasedChannel =
+      // //       guild.channels.cache.get("846277251351052308");
+      // //     if (!channel) return;
+      // //     if (channel.type === "GUILD_TEXT") {
+      // //       let embedWaning = new MessageEmbed()
+      // //         .setTitle("⚠️Possivel Inflação detectada.⚠️")
+      // //         .setColor("#ab3018")
+      // //         .setDescription(
+      // //           `Foi detectado uma possivel tentativa de phising pelo usuario **${message.member.user.tag}**, .`
+      // //         )
+      // //         .addField(
+      // //           `Conteudo da mensagem -> ${message.content}`,
+      // //           "<@&731199687981400097>"
+      // //         )
+      // //         .setFooter(
+      // //           {text:`ID do usuario: ${message.member.id}`,
+      // //           iconURL:"https://media.discordapp.net/attachments/776094611470942208/846246640867737610/peach_san.png?width=701&height=701"}
+      // //         );
+      // //       return channel.send({ embeds: [embedWaning] }).then(() => {
+      // //         if (message.deletable) {
+      // //           message.delete();
+      // //         }
+      // //       });
+      // //     }
+      // //   }
+      // // }
+      //#endregion
+      
       Report(message, client);
+
+      await levelCheck(message);
 
       if (
         message.author.bot ||

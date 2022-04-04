@@ -38,7 +38,7 @@ export const command: Command = {
           `Olá ${message.author.username}, Logo abaixo, estão listadas todas as minhas funcionalidades. Qualquer tipo de duvida, entre em contato com os moderadores ou com o Desenvolvedor do bot.`
         )
         .addFields(
-          { name: "**│ 🡻 Administração 🡻 │**", value: "\u200b" },
+          { name: "**│ 🡻 Administração & 4Fun 🡻 │**", value: "\u200b" },
           {
             name: "Comando para banir usuarios por tempo indeterminado.",
             value: "`.ban {user✅} {reason❌}`",
@@ -67,10 +67,10 @@ export const command: Command = {
             name: "Comando para retirar o Mute de um usuario.",
             value: "`.unmute {user✅} {reason❌}`",
           },
-          //   {
-          //     name: "Informa o tempo restante até acabar a punição do usuario.",
-          //     value: "`.timeleft {user❌}`",
-          //   },
+          {
+            name: "Informa a versão e os detalhes da atualização feitas no bot.`NEW`",
+            value: "`.changelog`",
+          },
           //   {
           //     name: 'Comando que envia uma marcação para o usuario "@Fuzii"',
           //     value: "`.fuzi {on/off❌}`",
@@ -78,6 +78,10 @@ export const command: Command = {
           {
             name: "Comando para mostrar o perfil do usuario.",
             value: "`.profile {user❌}`",
+          },
+          {
+            name: "Informa o convite do servidor Brioco. `NEW`",
+            value: "`.invite`",
           },
           { name: "Comando para limpar o chat.", value: "`.clear {number✅}`" },
           { name: "\u200b", value: "\u200b" },
