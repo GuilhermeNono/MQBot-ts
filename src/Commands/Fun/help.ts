@@ -27,7 +27,7 @@ export const command: Command = {
         .setDescription(
           " Olá sou seu bot focado na administração desse servidor. Eu ainda estou em desenvolvimento então erros ou bugs inesperados podem acontecer, no entanto, se caso acontecer, contate o desenvolvedor do bot."
         )
-        .addField("Desenvolvedor 🠗 ", `"Discord.#4953"`);
+        .addField("Desenvolvedor 🠗 ", `"Frajola#4953"`);
       const helpEmbed: MessageEmbed = new MessageEmbed()
         .setAuthor({
           name: `${message.client.user.username} ➔ Ajuda 🔰🔰`,
@@ -38,7 +38,7 @@ export const command: Command = {
           `Olá ${message.author.username}, Logo abaixo, estão listadas todas as minhas funcionalidades. Qualquer tipo de duvida, entre em contato com os moderadores ou com o Desenvolvedor do bot.`
         )
         .addFields(
-          { name: "**│ 🡻 Administração 🡻 │**", value: "\u200b" },
+          { name: "**│ 🡻 Administração & 4Fun 🡻 │**", value: "\u200b" },
           {
             name: "Comando para banir usuarios por tempo indeterminado.",
             value: "`.ban {user✅} {reason❌}`",
@@ -67,10 +67,10 @@ export const command: Command = {
             name: "Comando para retirar o Mute de um usuario.",
             value: "`.unmute {user✅} {reason❌}`",
           },
-          //   {
-          //     name: "Informa o tempo restante até acabar a punição do usuario.",
-          //     value: "`.timeleft {user❌}`",
-          //   },
+          {
+            name: "Informa a versão e os detalhes da atualização feitas no bot.`NEW`",
+            value: "`.changelog`",
+          },
           //   {
           //     name: 'Comando que envia uma marcação para o usuario "@Fuzii"',
           //     value: "`.fuzi {on/off❌}`",
@@ -78,6 +78,10 @@ export const command: Command = {
           {
             name: "Comando para mostrar o perfil do usuario.",
             value: "`.profile {user❌}`",
+          },
+          {
+            name: "Informa o convite do servidor Brioco. `NEW`",
+            value: "`.invite`",
           },
           { name: "Comando para limpar o chat.", value: "`.clear {number✅}`" },
           { name: "\u200b", value: "\u200b" },
@@ -173,7 +177,7 @@ export const command: Command = {
             value: "`Apenas numeros que sejam positivo e inteiro`",
           },
           {
-            name: "🡲 Qualquer dúvida, favor entrar em contato com Discord#4953 🡰",
+            name: "🡲 Qualquer dúvida, favor entrar em contato com Frajola#4953 🡰",
             value: `Version ${version}`,
           }
         );

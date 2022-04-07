@@ -23,6 +23,12 @@ class UserData {
   public primaryInsignia: number;
   @prop()
   public secondaryInsignia: number;
+  @prop()
+  public xp: number;
+  @prop()
+  public level: number;
+  @prop()
+  public nextLevelXp: number;
 }
 
 const UserDataModel = getModelForClass(UserData);

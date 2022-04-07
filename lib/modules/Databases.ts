@@ -16,7 +16,10 @@ class Databases {
     balance: string = "0",
     primaryInsignia: number = 0,
     secondaryInsignia: number = 0,
-    insigniaID: number[] = [0]
+    insigniaID: number[] = [0],
+    xp: number = 1000,
+    level: number = 1,
+    nextLevelXp: number = 2000
   ): Promise<boolean> {
     try {
       const doc = new UserDataModel({
@@ -30,6 +33,9 @@ class Databases {
         primaryInsignia: primaryInsignia,
         secondaryInsignia: secondaryInsignia,
         insigniaID: insigniaID,
+        xp: xp,
+        level: level,
+        nextLevelXp: nextLevelXp
       });
 
       await doc.save();
