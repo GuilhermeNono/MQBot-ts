@@ -31,7 +31,7 @@ export const command: Command = {
           No servidor oficial do bot, foi anunciado e apresentado o escopo final do sistema, contudo algumas ideias foram deixadas para o proximo patch. 
           Além do sistema de XP parcialmente funcional, a funcionalidade de Mute temporario para bufadores, foi deixada também, para o proximo patch.`
         )
-        .addField("Desenvolvedor 🠗 ", `"Discord.#4953"`);
+        .addField("Desenvolvedor 🠗 ", `"Frajola.#4953"`);
 
       const updateEmbed: MessageEmbed = new MessageEmbed()
         .setAuthor({

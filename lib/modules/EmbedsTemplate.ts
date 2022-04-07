@@ -6,7 +6,6 @@ import {
   Message,
   GuildMember,
   User,
-  Guild,
 } from "discord.js";
 class EmbedTemplates {
   constructor(private client: ExtendedClient) {

@@ -1,4 +1,4 @@
-import { Client, Guild, GuildMember, Message } from "discord.js";
+import { GuildMember, Message } from "discord.js";
 import { Databases } from "../../../lib/modules";
 import { UserDataModel } from "../../../models";
 
@@ -14,9 +14,9 @@ async function levelCheck(
 
     if (memberDB === null) return await new Databases().UserData(memberGuild.id);
 
-    let level = memberDB.level;
-    let xp = memberDB.xp;
-    let nextLevel = memberDB.nextLevelXp;
+    let level:number = memberDB.level;
+    let xp:number = memberDB.xp;
+    let nextLevel:number = memberDB.nextLevelXp;
 
     xp += Math.floor((Math.random() * 120) + 50);
 

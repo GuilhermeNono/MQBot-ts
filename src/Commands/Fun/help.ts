@@ -27,7 +27,7 @@ export const command: Command = {
         .setDescription(
           " Olá sou seu bot focado na administração desse servidor. Eu ainda estou em desenvolvimento então erros ou bugs inesperados podem acontecer, no entanto, se caso acontecer, contate o desenvolvedor do bot."
         )
-        .addField("Desenvolvedor 🠗 ", `"Discord.#4953"`);
+        .addField("Desenvolvedor 🠗 ", `"Frajola#4953"`);
       const helpEmbed: MessageEmbed = new MessageEmbed()
         .setAuthor({
           name: `${message.client.user.username} ➔ Ajuda 🔰🔰`,
@@ -177,7 +177,7 @@ export const command: Command = {
             value: "`Apenas numeros que sejam positivo e inteiro`",
           },
           {
-            name: "🡲 Qualquer dúvida, favor entrar em contato com Discord#4953 🡰",
+            name: "🡲 Qualquer dúvida, favor entrar em contato com Frajola#4953 🡰",
             value: `Version ${version}`,
           }
         );

@@ -110,14 +110,17 @@ export const command: Command = {
         roleInfo.roleColor = tierInfo.color;
 
         //*6 Criando uma variavel que armazene a data em que o usuario entrou no servidor
-        let dateMemberJoinedAt: Date = person.joinedAt;
-        let strDateMember: string = dateMemberJoinedAt.toString().slice(0, 24);
-        let strDate: string = strDateMember.slice(4);
-        let dateMemberArray: string[] = strDate.split(" ");
+        const date:string = person.joinedAt.toLocaleDateString("pt-br",{
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        })
 
-        UpdateDate(dateMemberArray);
-        let dateMember: string = `${dateMemberArray[1]}/${dateMemberArray[0]}/${dateMemberArray[2]}`;
-        let timeDate: string = dateMemberArray[3];
+        const dateTime:string = person.joinedAt.toLocaleTimeString("pt-br",{
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit"
+        })
 
         //*7 Pegando as informações do banco do usuario.
 
@@ -172,8 +175,8 @@ export const command: Command = {
         message.channel.send({
           files: [
             await MakeCanvas(
-              dateMember,
-              timeDate,
+              date,
+              dateTime,
               roleInfo,
               availableMutes,
               mutesInAccount,
@@ -286,6 +289,7 @@ export const command: Command = {
         ctx.textAlign = "center";
         ctx.font = "20px Montserrat Black";
         ctx.fillStyle = "#ffd2b3";
+
         ctx.fillText(`${dateMember} > ${timeDate}`, 565, 240);
 
         //Contador de Mutes
@@ -335,12 +339,56 @@ export const command: Command = {
         }
 
         //DEV Profile
+        //Frajola
         if(person.id === "261945904829956097") {
-          ctx.textAlign = "center";
-          ctx.font = "25px Montserrat Black";
-          ctx.fillStyle = "#a114e3";
-          ctx.fillText(`DEV`, 270, 440);
+          let adminIcon = await loadImage(
+            path.join(__dirname, "..", "..", "Assets", "img/insignias/admin-icon.png")
+          );
+          let devIcon = await loadImage(
+            path.join(__dirname, "..", "..", "Assets", "img/insignias/dev-icon.png")
+          );
+          ctx.drawImage(devIcon, 285, 410, 30, 30 );
+          ctx.drawImage(adminIcon, 250, 390, 45, 45);
         }
+        //YSoft
+        if(person.id === "634472759975739403") {
+          let devIcon = await loadImage(
+            path.join(__dirname, "..", "..", "Assets", "img/insignias/dev-icon.png")
+          );
+          let memberIcon = await loadImage(
+            path.join(__dirname, "..", "..", "Assets", "img/insignias/member-icon.png")
+          );
+          ctx.drawImage(memberIcon, 285, 410, 30, 30 );
+          ctx.drawImage(devIcon, 250, 390, 45, 45);
+        }
+
+        //PARTNER Profile
+        //Kojj
+        if(person.id == "273322824318582785") {
+          let adminIcon = await loadImage(
+            path.join(__dirname, "..", "..", "Assets", "img/insignias/partner-icon.jpg")
+          );
+          let memberIcon = await loadImage(
+            path.join(__dirname, "..", "..", "Assets", "img/insignias/member-icon.png")
+          );
+          ctx.drawImage(memberIcon, 285, 410, 30, 30 );
+          ctx.drawImage(adminIcon, 250, 390, 45, 45);
+        }
+
+        //PARTNER Profile
+        //Rafaé
+        if(person.id == "302189041112317963") {
+          let adminIcon = await loadImage(
+            path.join(__dirname, "..", "..", "Assets", "img/insignias/partner-icon.jpg")
+          );
+          let memberIcon = await loadImage(
+            path.join(__dirname, "..", "..", "Assets", "img/insignias/member-icon.png")
+          );
+          ctx.drawImage(memberIcon, 285, 410, 30, 30 );
+          ctx.drawImage(adminIcon, 250, 390, 45, 45);
+        }
+
+        //TODO:COlocar o icon partner no Kojj e no Rafaé
       
         //Nivel em XP
 
@@ -456,42 +504,10 @@ export const command: Command = {
           return { color: "#1387ed", tier: "T6", highRole: false };
         }
       }
+
     } catch (error) {
       message.react("❌");
       console.log(error);
     }
   },
 };
-
-function FormatationDate(date: string[], mesEmNumero: string) {
-  let dateFormated: string = date[0].replace(date[0], mesEmNumero);
-  return date.splice(0, 1, dateFormated);
-}
-
-function UpdateDate(date: string[]) {
-  if (date[0] == "Jan") {
-    FormatationDate(date, "01");
-  } else if (date[0] == "Feb") {
-    FormatationDate(date, "02");
-  } else if (date[0] == "Mar") {
-    FormatationDate(date, "03");
-  } else if (date[0] == "Apr") {
-    FormatationDate(date, "04");
-  } else if (date[0] == "May") {
-    FormatationDate(date, "05");
-  } else if (date[0] == "Jun") {
-    FormatationDate(date, "06");
-  } else if (date[0] == "Jul") {
-    FormatationDate(date, "07");
-  } else if (date[0] == "Aug") {
-    FormatationDate(date, "08");
-  } else if (date[0] == "Sep") {
-    FormatationDate(date, "09");
-  } else if (date[0] == "Oct") {
-    FormatationDate(date, "10");
-  } else if (date[0] == "Nov") {
-    FormatationDate(date, "11");
-  } else if (date[0] == "Dec") {
-    FormatationDate(date, "12");
-  }
-}
