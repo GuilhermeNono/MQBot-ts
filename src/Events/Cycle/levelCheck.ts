@@ -18,7 +18,7 @@ async function levelCheck(
     let xp:number = memberDB.xp;
     let nextLevel:number = memberDB.nextLevelXp;
 
-    xp += Math.floor((Math.random() * 120) + 50);
+    xp += Math.floor((Math.random() * (level * 100)) + (level * 50));
 
     if (xp >= nextLevel) {
       level++;

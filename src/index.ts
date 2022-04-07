@@ -10,6 +10,7 @@ new Client({
       Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
       Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
       Intents.FLAGS.GUILD_BANS,
+      // Intents.FLAGS.GUILD_VOICE_STATES,
     ],
     partials: ["USER", "REACTION", "MESSAGE", "GUILD_MEMBER"],
   }).init()

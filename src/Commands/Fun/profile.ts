@@ -213,7 +213,7 @@ export const command: Command = {
             "..",
             "..",
             "Assets",
-            "/img/png/Profile_Card2_.png"
+            "/img/png/Profile_Card4_.png"
           )
         );
         ctx.drawImage(background, 0, 0);
@@ -339,57 +339,48 @@ export const command: Command = {
         }
 
         //DEV Profile
-        //Frajola
-        if(person.id === "261945904829956097") {
-          let adminIcon = await loadImage(
-            path.join(__dirname, "..", "..", "Assets", "img/insignias/admin-icon.png")
-          );
-          let devIcon = await loadImage(
-            path.join(__dirname, "..", "..", "Assets", "img/insignias/dev-icon.png")
-          );
-          ctx.drawImage(devIcon, 285, 410, 30, 30 );
-          ctx.drawImage(adminIcon, 250, 390, 45, 45);
-        }
-        //YSoft
-        if(person.id === "634472759975739403") {
-          let devIcon = await loadImage(
-            path.join(__dirname, "..", "..", "Assets", "img/insignias/dev-icon.png")
-          );
-          let memberIcon = await loadImage(
-            path.join(__dirname, "..", "..", "Assets", "img/insignias/member-icon.png")
-          );
-          ctx.drawImage(memberIcon, 285, 410, 30, 30 );
-          ctx.drawImage(devIcon, 250, 390, 45, 45);
+        let adminIcon = await loadImage(
+          path.join(__dirname, "..", "..", "Assets", "img/insignias/admin-icon.png")
+        );
+        let devIcon = await loadImage(
+          path.join(__dirname, "..", "..", "Assets", "img/insignias/dev-icon.png")
+        );
+        let memberIcon = await loadImage(
+          path.join(__dirname, "..", "..", "Assets", "img/insignias/member-icon.png")
+        );
+        let partnerIcon = await loadImage(
+          path.join(__dirname, "..", "..", "Assets", "img/insignias/partner-icon.jpg")
+        );
+
+        //Insignias
+
+        switch (person.id) {
+          case "261945904829956097":
+            //Frajola           
+            ctx.drawImage(devIcon, 285, 411, 30, 30 );
+            ctx.drawImage(adminIcon, 250, 391, 45, 45);
+            break;
+          case "634472759975739403":
+            //YSoft
+            ctx.drawImage(memberIcon, 285, 410, 30, 30 );
+            ctx.drawImage(devIcon, 250, 390, 45, 45);
+            break
+          case "273322824318582785":
+            //Jjok            
+            ctx.drawImage(memberIcon, 285, 410, 30, 30 );
+            ctx.drawImage(partnerIcon, 250, 390, 45, 45);
+            break 
+          case "302189041112317963":
+            //Rafaé
+            ctx.drawImage(memberIcon, 285, 410, 30, 30 );
+            ctx.drawImage(adminIcon, 250, 390, 45, 45);
+            break
+          default:
+            ctx.drawImage(memberIcon, 285, 410, 30, 30 );
+            ctx.drawImage(memberIcon, 250, 390, 45, 45);
+            break;
         }
 
-        //PARTNER Profile
-        //Kojj
-        if(person.id == "273322824318582785") {
-          let adminIcon = await loadImage(
-            path.join(__dirname, "..", "..", "Assets", "img/insignias/partner-icon.jpg")
-          );
-          let memberIcon = await loadImage(
-            path.join(__dirname, "..", "..", "Assets", "img/insignias/member-icon.png")
-          );
-          ctx.drawImage(memberIcon, 285, 410, 30, 30 );
-          ctx.drawImage(adminIcon, 250, 390, 45, 45);
-        }
-
-        //PARTNER Profile
-        //Rafaé
-        if(person.id == "302189041112317963") {
-          let adminIcon = await loadImage(
-            path.join(__dirname, "..", "..", "Assets", "img/insignias/partner-icon.jpg")
-          );
-          let memberIcon = await loadImage(
-            path.join(__dirname, "..", "..", "Assets", "img/insignias/member-icon.png")
-          );
-          ctx.drawImage(memberIcon, 285, 410, 30, 30 );
-          ctx.drawImage(adminIcon, 250, 390, 45, 45);
-        }
-
-        //TODO:COlocar o icon partner no Kojj e no Rafaé
-      
         //Nivel em XP
 
         const degress = Math.floor((xp / nextLevelXp) * 360);
