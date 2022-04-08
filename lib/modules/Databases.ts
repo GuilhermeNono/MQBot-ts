@@ -1,4 +1,4 @@
-import { UserDataModel, UserBoostModel } from "../../models/index";
+import { UserDataModel, UserBoostModel, insigniaDataModel} from "../../models/index";
 
 class Databases {
   /**
@@ -60,6 +60,29 @@ class Databases {
         userId: userId,
         numberChannel: numberChannel,
         idChannel: idChannel,
+      });
+
+      await doc.save();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * 💠 - Cria um banco de dados para novas insignias.
+   * @returns Verdadeiro significará que a operação foi um sucesso.
+   */
+  async InsigniaData (
+    InsigniaID:number,
+    InsigniaName:string,
+    InsigniaURL:string
+  ):Promise<boolean> {
+    try {
+      const doc = new insigniaDataModel({
+        insigniaID: InsigniaID,
+        insigniaName: InsigniaName,
+        insigniaURL: InsigniaURL
       });
 
       await doc.save();

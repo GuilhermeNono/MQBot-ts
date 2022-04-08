@@ -1,11 +1,16 @@
 import ExtendedClient from "../../Client/index";
-import { Command, RoleProfile, TierOptions } from "../../interfaces/index";
+import {
+  Command,
+  RoleProfile,
+  TierOptions,
+  InsigniaInfo,
+} from "../../interfaces/index";
 import {
   CheckRole,
   Databases,
   EmbedTemplates,
 } from "../../../lib/modules/index";
-import { UserDataModel } from "../../../models/index";
+import { UserDataModel, insigniaDataModel } from "../../../models/index";
 import { createCanvas, Image, loadImage, registerFont } from "canvas";
 import {
   GuildMember,
@@ -110,17 +115,17 @@ export const command: Command = {
         roleInfo.roleColor = tierInfo.color;
 
         //*6 Criando uma variavel que armazene a data em que o usuario entrou no servidor
-        const date:string = person.joinedAt.toLocaleDateString("pt-br",{
+        const date: string = person.joinedAt.toLocaleDateString("pt-br", {
           day: "2-digit",
           month: "2-digit",
-          year: "numeric"
-        })
+          year: "numeric",
+        });
 
-        const dateTime:string = person.joinedAt.toLocaleTimeString("pt-br",{
+        const dateTime: string = person.joinedAt.toLocaleTimeString("pt-br", {
           hour: "2-digit",
           minute: "2-digit",
-          second: "2-digit"
-        })
+          second: "2-digit",
+        });
 
         //*7 Pegando as informações do banco do usuario.
 
@@ -149,6 +154,47 @@ export const command: Command = {
         const mutesInAccount: number = userDB.countMute;
         const balanceInAccout: string = userDB.balance;
 
+        const primInsignia: number = userDB.primaryInsignia;
+        const seconInsignia: number = userDB.secondaryInsignia;
+
+        let primInsigniaInfo: InsigniaInfo = {
+          insigniaID: 0,
+          insigniaName: "Membro",
+          insigniaURL: "https://i.imgur.com/ZEl17TJ.png",
+        };
+
+        let seconInsigniaInfo: InsigniaInfo = {
+          insigniaID: 0,
+          insigniaName: "Membro",
+          insigniaURL: "https://i.imgur.com/ZEl17TJ.png",
+        };
+
+        let primInsigniaModel = await insigniaDataModel
+          .findOne({ insigniaID: primInsignia })
+          .exec();
+        if (primInsigniaModel == null) {
+          console.log("Erro no modelo da insignia primaria.");
+        } else {
+          primInsigniaInfo = {
+            insigniaID: primInsigniaModel.insigniaID,
+            insigniaName: primInsigniaModel.insigniaName,
+            insigniaURL: primInsigniaModel.insigniaURL,
+          };
+        }
+
+        let seconInsigniaModel = await insigniaDataModel
+          .findOne({ insigniaID: seconInsignia })
+          .exec();
+        if (seconInsigniaModel == null) {
+          console.log("Erro no modelo da insignia secundaria.");
+        } else {
+          seconInsigniaInfo = {
+            insigniaID: seconInsigniaModel.insigniaID,
+            insigniaName: seconInsigniaModel.insigniaName,
+            insigniaURL: seconInsigniaModel.insigniaURL,
+          };
+        }
+
         //*8 Pegando a informação do avatar do membro.
 
         let personAvatar = person.user.avatarURL({ format: "jpeg" });
@@ -176,6 +222,8 @@ export const command: Command = {
           files: [
             await MakeCanvas(
               date,
+              primInsigniaInfo,
+              seconInsigniaInfo,
               dateTime,
               roleInfo,
               availableMutes,
@@ -193,6 +241,8 @@ export const command: Command = {
 
       async function MakeCanvas(
         dateMember: string,
+        primInsignia: InsigniaInfo,
+        seconInsignia: InsigniaInfo,
         timeDate: string,
         roleinfo: RoleProfile,
         availableMutes: number,
@@ -337,49 +387,14 @@ export const command: Command = {
           ctx.fillStyle = "#ffd2b3";
           ctx.fillText(`/${availableMutes}`, 780, 30);
         }
-
-        //DEV Profile
-        let adminIcon = await loadImage(
-          path.join(__dirname, "..", "..", "Assets", "img/insignias/admin-icon.png")
-        );
-        let devIcon = await loadImage(
-          path.join(__dirname, "..", "..", "Assets", "img/insignias/dev-icon.png")
-        );
-        let memberIcon = await loadImage(
-          path.join(__dirname, "..", "..", "Assets", "img/insignias/member-icon.png")
-        );
-        let partnerIcon = await loadImage(
-          path.join(__dirname, "..", "..", "Assets", "img/insignias/partner-icon.jpg")
-        );
-
+        
         //Insignias
 
-        switch (person.id) {
-          case "261945904829956097":
-            //Frajola           
-            ctx.drawImage(devIcon, 285, 411, 30, 30 );
-            ctx.drawImage(adminIcon, 250, 391, 45, 45);
-            break;
-          case "634472759975739403":
-            //YSoft
-            ctx.drawImage(memberIcon, 285, 410, 30, 30 );
-            ctx.drawImage(devIcon, 250, 390, 45, 45);
-            break
-          case "273322824318582785":
-            //Jjok            
-            ctx.drawImage(memberIcon, 285, 410, 30, 30 );
-            ctx.drawImage(partnerIcon, 250, 390, 45, 45);
-            break 
-          case "302189041112317963":
-            //Rafaé
-            ctx.drawImage(memberIcon, 285, 410, 30, 30 );
-            ctx.drawImage(adminIcon, 250, 390, 45, 45);
-            break
-          default:
-            ctx.drawImage(memberIcon, 285, 410, 30, 30 );
-            ctx.drawImage(memberIcon, 250, 390, 45, 45);
-            break;
-        }
+        let primaryInsignia = await loadImage(primInsignia.insigniaURL);
+        let secondaryInsignia = await loadImage(seconInsignia.insigniaURL);
+
+        ctx.drawImage(secondaryInsignia, 285, 410, 30, 30);
+        ctx.drawImage(primaryInsignia, 250, 390, 45, 45);
 
         //Nivel em XP
 
@@ -495,7 +510,6 @@ export const command: Command = {
           return { color: "#1387ed", tier: "T6", highRole: false };
         }
       }
-
     } catch (error) {
       message.react("❌");
       console.log(error);
