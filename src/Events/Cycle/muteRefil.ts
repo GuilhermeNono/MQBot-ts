@@ -11,7 +11,7 @@ async function MuteRefil(client: Client<true>): Promise<any> {
       var time: number = today.getHours();
 
       if (time === 0) {
-        const guild: Guild = client.guilds.cache.get("929417995325956177");
+        const guild: Guild = client.guilds.cache.get(process.env.GUILD_ID_BRIOCO);
         const roleBuff: Role = guild.roles.cache.find(
           (role) => role.id === "929777206631223346"
         );

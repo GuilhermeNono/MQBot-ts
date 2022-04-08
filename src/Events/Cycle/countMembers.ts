@@ -4,7 +4,7 @@ import ms from "ms";
 
 async function Contador(client: Client<true>): Promise<void> {
   /*Puxando o servidor pelo id*/
-  const guild: Guild = client.guilds.cache.get("929417995325956177");
+  const guild: Guild = client.guilds.cache.get(process.env.GUILD_ID_BRIOCO);
   /*Setando o tempo em 10 minutos*/
   let time: number = ms("10m");
   /*Criando um temporizador para que a cada 10 minutos ele atualize o canal.*/

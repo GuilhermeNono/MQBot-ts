@@ -22,7 +22,7 @@ async function levelCheck(
 
     if (xp >= nextLevel) {
       level++;
-      nextLevel = nextLevel + (nextLevel * 1.2);
+      nextLevel = Math.round((nextLevel + (nextLevel * 1.2)) / 1.5);
       await UserDataModel.findOneAndUpdate({userId:memberGuild.id}, {$set:{level:level, nextLevelXp:nextLevel, xp:0}});
     } else {
       await UserDataModel.findOneAndUpdate({userId:memberGuild.id}, {xp:xp});

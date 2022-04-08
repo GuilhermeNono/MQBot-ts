@@ -7,7 +7,7 @@ import { green, red, yellow } from "colors";
 async function InitDB(client: Client<true>): Promise<any> {
   try {
     console.log(yellow(`⌛ Initiating members database verification...⌛`));
-    const guildNone: Guild = client.guilds.cache.get(process.env["GUILD_ID"]);
+    const guildNone: Guild = client.guilds.cache.get(process.env["GUILD_ID_BRIOCO"]);
 
     guildNone.members.cache.forEach(async (member) => {
       const memberDB = await UserDataModel.findOne({

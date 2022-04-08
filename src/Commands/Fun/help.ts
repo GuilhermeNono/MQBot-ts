@@ -71,6 +71,10 @@ export const command: Command = {
             name: "Informa a versão e os detalhes da atualização feitas no bot.`NEW`",
             value: "`.changelog`",
           },
+          {
+            name:"Informa o ID do usuario. `NEW`",
+            value:"`.id {user❌}`",
+          },
           //   {
           //     name: 'Comando que envia uma marcação para o usuario "@Fuzii"',
           //     value: "`.fuzi {on/off❌}`",
@@ -108,10 +112,6 @@ export const command: Command = {
         )
         .addFields(
           { name: "**│ 🡻 BUFADORES 🡻 │**", value: "\u200b" },
-          {
-            name: "Help exclusivo com os comandos dos bufadores.",
-            value: "`.bufador",
-          },
           {
             name: "Cria um novo canal com seu id registrado.",
             value: "`.createchannel {name✅}`",

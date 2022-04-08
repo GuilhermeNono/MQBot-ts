@@ -2,7 +2,7 @@ import { Client, GuildBasedChannel, Message, MessageEmbed } from "discord.js";
 
 async function Report(message: Message, client: Client<true>): Promise<any> {
   try {
-    if (message.guild.id !== "929417995325956177") return;
+    if (message.guild.id !== process.env.GUILD_ID_BRIOCO) return;
 
     //*1 Pegando as informações do canal.
     let channelReports: GuildBasedChannel =
@@ -72,7 +72,7 @@ async function Report(message: Message, client: Client<true>): Promise<any> {
       //Criando uma função para enviar 1 Embed para cada servidor e apagar a mensagem do canal.
       function SendEmbed(msg: Message<boolean>) {
         const peachServer: GuildBasedChannel = client.guilds.cache
-          .get("929417995325956177")
+          .get(process.env.GUILD_ID_BRIOCO)
           .channels.cache.get("929786857464668222");
 
         if (peachServer.type === "GUILD_TEXT")
