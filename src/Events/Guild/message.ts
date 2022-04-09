@@ -15,7 +15,13 @@ export const event: Event = {
   name: "messageCreate",
   run: async (client: ExtendedClient, message: Message<boolean>) => {
     try {
+      const embedIsNotOfficialServer: MessageEmbed = new MessageEmbed()
+        .setColor("RED")
+        .setTitle(`💢 Bot exclusivo do servidor "Brioco" 💢`);
+
       if (message.author.bot) return;
+      if (message.guild.id !== process.env.GUILD_ID_BRIOCO)
+        return message.channel.send({ embeds: [embedIsNotOfficialServer] });
 
       let userKojj: User = client.users.cache.get("273322824318582785");
       let userCaiera: User = client.users.cache.get("429737792789282816");
@@ -79,17 +85,9 @@ export const event: Event = {
 
       if (
         message.author.bot ||
-        !message.guild ||
         !message.content.startsWith(process?.env["BOT_PREFIX"])
       )
         return;
-
-      const embedIsNotOfficialServer: MessageEmbed = new MessageEmbed()
-        .setColor("RED")
-        .setTitle(`💢 Bot exclusivo do servidor "Brioco" 💢`);
-
-      if (message.guild.id !== process.env.GUILD_ID_BRIOCO)
-        return message.channel.send({ embeds: [embedIsNotOfficialServer] });
 
       const args = message?.content
         .slice(process.env["BOT_PREFIX"]?.length)
