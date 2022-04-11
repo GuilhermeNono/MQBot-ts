@@ -4,6 +4,7 @@ import {
   RoleProfile,
   TierOptions,
   InsigniaInfo,
+  DBInfoServer
 } from "../../interfaces/index";
 import {
   CheckRole,
@@ -129,21 +130,24 @@ export const command: Command = {
 
         //*7 Pegando as informações do banco do usuario.
 
-        let userDB = await UserDataModel.findOne({ userId: person.id }).exec();
-        if (userDB === null) {
-          //#region Embed
+//#region Embed
 
-          let databaseNotFound: MessageEmbed = new MessageEmbed()
-            .setColor("#33f5ab")
-            .setTitle("**Registrei você em meu Banco!**")
-            .setDescription(
-              "Aparentemente, não tinha conseguido encontrar você em meu banco de dados. Então acabei de criar um novo com seu id registrado. Por favor, use o comando de novo para ver seu profile."
-            )
-            .setFooter({ text: "Registro feito com sucesso" });
+let databaseNotFound: MessageEmbed = new MessageEmbed()
+.setColor("#33f5ab")
+.setTitle("**Registrei você em meu Banco!**")
+.setDescription(
+  "Aparentemente, não tinha conseguido encontrar você em meu banco de dados. Então acabei de criar um novo com seu id registrado. Por favor, use o comando de novo para ver seu profile."
+)
+.setFooter({ text: "Registro feito com sucesso" });
 
           //#endregion
 
-          await new Databases().UserData(person.id);
+        
+
+        let userDB = await UserDataModel.findOne({ userId: person.id, serverId:message.guild.id}).exec();
+
+        if (userDB === null) {
+          await new Databases().UserData(person.id, person.guild.id);
           return message.channel.send({ embeds: [databaseNotFound] });
         }
 
@@ -151,7 +155,7 @@ export const command: Command = {
         const level: number = userDB.level;
         const xp: number = userDB.xp;
         const nextLevel: number = userDB.nextLevelXp;
-        const mutesInAccount: number = userDB.countMute;
+        const mutesInAccount: number = userDB.countMute;  
         const balanceInAccout: string = userDB.balance;
 
         const primInsignia: number = userDB.primaryInsignia;
@@ -170,7 +174,7 @@ export const command: Command = {
         };
 
         let primInsigniaModel = await insigniaDataModel
-          .findOne({ insigniaID: primInsignia })
+          .findOne({ insigniaID: primInsignia, serverId: message.guild.id })
           .exec();
         if (primInsigniaModel == null) {
           console.log("Erro no modelo da insignia primaria.");
@@ -183,7 +187,7 @@ export const command: Command = {
         }
 
         let seconInsigniaModel = await insigniaDataModel
-          .findOne({ insigniaID: seconInsignia })
+          .findOne({ insigniaID: seconInsignia, serverId: message.guild.id  })
           .exec();
         if (seconInsigniaModel == null) {
           console.log("Erro no modelo da insignia secundaria.");
@@ -212,11 +216,7 @@ export const command: Command = {
         //*9 Pegando a informação do dinheiro do usuario.
 
         //*10 Retornando o Canvas para o usuario
-        if (message.deletable) {
-          message.delete().then(async () => {
-            if (loading.deletable) await loading.delete();
-          });
-        }
+        if (loading.deletable) await loading.delete();
 
         message.channel.send({
           files: [

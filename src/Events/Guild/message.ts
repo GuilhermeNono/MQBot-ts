@@ -1,6 +1,6 @@
 import { Event, Command } from "../../interfaces/index.js";
-import { CheckRole } from "../../../lib/modules/index";
-import { Report, levelCheck} from "../Cycle/index";
+import { CheckRole, Databases } from "../../../lib/modules/index";
+import { Report, levelCheck } from "../Cycle/index";
 import {
   Guild,
   GuildBasedChannel,
@@ -10,6 +10,7 @@ import {
   User,
 } from "discord.js";
 import ExtendedClient from "../../Client/index";
+import { GuildDataModel } from "../../../models/index";
 
 export const event: Event = {
   name: "messageCreate",
@@ -17,26 +18,31 @@ export const event: Event = {
     try {
       const embedIsNotOfficialServer: MessageEmbed = new MessageEmbed()
         .setColor("RED")
-        .setTitle(`💢 Bot exclusivo do servidor "Brioco" 💢`);
+        .setTitle(`💢 Bot exclusivo do servidor "Brioco" e autorizados. 💢`)
+        .setFooter({
+          text: `Contate o Desenvolvedor para mais informações. ➟ ${
+            client.users.cache.get("261945904829956097").tag
+          }`,
+        });
 
       if (message.author.bot) return;
-      if (message.guild.id !== process.env.GUILD_ID_BRIOCO)
-        return message.channel.send({ embeds: [embedIsNotOfficialServer] });
 
-      let userKojj: User = client.users.cache.get("273322824318582785");
-      let userCaiera: User = client.users.cache.get("429737792789282816");
-      let userFelipe: User = client.users.cache.get("404299096967610370");
+      if (message.guild.id === "929417995325956177") {
+        let userKojj: User = client.users.cache.get("273322824318582785");
+        let userCaiera: User = client.users.cache.get("429737792789282816");
+        let userFelipe: User = client.users.cache.get("404299096967610370");
 
-      if (
-        message.content === `<@!${userKojj.id}>` ||
-        message.content === `<@!${userCaiera.id}>` ||
-        (message.content === `<@!${userFelipe.id}>` && message.deletable)
-      ) {
-        let memberGuild: GuildMember = message.guild.members.cache.get(
-          message.author.id
-        );
-        const newCheckAuthor: CheckRole = new CheckRole(client, memberGuild);
-        if (!newCheckAuthor.CheckHighRoleBool()) message.delete();
+        if (
+          message.content === `<@!${userKojj.id}>` ||
+          message.content === `<@!${userCaiera.id}>` ||
+          (message.content === `<@!${userFelipe.id}>` && message.deletable)
+        ) {
+          let memberGuild: GuildMember = message.guild.members.cache.get(
+            message.author.id
+          );
+          const newCheckAuthor: CheckRole = new CheckRole(client, memberGuild);
+          if (!newCheckAuthor.CheckHighRoleBool()) message.delete();
+        }
       }
 
       //#region DEPRECATED
@@ -78,7 +84,7 @@ export const event: Event = {
       // //   }
       // // }
       //#endregion
-      
+
       Report(message, client);
 
       await levelCheck(message);
@@ -98,8 +104,27 @@ export const event: Event = {
       if (!cmd) return;
       const command: Command | undefined =
         client.commands.get(cmd) || client.aliases.get(cmd);
+
+      let guildDB = await GuildDataModel.findOne({
+        guildID: message.guildId,
+      }).exec();
+
+      if (!guildDB) {
+        await new Databases().GuildData(message.guildId, message.guild.ownerId, false);
+        return await message.channel.send("🚫 Servidor Registrado. Peça aos desenvolvedores para autorizarem o uso do bot no servidor 🚫"); 
+      }
+
+      //TODO Descobrir por que o valor não está sendo atualizado no banco.
+
+      if (!guildDB.isAuthorized) {
+        if (command.name !== "auth") {
+          return message.channel.send({ embeds: [embedIsNotOfficialServer] });
+        }
+      }
       if (!command) return;
       if (command) (command as Command).run(client, message, args);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   },
 };

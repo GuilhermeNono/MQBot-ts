@@ -5,6 +5,8 @@ class GuildData {
     @prop()
     ownerGuildID: string;
     @prop()
+    isAuthorized:boolean;
+    @prop()
     prefix: string;
 }
 

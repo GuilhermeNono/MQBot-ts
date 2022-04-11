@@ -1,4 +1,4 @@
-import { UserDataModel, UserBoostModel, insigniaDataModel} from "../../models/index";
+import { UserDataModel, UserBoostModel, GuildDataModel, insigniaDataModel} from "../../models/index";
 
 class Databases {
   /**
@@ -8,6 +8,7 @@ class Databases {
 
   async UserData(
     userId: string,
+    serverId: string,
     isMuted: boolean = false,
     isBan: boolean = false,
     countBan: number = 0,
@@ -19,7 +20,7 @@ class Databases {
     insigniaID: number[] = [0],
     xp: number = 1000,
     level: number = 1,
-    nextLevelXp: number = 2000
+    nextLevelXp: number = 2000,
   ): Promise<boolean> {
     try {
       const doc = new UserDataModel({
@@ -52,12 +53,14 @@ class Databases {
 
   async UserBoost(
     userId: string,
+    serverId:string,
     numberChannel: number = 0,
     idChannel: string = "000"
   ): Promise<boolean> {
     try {
       const doc = new UserBoostModel({
         userId: userId,
+        serverId: serverId,
         numberChannel: numberChannel,
         idChannel: idChannel,
       });
@@ -83,6 +86,32 @@ class Databases {
         insigniaID: InsigniaID,
         insigniaName: InsigniaName,
         insigniaURL: InsigniaURL
+      });
+
+      await doc.save();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+   /**
+   * 💠 - Cria um banco de dados para novos servidores.
+   * @returns Verdadeiro significará que a operação foi um sucesso.
+   */
+
+  async GuildData(
+    guildID: string,
+    ownerGuildID:string,
+    isAuthorized:boolean,
+    prefix:string = '.'
+  ): Promise<boolean> {
+    try {
+      const doc = new GuildDataModel({
+        guildID: guildID,
+        ownerGuildID: ownerGuildID,
+        isAuthorized: isAuthorized,
+        prefix: prefix,
       });
 
       await doc.save();

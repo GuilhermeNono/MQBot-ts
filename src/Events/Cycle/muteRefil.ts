@@ -3,6 +3,7 @@ import { UserDataModel } from "../../../models/index";
 import { Client, Guild, GuildMember, Role } from "discord.js";
 //@ts-ignore
 import ms from "ms";
+import { DBInfoServer } from "../../interfaces";
 
 async function MuteRefil(client: Client<true>): Promise<any> {
   try {
@@ -11,27 +12,37 @@ async function MuteRefil(client: Client<true>): Promise<any> {
       var time: number = today.getHours();
 
       if (time === 0) {
-        const guild: Guild = client.guilds.cache.get(process.env.GUILD_ID_BRIOCO);
+        const guild: Guild = client.guilds.cache.get(
+          process.env.GUILD_ID_BRIOCO
+        );
         const roleBuff: Role = guild.roles.cache.find(
           (role) => role.id === "929777206631223346"
         );
         const membersRole: string[] = roleBuff.members.map((user) => user.id);
-        let userCreateDB: Databases = new Databases();
         for (let i in membersRole) {
-          let dbMembers = await UserDataModel.findOne({
+          const dbMembers = await UserDataModel.findOne({
             userId: membersRole[i],
+            serverId: guild.id,
           }).exec();
 
+          let member: GuildMember = guild.members.cache.find(
+            (userID) => userID.id === membersRole[i]
+          );
           if (dbMembers === null) {
-            let member: GuildMember = guild.members.cache.find(
-              (userID) => userID.id === membersRole[i]
+            await new Databases().UserData(
+              member.user.id,
+              member.guild.id,
+              false,
+              false,
+              0,
+              0,
+              2
             );
-            await userCreateDB.UserData(member.user.id, false, false, 0, 0, 2);
           } else {
-            let AvbMutes: number = await dbMembers.avbMutes;
+            let AvbMutes: number = dbMembers.avbMutes;
             if (AvbMutes <= 1) {
               await UserDataModel.findOneAndUpdate(
-                { userId: membersRole[i] },
+                { userId: membersRole[i], serverId: guild.id },
                 { avbMutes: 2 }
               ).exec();
             }
