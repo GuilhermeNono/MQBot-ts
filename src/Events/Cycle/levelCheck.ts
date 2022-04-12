@@ -1,6 +1,7 @@
 import { GuildMember, Message } from "discord.js";
 import { Databases } from "../../../lib/modules";
 import { UserDataModel, GuildDataModel, insigniaDataModel} from "../../../models";
+import {BypassINS} from '../../Events/Insignia/Bypass';
 
 async function levelCheck(message: Message<boolean>): Promise<any> {
   try {
@@ -11,6 +12,7 @@ async function levelCheck(message: Message<boolean>): Promise<any> {
 
     if (!guildInfo) return;
     if (guildInfo.isAuthorized) {
+      
       //*2 Checando se o usuario está no banco de dados
       const memberGuild: GuildMember = message.member;
 
@@ -47,6 +49,8 @@ async function levelCheck(message: Message<boolean>): Promise<any> {
       xp += Math.round((baseFunction * boost) + baseFunction);
 
       if (xp >= nextLevel) {
+
+        //Insignia - Bypass
 
         //*4 Verificando se o usuario tem xp o suficiente para subir de nivel
         level++;

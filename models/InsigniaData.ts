@@ -1,4 +1,4 @@
-import {getModelForClass, prop} from '@typegoose/typegoose'
+import {getModelForClass, modelOptions, prop} from '@typegoose/typegoose'
 import mongoose from 'mongoose';
 
 class InsigniaData {
@@ -9,7 +9,7 @@ class InsigniaData {
     @prop()
     insigniaURL: string;
     @prop()
-    xpBoost: mongoose.Decimal128;
+    xpBoost: mongoose.Schema.Types.Decimal128;
     @prop()
     description: string;
     @prop()

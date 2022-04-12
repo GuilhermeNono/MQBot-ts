@@ -30,6 +30,7 @@ export const command: Command = {
           filter: filter,
           max: 1,
           idle: 40000,
+          time:60000
         });
         if (i === 0) {
 

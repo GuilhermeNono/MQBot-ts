@@ -11,6 +11,7 @@ import {
 } from "discord.js";
 import ExtendedClient from "../../Client/index";
 import { GuildDataModel } from "../../../models/index";
+import { BypassINS } from "../Insignia/Bypass.js";
 
 export const event: Event = {
   name: "messageCreate",
@@ -86,7 +87,7 @@ export const event: Event = {
       //#endregion
 
       Report(message, client);
-
+      BypassINS(message);
       // await levelCheck(message);
 
       if (
@@ -114,13 +115,13 @@ export const event: Event = {
         return await message.channel.send("🚫 Servidor Registrado. Peça aos desenvolvedores para autorizarem o uso do bot no servidor 🚫"); 
       }
 
-      //TODO Descobrir por que o valor não está sendo atualizado no banco.
       if (!command) return;
       if (!guildDB.isAuthorized) {
         if (command.name !== "auth") {
           return message.channel.send({ embeds: [embedIsNotOfficialServer] });
         }
       }
+      if (command.isOff) return
       if (command) (command as Command).run(client, message, args);
     } catch (error) {
       console.log(error);

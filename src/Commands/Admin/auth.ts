@@ -5,6 +5,7 @@ import { MessageEmbed } from "discord.js";
 
 export const command: Command = {
   name: "auth",
+  isOff: false,
   aliases: [""],
   run: async (client, message, args) => {
     if (message.author.id !== "261945904829956097") return message.react("❌");
