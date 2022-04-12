@@ -111,8 +111,6 @@ export const command: Command = {
 
         //#endregion
 
-        //TODO:5 Deletando o canal e atualizando os dados no banco
-
         if (loading.deletable) {
           await loading.delete();
         }

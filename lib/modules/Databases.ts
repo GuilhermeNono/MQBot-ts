@@ -79,13 +79,19 @@ class Databases {
   async InsigniaData (
     InsigniaID:number,
     InsigniaName:string,
-    InsigniaURL:string
+    InsigniaURL:string,
+    description:string,
+    rarity:number,
+    xpBoost:number = 0.0
   ):Promise<boolean> {
     try {
       const doc = new insigniaDataModel({
         insigniaID: InsigniaID,
         insigniaName: InsigniaName,
-        insigniaURL: InsigniaURL
+        insigniaURL: InsigniaURL,
+        description: description,
+        rarity: rarity,
+        xpBoost: xpBoost
       });
 
       await doc.save();

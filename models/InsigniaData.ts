@@ -1,4 +1,5 @@
 import {getModelForClass, prop} from '@typegoose/typegoose'
+import mongoose from 'mongoose';
 
 class InsigniaData {
     @prop()
@@ -7,6 +8,12 @@ class InsigniaData {
     insigniaName: string;
     @prop()
     insigniaURL: string;
+    @prop()
+    xpBoost: mongoose.Decimal128;
+    @prop()
+    description: string;
+    @prop()
+    rarity: number;
 }
 
 const insigniaDataModel = getModelForClass(InsigniaData);

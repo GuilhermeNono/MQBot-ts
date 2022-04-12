@@ -87,7 +87,7 @@ export const event: Event = {
 
       Report(message, client);
 
-      await levelCheck(message);
+      // await levelCheck(message);
 
       if (
         message.author.bot ||
@@ -115,13 +115,12 @@ export const event: Event = {
       }
 
       //TODO Descobrir por que o valor não está sendo atualizado no banco.
-
+      if (!command) return;
       if (!guildDB.isAuthorized) {
         if (command.name !== "auth") {
           return message.channel.send({ embeds: [embedIsNotOfficialServer] });
         }
       }
-      if (!command) return;
       if (command) (command as Command).run(client, message, args);
     } catch (error) {
       console.log(error);

@@ -44,7 +44,7 @@ export const command: Command = {
       if (guildDB.isAuthorized === true)
         return message.channel.send({ embeds: [embedAlreadyAuth] });
 
-      await GuildDataModel.findOneAndUpdate({ guildId: message.guild.id },{isAuthorized: true }).exec()
+      await GuildDataModel.findOneAndUpdate({ guildID: message.guild.id },{isAuthorized: true }).exec()
       message.channel.send({ embeds: [embedAuth] });
         
     } catch (error) {
