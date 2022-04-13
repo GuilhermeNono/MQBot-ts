@@ -1,9 +1,10 @@
 import { GuildMember, Message } from "discord.js";
 import { Databases } from "../../../lib/modules";
 import { UserDataModel, GuildDataModel, insigniaDataModel} from "../../../models";
-import {BypassINS} from '../../Events/Insignia/Bypass';
+import ExtendedClient from "../../Client";
+import { BypassINS } from '../Insignias/index'
 
-async function levelCheck(message: Message<boolean>): Promise<any> {
+async function levelCheck(client:ExtendedClient, message: Message<boolean>): Promise<any> {
   try {
     //*1 Checando se o servidor está autorizado a usar o sistema de XP
     const guildInfo = await GuildDataModel.findOne({
@@ -50,10 +51,17 @@ async function levelCheck(message: Message<boolean>): Promise<any> {
 
       if (xp >= nextLevel) {
 
-        //Insignia - Bypass
+        if(level === 30){
+          await BypassINS(client, message)
+        }
 
         //*4 Verificando se o usuario tem xp o suficiente para subir de nivel
         level++;
+
+        if(level === 30) {
+          
+        }
+
         nextLevel = Math.round((nextLevel + nextLevel * 1.2) / 1.5);
         await UserDataModel.findOneAndUpdate(
           { userId: memberGuild.id, serverId: memberGuild.guild.id },

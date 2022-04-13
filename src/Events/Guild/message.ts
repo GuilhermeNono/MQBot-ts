@@ -2,8 +2,6 @@ import { Event, Command } from "../../interfaces/index.js";
 import { CheckRole, Databases } from "../../../lib/modules/index";
 import { Report, levelCheck } from "../Cycle/index";
 import {
-  Guild,
-  GuildBasedChannel,
   GuildMember,
   Message,
   MessageEmbed,
@@ -11,7 +9,6 @@ import {
 } from "discord.js";
 import ExtendedClient from "../../Client/index";
 import { GuildDataModel } from "../../../models/index";
-import { BypassINS } from "../Insignia/Bypass.js";
 
 export const event: Event = {
   name: "messageCreate",
@@ -87,8 +84,7 @@ export const event: Event = {
       //#endregion
 
       Report(message, client);
-      BypassINS(message);
-      // await levelCheck(message);
+      await levelCheck(client, message);
 
       if (
         message.author.bot ||
