@@ -6,5 +6,5 @@ export interface InsigniaInfo {
   insigniaURL?: string;
   insigniaDescription?: string;
   insigniaBoost?: number;
-  insigniaRarity?: number;
+  insigniaRarity?: number | string;
 }

@@ -1,6 +1,6 @@
 import { Command } from "../../interfaces";
 import { InsigniaInfo } from "../../interfaces/index";
-import { Databases, SetRarity } from "../../../lib/modules/index";
+import { Databases, Rarity } from "../../../lib/modules/index";
 import { Collection, Message, MessageEmbed } from "discord.js";
 
 export const command: Command = {
@@ -123,14 +123,16 @@ export const command: Command = {
           insignia.insigniaName,
           insignia.insigniaURL,
           insignia.insigniaDescription,
-          insignia.insigniaRarity,
+          Number(insignia.insigniaRarity),
           insignia.insigniaBoost
         )
         .then(async () => {
+          var colorRarity = new Rarity(client, Number(insignia.insigniaRarity)).getColorRarity();
+          
           var embedInsignia = new MessageEmbed()
             .setTitle(`${insignia.insigniaName}`)
             .setThumbnail(`${insignia.insigniaURL}`)
-            .setColor(SetRarity(insignia.insigniaRarity))
+            .setColor(colorRarity)
             .addFields(
               { name: "ID", value: `${insignia.insigniaID}`, inline: true },
               { name: "Descrição", value: `${insignia.insigniaDescription}` },

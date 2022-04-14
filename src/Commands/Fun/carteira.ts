@@ -1,5 +1,5 @@
 import { GuildMember, MessageEmbed } from "discord.js";
-import { EmbedTemplates } from "../../../lib/modules";
+import { EmbedTemplates, Rarity} from "../../../lib/modules";
 import { UserDataModel, insigniaDataModel } from "../../../models/";
 import { Command, InsigniaInfo } from "../../interfaces";
 
@@ -88,9 +88,16 @@ export const command: Command = {
         "\u200b",
         true
       );
+      
+      insigniasData.sort((a, b) => Number(a.insigniaRarity)-Number(b.insigniaRarity));
+      insigniasData.reverse();
+
     for (let i = 0; i < insigniasData.length; i++) {
+      
+      const emojiRarity = new Rarity(client, Number(insigniasData[i].insigniaRarity)).getEmojiRarity();
+
       embedBag.addField(
-        "`💎 ➟ " + insigniasData[i].insigniaName + " 🠔 💎`",
+        "`" + emojiRarity + " ➟ " + insigniasData[i].insigniaName + " 🠔 " + emojiRarity +"`",
         "`" + insigniasData[i].insigniaDescription + "`"
       );
     }

@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from "discord.js";
-import { SetRarity } from "../../../lib/modules/index";
+import { Rarity } from "../../../lib/modules/index";
 import { UserDataModel, insigniaDataModel } from "../../../models/index";
 import ExtendedClient from "../../Client";
 
@@ -24,9 +24,11 @@ async function BypassINS(
       .findOne({ insigniaID: 4 })
       .exec();
 
+      var colorRarity = new Rarity(client, insigniaInfo.rarity).getColorRarity();
+
     let embedNewInsignia = new MessageEmbed()
       .setTitle(`✨ Insignia conquistada ➟ __Bypass__ ✨`)
-      .setColor(SetRarity(insigniaInfo.rarity))
+      .setColor(colorRarity)
       .setAuthor({ name: "BYPASS", iconURL: insigniaInfo.insigniaURL })
       .setFooter({
         text: `${message.author.username}`,
