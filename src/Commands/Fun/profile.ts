@@ -218,10 +218,19 @@ let databaseNotFound: MessageEmbed = new MessageEmbed()
         //*10 Retornando o Canvas para o usuario
         if (loading.deletable) await loading.delete();
 
+        let insigniaInfo = await insigniaDataModel.findOne({insigniaID:primInsigniaInfo.insigniaID}).exec();
+        let primaryInsigniaBoost = Number(insigniaInfo.xpBoost);
+        insigniaInfo = await insigniaDataModel.findOne({insigniaID:seconInsigniaInfo.insigniaID}).exec();
+        let secondaryInsigniaBoost = Number(insigniaInfo.xpBoost);
+
+        let xpBoost = primaryInsigniaBoost + secondaryInsigniaBoost;
+        xpBoost = parseFloat((0 + (1 * xpBoost)).toFixed(1));
+
         message.channel.send({
           files: [
             await MakeCanvas(
               date,
+              xpBoost,
               primInsigniaInfo,
               seconInsigniaInfo,
               dateTime,
@@ -239,8 +248,11 @@ let databaseNotFound: MessageEmbed = new MessageEmbed()
         });
       });
 
+     
+
       async function MakeCanvas(
         dateMember: string,
+        xpBoost: number,
         primInsignia: InsigniaInfo,
         seconInsignia: InsigniaInfo,
         timeDate: string,
@@ -396,6 +408,14 @@ let databaseNotFound: MessageEmbed = new MessageEmbed()
         ctx.drawImage(secondaryInsignia, 285, 410, 30, 30);
         ctx.drawImage(primaryInsignia, 250, 390, 45, 45);
 
+        //XpBoost
+
+        if(xpBoost !== 0){
+          ctx.fillStyle = "#ffd2b3";
+          ctx.font = "16px Montserrat Black";
+          ctx.fillText(`${xpBoost}x`, 400, 330);
+        }
+
         //Nivel em XP
 
         const degress = Math.floor((xp / nextLevelXp) * 360);
@@ -416,7 +436,7 @@ let databaseNotFound: MessageEmbed = new MessageEmbed()
         ctx.font = "42px Montserrat Black";
         ctx.fillStyle = "#ff9463";
 
-        ctx.fillText(`${level}`, 400, 365); //TODO: Trocar para o nivel do usuario
+        ctx.fillText(`${level}`, 400, 365); 
 
         ctx.beginPath();
         ctx.strokeStyle = "#ff4d13";

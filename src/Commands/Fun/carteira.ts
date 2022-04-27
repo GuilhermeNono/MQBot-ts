@@ -5,7 +5,7 @@ import { Command, InsigniaInfo } from "../../interfaces";
 
 export const command: Command = {
   name: "carteira",
-  aliases: ["wallet", "bolsa", "bag"],
+  aliases: ["wallet", "bolsa", "bag", "inventario", "inv"],
   isOff: false,
   run: async (client, message, args) => {
     //.carteira <@user>

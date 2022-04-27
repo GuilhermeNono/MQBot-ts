@@ -14,6 +14,8 @@ export const event: Event = {
   name: "messageCreate",
   run: async (client: ExtendedClient, message: Message<boolean>) => {
     try {
+      if (process.env.NODE_ENV === "development" && message.author.id !== "261945904829956097") return;
+
       const embedIsNotOfficialServer: MessageEmbed = new MessageEmbed()
         .setColor("RED")
         .setTitle(`💢 Bot exclusivo do servidor "Brioco" e autorizados. 💢`)
@@ -42,6 +44,8 @@ export const event: Event = {
           if (!newCheckAuthor.CheckHighRoleBool()) message.delete();
         }
       }
+
+      //anti-Phishing 🔻
 
       //#region DEPRECATED
       // // if (message.content.includes("@everyone")) {

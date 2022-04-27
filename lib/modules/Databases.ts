@@ -25,6 +25,7 @@ class Databases {
     try {
       const doc = new UserDataModel({
         userId: userId,
+        serverId: serverId,
         isMuted: isMuted,
         isBan: isBan,
         countBan: countBan,
