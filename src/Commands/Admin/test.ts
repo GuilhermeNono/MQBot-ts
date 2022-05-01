@@ -9,7 +9,7 @@ export const command: Command = {
     run: async (client, message, args) => {
         if(message.author.id !== "261945904829956097") return
         try {
-            // await UserDataModel.deleteMany({serverId: {$exists:false}}).exec();
+            await UserDataModel.deleteMany({serverId: {$exists:false}}).exec();
             return message.react("✅");
         } catch (error) {
             console.log(error);
