@@ -1,37 +1,51 @@
 import { Event, Command } from "../../interfaces/index.js";
-import { CheckRole } from "../../../lib/modules/index";
-import { Report, levelCheck} from "../Cycle/index";
+import { CheckRole, Databases } from "../../../lib/modules/index";
+import { Report, levelCheck } from "../Cycle/index";
 import {
-  Guild,
-  GuildBasedChannel,
   GuildMember,
   Message,
   MessageEmbed,
   User,
 } from "discord.js";
 import ExtendedClient from "../../Client/index";
+import { GuildDataModel } from "../../../models/index";
 
 export const event: Event = {
   name: "messageCreate",
   run: async (client: ExtendedClient, message: Message<boolean>) => {
     try {
+      if (process.env.NODE_ENV === "development" && message.author.id !== "261945904829956097") return;
+
+      const embedIsNotOfficialServer: MessageEmbed = new MessageEmbed()
+        .setColor("RED")
+        .setTitle(`💢 Bot exclusivo do servidor "Brioco" e autorizados. 💢`)
+        .setFooter({
+          text: `Contate o Desenvolvedor para mais informações. ➟ ${
+            client.users.cache.get("261945904829956097").tag
+          }`,
+        });
+
       if (message.author.bot) return;
 
-      let userKojj: User = client.users.cache.get("273322824318582785");
-      let userCaiera: User = client.users.cache.get("429737792789282816");
-      let userFelipe: User = client.users.cache.get("404299096967610370");
+      if (message.guild.id === "929417995325956177") {
+        let userKojj: User = client.users.cache.get("273322824318582785");
+        let userCaiera: User = client.users.cache.get("429737792789282816");
+        let userFelipe: User = client.users.cache.get("404299096967610370");
 
-      if (
-        message.content === `<@!${userKojj.id}>` ||
-        message.content === `<@!${userCaiera.id}>` ||
-        (message.content === `<@!${userFelipe.id}>` && message.deletable)
-      ) {
-        let memberGuild: GuildMember = message.guild.members.cache.get(
-          message.author.id
-        );
-        const newCheckAuthor: CheckRole = new CheckRole(client, memberGuild);
-        if (!newCheckAuthor.CheckHighRoleBool()) message.delete();
+        if (
+          message.content === `<@!${userKojj.id}>` ||
+          message.content === `<@!${userCaiera.id}>` ||
+          (message.content === `<@!${userFelipe.id}>` && message.deletable)
+        ) {
+          let memberGuild: GuildMember = message.guild.members.cache.get(
+            message.author.id
+          );
+          const newCheckAuthor: CheckRole = new CheckRole(client, memberGuild);
+          if (!newCheckAuthor.CheckHighRoleBool()) message.delete();
+        }
       }
+
+      //anti-Phishing 🔻
 
       //#region DEPRECATED
       // // if (message.content.includes("@everyone")) {
@@ -72,24 +86,15 @@ export const event: Event = {
       // //   }
       // // }
       //#endregion
-      
-      Report(message, client);
 
-      await levelCheck(message);
+      Report(message, client);
+      await levelCheck(client, message);
 
       if (
         message.author.bot ||
-        !message.guild ||
         !message.content.startsWith(process?.env["BOT_PREFIX"])
       )
         return;
-
-      const embedIsNotOfficialServer: MessageEmbed = new MessageEmbed()
-        .setColor("RED")
-        .setTitle(`💢 Bot exclusivo do servidor "Brioco" 💢`);
-
-      if (message.guild.id !== process.env.GUILD_ID_BRIOCO)
-        return message.channel.send({ embeds: [embedIsNotOfficialServer] });
 
       const args = message?.content
         .slice(process.env["BOT_PREFIX"]?.length)
@@ -100,8 +105,26 @@ export const event: Event = {
       if (!cmd) return;
       const command: Command | undefined =
         client.commands.get(cmd) || client.aliases.get(cmd);
+
+      let guildDB = await GuildDataModel.findOne({
+        guildID: message.guildId,
+      }).exec();
+
+      if (!guildDB) {
+        await new Databases().GuildData(message.guildId, message.guild.ownerId, false);
+        return await message.channel.send("🚫 Servidor Registrado. Peça aos desenvolvedores para autorizarem o uso do bot no servidor 🚫"); 
+      }
+
       if (!command) return;
+      if (!guildDB.isAuthorized) {
+        if (command.name !== "auth") {
+          return message.channel.send({ embeds: [embedIsNotOfficialServer] });
+        }
+      }
+      if (command.isOff) return
       if (command) (command as Command).run(client, message, args);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   },
 };

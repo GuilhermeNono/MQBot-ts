@@ -7,6 +7,7 @@ interface Run {
 
 export interface Command {
   name: string;
+  isOff?: boolean;
   description?: string;
   aliases?: string[];
   run: Run;

@@ -10,16 +10,17 @@ import {
   MessageEmbed,
   Role,
 } from "discord.js";
+import { DBInfoServer } from "../../interfaces";
 
 export const event: Event = {
   name: "guildMemberAdd",
   run: async (client: ExtendedClient, member: GuildMember) => {
     //Checando se o usuario já tem um banco no servidor.
-    let doc = await UserDataModel.findOne({ userId: member.id }).exec();
-    const databases: Databases = new Databases();
-    if (doc === null) {
-      await databases.UserData(member.id);
-    }
+    let userDB = await UserDataModel.findOne({ userId: member.id, serverId:member.guild.id }).exec();
+
+    if (userDB === null) {
+      await new Databases().UserData(member.id, member.guild.id);
+    } 
     if (muteCheck.get(member.id)) {
       muteCheck.delete(member.id);
       let guildMember: Guild = client.guilds.cache.get(member.guild.id);

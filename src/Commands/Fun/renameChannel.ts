@@ -79,11 +79,13 @@ export const command: Command = {
 
         let userBooster = await UserBoostModel.findOne({
           userId: message.author.id,
+          serverId: message.guild.id,
         }).exec();
         let numberChannels: Number;
         if (userBooster === null) {
           const userBoosterdb: boolean = await new Databases().UserBoost(
-            message.author.id
+            message.author.id,
+            message.guild.id
           );
           if (!userBoosterdb) throw "Erro ao criar o BDD dos bufadores.";
           numberChannels = 0;
@@ -110,7 +112,7 @@ export const command: Command = {
 
         if (!channelExistCheck) {
           await UserBoostModel.findOneAndUpdate(
-            { userId: message.author.id },
+            { userId: message.author.id, serverId: message.guild.id },
             { $set: { numberChannel: 0, idChannel: "123" } }
           );
         }

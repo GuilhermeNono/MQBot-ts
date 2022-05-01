@@ -5,6 +5,8 @@ class userBoost {
     @prop()
     numberChannel: number;
     @prop()
+    serverId:string;
+    @prop()
     idChannel: string;
 }
 

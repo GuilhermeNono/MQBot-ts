@@ -4,6 +4,8 @@ class UserData {
   @prop()
   public userId: string;
   @prop()
+  public serverId: string;
+  @prop()
   public isMuted: boolean;
   @prop()
   public isBan: boolean;

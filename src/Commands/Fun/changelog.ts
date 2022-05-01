@@ -25,11 +25,9 @@ export const command: Command = {
           "https://cdn0.iconfinder.com/data/icons/social-messaging-ui-coloricon-2/21/98-512.png"
         )
         .setDescription(
-          `Atualização 4.2.0 entrou em vigor e, como novo recurso, o comando **.changelog** foi adicionado, ele mostra o que foi alterado no bot. 
-          Enfim, o bot esteve em um momento de pausa de atualizações por diversos motivos, mas o importante é que sempre voltamos hora ou outra.
-          E como prometido anteriormente, o Sistema de XP do bot já está PARCIAMENTE funcional, "Como assim parcialmente? 🤔"
-          No servidor oficial do bot, foi anunciado e apresentado o escopo final do sistema, contudo algumas ideias foram deixadas para o proximo patch. 
-          Além do sistema de XP parcialmente funcional, a funcionalidade de Mute temporario para bufadores, foi deixada também, para o proximo patch.`
+          `Atualização 4.3.0 - E chegamos na atualização 4.3.x, algumas mudanças, adições e correções chegaram junto a ela, sendo elas, 
+          alterações no ganho de xp, novos comandos e o novo sistema de insignias, que andará de mãos dadas com o XP e o Dinheiro do bot.
+          Sem mais delongas, vamos ao change-log:`
         )
         .addField("Desenvolvedor 🠗 ", `"Frajola.#4953"`);
 
@@ -40,12 +38,12 @@ export const command: Command = {
         })
         .setColor("#fc2626")
         .setDescription(
-          `A atualização em si, não foi extremamente grande, como a passada. Porém, algumas alterações ocorreram e vamos cita-las abaixo:`
+          `Como a atualização passada, incrementar novos comandos não foi o principal objetivo da atualização:`
         )
         .addFields(
           { name: "**│ 🡻 Mudanças 🡻 │**", value: "\u200b" },
           {
-            name: "Foi adicionado a tag `NEW` no comando `.help` para indicar novos comandos.",
+            name: "Todas as mudanças em comandos ficarão marcados como `NEW` no `.help`",
             value: "✅ Tag `NEW` ➔ `.help`",
           },
           {
@@ -53,31 +51,35 @@ export const command: Command = {
             value: "\u200b",
           },
           {
-            name: "Agora o comando `.convite` foi adicionado para informar o link do servidor Oficial do Brioco.",
-            value: "✅ Command added `.convite`",
+            name:"Existe agora uma verificação para o uso do bot em novos servidores, mais detalhes em breve.",
+            value: "✅ New Servers ➔ `Experimental`",
+          },
+          {
+            name: "O sistema de XP ainda anda em fase experimental, e recentemente, um problema fez com que alguns usuarios sumissem da base de dados do bot. Então caso seu nivel não esteja como era a 1 semana atrás, pedimos desculpas pelo inconveniente.",
+            value: "♻ Update ➔ `Metodo de ganho de XP nerfado.`",
           },
           {
             name: "\u200b",
             value: "\u200b",
           },
           {
-            name: "Foi adicionado o comando `.server` que ira te redirecionar para o servidor do bot. O comando é um comando oculto, ou seja, não aparecerá no `.help`.",
-            value: "✅ Command added `.server`",
+            name: "Foi recém adicionado o sistema de Boost para auxiliar no ganho de XP.",
+            value: "✅ System XPBoost ➔ `Trabalhará junto com as insignias.`",
           },
           {
             name: "\u200b",
             value: "\u200b",
           },
           {
-            name: "Enfim o sistema de XP entrou em vigor nessa atualização, será usado como fase experimental para testes. Caso tudo de certo, o sistema completo será incluido no proximo patch. (acumulem bastante xp 😉)",
-            value: "✅ System XP ➔ `Experimental`",
+            name: "E até que enfim foi adicionado o sistema de Insignias, que auxiliará no ganho de XP, Dinheiro e funcionalidades exclusivas enquanto determinada insignia estiver equipada.",
+            value: "✅ System Insignias ➔ `Experimental`",
           },
           {
             name: "\u200b",
             value: "\u200b",
           },
           {
-            name: "O `.profile` foi atualizado e levemente alterado, para melhorar a experiência do usuário.",
+            name: "Agora será informado no profile do usuario quanto de Boost está sendo fornecido para ele em relação as insignias equipadas.",
             value: "♻ Update ➔ `.profile`",
           },
           {
@@ -85,16 +87,16 @@ export const command: Command = {
             value: "\u200b",
           },
           {
-            name: "Agora, qualquer marcação nos usuarios `kojj`, `caiera` e/ou `felepe` será automaticamente excluida(exceção para moderadores e acima).",
-            value: "✅ Auto-remove ➔ `kojj, caira, felepe`",
+            name: "Caso queria ter mais informações sobre as insignias, poderá usar o novo comando `.insignia` para isso.",
+            value: "✅ Command Added ➔ `.insignia`",
           },
           {
             name: "\u200b",
             value: "\u200b",
           },
           {
-            name: "Banco de dados atualizado para suprir o novo sistema de XP",
-            value: "♻ Update ➔ `Database`",
+            name: "E sabendo das informações de determinada insignia, poderá também equipa-la em seu perfil caso tenha ela em seu inventario.",
+            value: "✅ Command Added ➔ `.useinsignia`",
           },
           {
             name: "\u200b",

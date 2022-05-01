@@ -1,5 +1,5 @@
 import ExtendedClient from "../../Client/index";
-import { Command } from "../../interfaces/index";
+import { Command, DBInfoServer} from "../../interfaces/index";
 import { UserDataModel } from "../../../models/index";
 import {
   CheckRole,
@@ -247,21 +247,19 @@ export const command: Command = {
 
       //* 6 Somando +1 no contador de mutes do usuario.
 
-      try {
-        let userDB = await UserDataModel.findOne({ userId: person.id }).exec();
+        let userDB = await UserDataModel.findOne({ userId: person.id, serverId:message.guild.id }).exec();
+
         if (userDB === null) {
-          return await new Databases().UserData(person.id);
-        }
+          return await new Databases().UserData(person.id, person.guild.id);
+        } 
 
         let userCountMute: number = userDB.countMute + 1;
 
         await UserDataModel.findOneAndUpdate(
-          { userId: person.id },
+          { userId: person.id, serverId: message.guild.id },
           { countMute: userCountMute }
         ).exec();
-      } catch (error) {
-        console.log(error);
-      }
+
     } catch (error) {
       await message.react("❌");
       console.log(error);
