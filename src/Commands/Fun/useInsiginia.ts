@@ -1,6 +1,6 @@
 import { Command } from "../../interfaces";
 import {UserDataModel, insigniaDataModel} from '../../../models'
-import { Databases } from "../../../lib/modules";
+import { Databases, CheckRole} from "../../../lib/modules";
 import { MessageEmbed } from "discord.js";
 
 export const command:Command = {
@@ -73,7 +73,27 @@ export const command:Command = {
         .setTitle("✅ | Insignia equipada com sucesso!")
         .setDescription("`"+"♦ID da primeira insignia ➔ " + userData.primaryInsignia + "\n♦ID da segunda insignia ➔ " + userData.secondaryInsignia +"`");
 
+        BypassVerification();
+
         userData.save().then(() => message.channel.send({embeds:[embed]}));
 
+        function BypassVerification() {
+
+            const bypassRole = message.guild.roles.cache.find(role => role.id === "949898954898808872");
+            if(!bypassRole) return;
+            const haveBypassRole = new CheckRole(client, message.member, [bypassRole.id]).CheckReturnBoolean();
+
+            if(!haveBypassRole) {
+                if(userData.primaryInsignia === 4 || userData.secondaryInsignia === 4){
+                    return message.member.roles.add(bypassRole);
+                } 
+            } else {
+                if(userData.primaryInsignia !== 4 && userData.secondaryInsignia !== 4){
+                    return message.member.roles.remove(bypassRole);
+                } 
+            }
+            
+        }
     }
 }
+
