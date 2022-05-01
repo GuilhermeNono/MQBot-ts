@@ -13,9 +13,10 @@ export const command: Command = {
       //*1 Verificando se o usuario tem o cargo necessario para usar esse comando
       const memberAuthor: GuildMember = message.member;
 
-      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor);
+      const rolesAdmin = ["929418031795408916", "929426173673500673"]
+      const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor, rolesAdmin);
       const Embeds: EmbedTemplates = new EmbedTemplates(client);
-      const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
+      const checkReturn: Boolean = newCheckAuthor.CheckReturnBoolean();
       if (!checkReturn)
         return message.channel.send({
           embeds: [Embeds.missingPermission()],

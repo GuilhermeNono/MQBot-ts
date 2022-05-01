@@ -75,6 +75,18 @@ export const command: Command = {
             name:"Informa o ID do usuario. `NEW`",
             value:"`.id {user❌}`",
           },
+          {
+            name: "Carteira de insignias do usuario. `NEW`",
+            value: "`.carteira {user❌}`",
+          },
+          {
+            name: "Fornece informações sobre a insignia. `NEW`",
+            value:"`.insignia {insigniaData✅}`",
+          },
+          {
+            name:"Equipa a insignia presente no inventario do usuario. `NEW`",
+            value:"`.useinsignia {insigniaID✅} {insigniaID❌}`",
+          },
           //   {
           //     name: 'Comando que envia uma marcação para o usuario "@Fuzii"',
           //     value: "`.fuzi {on/off❌}`",
@@ -177,6 +189,14 @@ export const command: Command = {
             value: "`Apenas numeros que sejam positivo e inteiro`",
           },
           {
+            name: ":grey_exclamation: {insigniaData}",
+            value: "`Nome ou ID da insignia.`"
+          },
+          {
+            name: ":grey_exclamation: {insigniaID}",
+            value: "`O id da insignia`",
+          },
+          {
             name: "🡲 Qualquer dúvida, favor entrar em contato com Frajola#4953 🡰",
             value: `Version ${version}`,
           }
@@ -201,7 +221,6 @@ export const command: Command = {
       const timeout: string = "120000";
 
       Pagination(message, pages, buttonList, timeout);
-      //TODO: Colocar os botoes.
     } catch (error) {
       await message.react("❌");
       console.log(error);
