@@ -7,6 +7,7 @@ import {
   GuildMember,
   User,
 } from "discord.js";
+import { InsigniaInfo } from "../../src/interfaces";
 class EmbedTemplates {
   constructor(private client: ExtendedClient) {
     this.client = client;
@@ -15,6 +16,26 @@ class EmbedTemplates {
    * ❌ - Tentativa de banir alguem com cargo superior.
    * @returns MessageEmbed()
    */
+
+  insigniaTemplate(
+    username:string,
+    avatarURL:string,
+    InsigniaName: string,
+    colorRarity: ColorResolvable,
+    insigniaInfo: InsigniaInfo
+  ): MessageEmbed {
+    return new MessageEmbed()
+      .setTitle(`✨ Insignia conquistada ➟ __${InsigniaName}__ ✨`)
+      .setColor(colorRarity)
+      .setAuthor({ name: InsigniaName, iconURL: insigniaInfo.insigniaURL })
+      .setFooter({
+        text: `${username}`,
+        iconURL: avatarURL
+          ? avatarURL
+          : undefined,
+      });
+  }
+
   userCannotBePunished(): MessageEmbed {
     return new MessageEmbed()
       .setColor("#fa4848")

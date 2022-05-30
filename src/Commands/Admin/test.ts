@@ -9,7 +9,20 @@ export const command: Command = {
     run: async (client, message, args) => {
         if(message.author.id !== "261945904829956097") return
         try {
-            await UserDataModel.deleteMany({serverId: {$exists:false}}).exec();
+            // const members = message.guild.members.cache.map(f => f.id)
+            // let member;
+            // let memberRole;
+            // for(let i in members) {
+            //     member = message.guild.members.cache.get(members[i]);
+            //     memberRole = member.roles.cache.find(f => f.id === "939195863245422624")
+            //     if(memberRole){
+            //         const teste1 = await UserDataModel.findOne({userId:member.id}).exec();
+            //         const insignias = teste1.insigniaID
+            //         const newArray = insignias.push(5);
+            //         await UserDataModel.findOneAndUpdate({userId:member.id},{insigniaID:insignias}).exec();
+            //     }
+            // }
+            // await UserDataModel.find({serverId: {$exists:false}}).exec();
             return message.react("✅");
         } catch (error) {
             console.log(error);

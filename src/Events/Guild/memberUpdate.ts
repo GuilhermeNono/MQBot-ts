@@ -1,6 +1,7 @@
 import ExtendedClient from "../../Client/index";
 import { Event } from "../../interfaces/Event";
-import { GuildBasedChannel, GuildMember, MessageEmbed, Role } from "discord.js";
+import { GuildBasedChannel, GuildMember, GuildTextBasedChannel, MessageEmbed, Role, TextChannel } from "discord.js";
+import Insignia from "../Insignias/Insignia";
 
 export const event: Event = {
   name: "guildMemberUpdate",
@@ -12,10 +13,10 @@ export const event: Event = {
     //*1 Pegando os cargos do usuario antes e depois de atualizar
 
     const hadRole: Role = oldMember.roles.cache.find(
-      (role) => role.name == "Server Booster"
+      (role) => role.name == "BOSS [100]"
     );
     const hasRole: Role = newMember.roles.cache.find(
-      (role) => role.name == "Server Booster"
+      (role) => role.name == "BOSS [100]"
     );
 
     let userBoost: MessageEmbed = new MessageEmbed()
@@ -29,12 +30,23 @@ export const event: Event = {
 
     //*2 Checando se o usuario não tinha o cargo "Server Booster" e agora tem
 
+    const insignias = new Insignia();
+
     if (!hadRole && hasRole) {
       let channelBooster: GuildBasedChannel =
         newMember.guild.channels.cache.get("929440410496020510");
 
       if (channelBooster.type === "GUILD_TEXT") {
         channelBooster.send({ embeds: [userBoost] });
+        //criar channel 
+        let commandsChannel: GuildTextBasedChannel = newMember.guild.channels.cache.get('929430961697980456') as TextChannel;
+        await insignias.Supporter(client, {
+          username: newMember.user.username,
+          avatarURL: newMember.displayAvatarURL(),
+          channel: commandsChannel,
+          guildId: newMember.guild.id,
+          userId: newMember.id,
+        });
         newMember.roles.add("929777206631223346");
       }
     } else if (hadRole && !hasRole) {

@@ -32,11 +32,12 @@ export const command: Command = {
       const newCheckAuthor: CheckRole = new CheckRole(client, memberAuthor);
       const Embeds: EmbedTemplates = new EmbedTemplates(client);
       const checkReturn: Boolean = newCheckAuthor.CheckHighRoleBool();
-      if (!checkReturn)
+      if (!checkReturn) {
         return message.channel.send({
-          embeds: [Embeds.userCannotBePunished()],
+          embeds: [Embeds.missingPermission()],
         });
-
+      }
+        
       //*2 Puxando as informações do membro, verificando se o usuario não digitou errado e se o usuario pode ser punido.
 
       //Checando se o argumento foi uma marcação.

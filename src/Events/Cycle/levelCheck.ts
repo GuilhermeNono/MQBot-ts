@@ -1,10 +1,17 @@
-import { GuildMember, Message } from "discord.js";
+import { GuildMember, Message, TextChannel } from "discord.js";
 import { Databases } from "../../../lib/modules";
-import { UserDataModel, GuildDataModel, insigniaDataModel} from "../../../models";
+import {
+  UserDataModel,
+  GuildDataModel,
+  insigniaDataModel,
+} from "../../../models";
 import ExtendedClient from "../../Client";
-import { BypassINS } from '../Insignias/index'
+import Insignia from "../Insignias/Insignia";
 
-async function levelCheck(client:ExtendedClient, message: Message<boolean>): Promise<any> {
+async function levelCheck(
+  client: ExtendedClient,
+  message: Message<boolean>
+): Promise<any> {
   try {
     //*1 Checando se o servidor está autorizado a usar o sistema de XP
     const guildInfo = await GuildDataModel.findOne({
@@ -13,7 +20,6 @@ async function levelCheck(client:ExtendedClient, message: Message<boolean>): Pro
 
     if (!guildInfo) return;
     if (guildInfo.isAuthorized) {
-      
       //*2 Checando se o usuario está no banco de dados
       const memberGuild: GuildMember = message.member;
 
@@ -32,9 +38,13 @@ async function levelCheck(client:ExtendedClient, message: Message<boolean>): Pro
       let primaryInsignia = memberDB.primaryInsignia;
       let secondaryInsignia = memberDB.secondaryInsignia;
 
-      let insigniaInfo = await insigniaDataModel.findOne({insigniaID:primaryInsignia}).exec();
+      let insigniaInfo = await insigniaDataModel
+        .findOne({ insigniaID: primaryInsignia })
+        .exec();
       primaryInsignia = Number(insigniaInfo.xpBoost);
-      insigniaInfo = await insigniaDataModel.findOne({insigniaID:secondaryInsignia}).exec();
+      insigniaInfo = await insigniaDataModel
+        .findOne({ insigniaID: secondaryInsignia })
+        .exec();
       secondaryInsignia = Number(insigniaInfo.xpBoost);
 
       const xpBoost = primaryInsignia + secondaryInsignia;
@@ -44,26 +54,36 @@ async function levelCheck(client:ExtendedClient, message: Message<boolean>): Pro
       let xp: number = memberDB.xp;
       let nextLevel: number = memberDB.nextLevelXp;
 
-      let boost = parseFloat((0 + (1 * xpBoost)).toFixed(1))
-      let baseFunction = Math.floor(Math.random() * ((level * 100) - (level * 50))) + level * 50
+      let boost = parseFloat((0 + 1 * xpBoost).toFixed(1));
+      let baseFunction;
+
+      if (level >= 19) {
+        baseFunction = Math.floor(Math.random() * (level * 350 - level * 150)) + level * 200
+      } else {
+        baseFunction = Math.floor(Math.random() * (level * 100 - level * 50)) + level * 50;
+      }
       
-      xp += Math.round((baseFunction * boost) + baseFunction);
+
+      xp += Math.round(baseFunction * boost + baseFunction);
+
+      const insClass = new Insignia();
 
       if (xp >= nextLevel) {
-
-        if(level === 30){
-          await BypassINS(client, message)
-        }
-
         //*4 Verificando se o usuario tem xp o suficiente para subir de nivel
         level++;
 
-        if(level === 30) {
-          
+        if (level === 30) {
+          await insClass.Bypass(client, {
+            avatarURL: message.member.displayAvatarURL(),
+            channel: message.channel as TextChannel,
+            guildId:message.guildId,
+            userId:message.member.id,
+            username:message.member.user.username
+          });
         }
 
-        nextLevel = Math.round((nextLevel + nextLevel * 1.2) / 1.5);
-        await UserDataModel.findOneAndUpdate(
+        nextLevel = Math.round((nextLevel + nextLevel * 0.9) / 1.5);
+        await UserDataModel.findOneAndUpdate( 
           { userId: memberGuild.id, serverId: memberGuild.guild.id },
           { $set: { level: level, nextLevelXp: nextLevel, xp: 0 } }
         );
