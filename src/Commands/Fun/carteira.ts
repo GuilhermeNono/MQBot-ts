@@ -1,7 +1,16 @@
-import { GuildMember, MessageEmbed } from "discord.js";
+import { GuildMember, MessageAttachment, MessageEmbed } from "discord.js";
 import { EmbedTemplates, Rarity} from "../../../lib/modules";
 import { UserDataModel, insigniaDataModel } from "../../../models/";
 import { Command, InsigniaInfo } from "../../interfaces";
+import { createCanvas, Image, loadImage, registerFont } from "canvas";
+import path from "path";
+import CanvasUI from "../../../lib/modules/Canvas";
+registerFont(
+  path.join(__dirname, "..", "..", "Assets", "fonts/Poppins-Regular.ttf"),
+  {
+    family: "Poppins",
+  }
+);
 
 export const command: Command = {
   name: "carteira",
@@ -102,6 +111,16 @@ export const command: Command = {
       );
     }
 
-    message.channel.send({ embeds: [embedBag] });
+    // message.channel.send({ embeds: [embedBag] });
+    
+    const avatarProfile = await loadImage(person.user.avatarURL({ format: "jpeg" }))
+
+    const canvas = new CanvasUI();
+    const walletCanvas = await canvas.CanvasWallet(
+      { canvasHeight: 450, canvasWidth: 800 },
+      { userAvatarImage: avatarProfile, userId: person.user.id }
+    );
+    
+    message.channel.send({files:[walletCanvas]})
   },
 };

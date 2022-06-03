@@ -140,7 +140,6 @@ export const command: Command = {
         await person.timeout(null);
         await message.react("✅");
       }
-      //TODO: Criar um embed final.
     } catch (error) {
       await message.react("❌");
       console.log(`${error}`);

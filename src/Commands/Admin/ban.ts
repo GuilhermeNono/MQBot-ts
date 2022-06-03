@@ -174,7 +174,6 @@ export const command: Command = {
         } else {
           await BanPerson(message, person, reason);
           FinalEmbed();
-          //TODO: Criar um embed final.
         }
       }
       function FinalEmbed() {

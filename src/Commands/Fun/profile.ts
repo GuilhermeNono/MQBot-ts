@@ -249,6 +249,7 @@ let databaseNotFound: MessageEmbed = new MessageEmbed()
       });
 
      
+      //TODO Mover a criação do canvas para a classe "CanvasUi" para seu devido metodo.
 
       async function MakeCanvas(
         dateMember: string,

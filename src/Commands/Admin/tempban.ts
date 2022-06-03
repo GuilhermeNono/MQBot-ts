@@ -241,7 +241,6 @@ export const command: Command = {
               });
         }
       }
-      //TODO: Criar um embed final.
     } catch (error) {
       await message.react("❌");
       console.log(`${error}`);

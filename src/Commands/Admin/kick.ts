@@ -122,7 +122,6 @@ export const command: Command = {
           embeds: [Embeds.userCannotBePunished()],
         });
 
-      //todo 5 Kickando o usuario.
 
       await person.kick(reason);
       //*6 Setando os canasi publicos e privados.

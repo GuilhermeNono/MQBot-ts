@@ -29,8 +29,6 @@ export const command: Command = {
       if (!authorHighRole.CheckReturnBoolean())
         return message.channel.send({ embeds: [Embeds.missingPermission()] });
 
-      //TODO: 2 Criando uma variavel para armazenar a quantidade de mensagens a serem apagadas
-
       if (!args[0]) return message.channel.send({ embeds: [] });
       if (!parseInt(args[0])) {
         let NaNEmbed: MessageEmbed = new MessageEmbed()
@@ -48,12 +46,10 @@ export const command: Command = {
           .setTitle("O numero não pode ser negativo ou maior que 99");
         return message.channel.send({ embeds: [numberGreaterThan99] });
       }
-      //TODO: 3 Armazenando as mensagens referente a variavel qtd
       const fetched: Collection<
         string,
         Message<boolean>
       > = await message.channel.messages.fetch({ limit: qtd + 1 });
-      //TODO: 4 Apagando "qtd" mensagens do canal e enviando uma confirmação ou erro
 
       //Checando se existe mensagens para serem excluidas.
       if (fetched) {

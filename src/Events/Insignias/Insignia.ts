@@ -1,15 +1,8 @@
-import {
-  DMChannel,
-  GuildTextBasedChannel,
-  Message,
-  NewsChannel,
-  PartialDMChannel,
-  TextChannel,
-  ThreadChannel,
-} from "discord.js";
+import { GuildTextBasedChannel, Message } from "discord.js";
 import { EmbedTemplates, Rarity } from "../../../lib/modules";
 import { insigniaDataModel, UserDataModel } from "../../../models";
 import ExtendedClient from "../../Client";
+
 
 interface IFields {
   channel: GuildTextBasedChannel;
@@ -20,7 +13,6 @@ interface IFields {
 }
 
 export default class Insignia {
-  
   /**
    * 💠 - Realiza a checagem de requisitos para, só então, destribuir a insignia Bypass.
    * @param client ExtendedClient
@@ -95,12 +87,7 @@ async function giveInsignia(
 
 async function sendEmbed(
   client: ExtendedClient,
-  channel:
-    | DMChannel
-    | PartialDMChannel
-    | NewsChannel
-    | TextChannel
-    | ThreadChannel,
+  channel: GuildTextBasedChannel,
   username: string,
   avatarURL: string,
   idInsignia: number,
