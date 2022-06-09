@@ -15,7 +15,7 @@ registerFont(
 export const command: Command = {
   name: "carteira",
   aliases: ["wallet", "bolsa", "bag", "inventario", "inv"],
-  isOff: false,
+  isOff: true,
   run: async (client, message, args) => {
     //.carteira <@user>
 
@@ -115,9 +115,8 @@ export const command: Command = {
     
     const avatarProfile = await loadImage(person.user.avatarURL({ format: "jpeg" }))
 
-    const canvas = new CanvasUI();
+    const canvas = new CanvasUI(450, 800);
     const walletCanvas = await canvas.CanvasWallet(
-      { canvasHeight: 450, canvasWidth: 800 },
       { userAvatarImage: avatarProfile, userId: person.user.id }
     );
     

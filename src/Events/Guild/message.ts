@@ -121,7 +121,7 @@ export const event: Event = {
           return message.channel.send({ embeds: [embedIsNotOfficialServer] });
         }
       }
-      if (command.isOff) return
+      if (command.isOff) return await message.channel.send("Comando Desabilitado.")
       if (command) (command as Command).run(client, message, args);
     } catch (error) {
       console.log(error);

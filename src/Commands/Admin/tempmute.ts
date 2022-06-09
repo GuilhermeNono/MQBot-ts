@@ -200,7 +200,7 @@ export const command: Command = {
       //Mutando o usuario.
       await person.timeout(time, reason);
 
-      //*5 Setando os canasi publicos e privados.
+      //*5 Setando os canais publicos e privados.
 
       const publicChannel: GuildBasedChannel =
         message.guild.channels.cache.get("929441854469070949");
