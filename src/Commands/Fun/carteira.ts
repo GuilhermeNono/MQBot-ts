@@ -15,7 +15,7 @@ registerFont(
 export const command: Command = {
   name: "carteira",
   aliases: ["wallet", "bolsa", "bag", "inventario", "inv"],
-  isOff: true,
+  isOff: false,
   run: async (client, message, args) => {
     //.carteira <@user>
 

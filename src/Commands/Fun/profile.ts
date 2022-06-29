@@ -31,7 +31,7 @@ registerFont(
 
 export const command: Command = {
   name: "profile",
-  isOff: true,
+  isOff: false,
   aliases: ["pf"],
   run: async (
     client: ExtendedClient,

@@ -2,6 +2,7 @@ import { createCanvas, Image, loadImage, NodeCanvasRenderingContext2DSettings } 
 import { ColorResolvable, GuildMember, MessageAttachment } from "discord.js";
 import path from "path";
 import { TierOptions } from "../../src/interfaces";
+import { canvasWalletBalance, canvasWalletUsername } from "./CanvasFunction";
 
 interface CanvasInfo {
     canvasWidth:number;
@@ -289,27 +290,20 @@ export default class CanvasUI implements CanvasInfo{
             ctx.drawImage(background, 0, 0);
 
 
-            ctx.textAlign = "left";
-            ctx.font = "24px Poppins Black";
-            ctx.fillStyle = "#ffffff";
-            ctx.fillText(`Frajola`, 95, 63);
-
-            ctx.textAlign = "left";
-            ctx.font = "14px Poppins SemiBold";
-            ctx.fillStyle = "#ffe6d4";
-            ctx.fillText(`154,22`, 98, 83);
+            canvasWalletUsername(ctx)
+            canvasWalletBalance(ctx)
 
             //TODO Descobrir como colocar mais de uma imagem aparecendo no canvas
-            // makeCircle({
-            //   canvasContext: ctx,
-            //   color: "#000",
-            //   outline: 2,
-            //   radius: 37,
-            //   xPosition: 54.5,
-            //   yPosition: 193.5,
-            // });
+            makeCircle({
+              canvasContext: ctx,
+              color: "#000",
+              outline: 2,
+              radius: 37,
+              xPosition: 54.5,
+              yPosition: 193.5,
+            });
             
-            // ctx.drawImage(lockedImage, 13, 10, 77, 76);
+            // ctx.Imgage(lockedImage, 13, 10, 77, 76);
 
             //Foto de Perfil
             makeCircle({
@@ -346,9 +340,9 @@ function makeCircle(options: CircleOptions):void {
   options.canvasContext.arc(options.xPosition, options.yPosition, options.radius, 0, Math.PI * 2, true);
   options.canvasContext.strokeStyle = options.color;
   options.canvasContext.lineWidth = options.outline;
-  options.canvasContext.stroke();
   options.canvasContext.clip();
   options.canvasContext.closePath();
+  options.canvasContext.stroke();
 }
 
 // function setTier(
