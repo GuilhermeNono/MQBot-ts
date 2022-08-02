@@ -17,8 +17,7 @@
 
 ### 🛠 Tecnologias
 
-Será utilizado na criação do bot:
-- [Node.js](https://nodejs.org/en/)
+It was used during development:
 - [Typescript](https://www.typescriptlang.org/)
 - [MongoDB](https://www.mongodb.com/)
 
